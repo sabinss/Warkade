@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.scss';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Index } from './pages/Index';
+import { Landing } from './pages/Landing';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Index />}></Route>
+        <Route path='/' element={<Landing />}></Route>
       </Routes>
     </BrowserRouter>
   );

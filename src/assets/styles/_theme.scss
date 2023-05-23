@@ -1,0 +1,187 @@
+
+body{
+    background-color: #181818;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    padding:20px 0px;
+  }
+  
+  .index-home-section{
+    height: 85vh;
+    .banner-content{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        height: 100%;
+        .text-content{
+            width: 80%;
+            .banner-title{
+                display:inline-block;
+                width: 100%;
+                h1{
+                    color: $primary-color;
+                    text-transform: capitalize;
+                    font-size: 5    0px;
+                    padding:20px 0px;
+                    &:nth-child(2){
+                        display: block;
+                        float: right;
+                        background-color: $secondary-color;
+                        color: white;
+                       
+                        text-transform: uppercase;
+                    }
+                }
+            }
+    
+            .banner-text{
+                float: none;
+                width: 100%;
+               
+               
+                p{
+                    display: block;
+                    width: 100%;
+                    color: $primary-color;
+                    line-height: 2.5;
+                    position: relative;
+                    padding-left:30px;
+                    span{
+                        color: $secondary-color;
+                    }
+                    &::before{
+                        content: "";
+                        position: absolute;
+                        left: 0;
+                        top: 10px;
+                        background-image:url(../images/icons/chevron.svg);
+                        width: 15px;
+                        height: 25px;
+                        background-size: 100%;
+                        background-repeat: no-repeat;
+                    }
+                }
+               
+            }
+           
+        }
+        .banner-bottom{
+            width: 100%;
+            margin: 0 auto;
+           
+            .bottom-content{
+                width: 90%;
+                padding-left: 50px;
+                .bottom-title{
+                    background-color: #424242;
+                    padding: 15px 0px;
+                    
+                    h6{
+                        color: $primary-color;
+                    }
+                }
+                .banner-image-sprite{
+                    border-bottom: 8px solid #fff;
+                    .single-image-holder{
+                        width: 10%;
+                        height:115px;
+                    }
+                }
+                
+            }
+            .bottom-line-grp{
+                span{
+                    width: 100%;
+                    display: block;
+                    position: relative;
+                    height: 8px;
+                    &::after{
+                        content: "";
+                        right: 8.5%;
+                        position: absolute;
+                        top: 0;
+                        width: 1.5%;
+                        background-color: white;
+                        height: 8px;
+                    }
+                    &:nth-child(2){
+                        &::after{
+                            right: 7%;
+                        }
+                        
+                    }
+                    &:nth-child(3){
+                        &::after{
+                            right: 5.5%;
+                        }
+                        
+                    }
+                    &:nth-child(4){
+                        &::after{
+                            right: 4%;
+                        }
+                       
+                    }
+                    &:nth-child(5){
+                        &::after{
+                            right: 2.5%;
+                        }
+                       
+                    }
+                    &:nth-child(6){
+                        &::after{
+                            right:1%;
+                        }
+                       
+                    }
+                }
+            }
+            .bottom-right{
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                justify-content: end;
+                .image-holder{
+                    &.fire-back{
+                        background-image: url(../images/fireback.png);
+                    }
+                }
+                .wr-primary-theme-btn{
+                    width: 100%;
+                }
+            }
+        }
+    }
+  }
+
+  footer{
+    background-color: #242424;
+    .footer-content{
+        padding:10px 0px;
+        padding-left: 20px;
+        .footer-content-wrap{
+            a{
+                color: $primary-color;
+                font-size: 13px;
+            }
+            ul{
+                li{
+                    a{
+                        color: $primary-color;
+                        font-size: 13px;
+                        display: block;
+                        padding: 0px 5px;
+                    }
+                }
+            }
+            &.footer-right{
+                margin-left: 20px;
+                ul{
+                    float: right;
+                }
+            }
+        }
+    }
+  }
