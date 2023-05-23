@@ -15,7 +15,7 @@ export const Header = () => {
             </div>
             <div className="col-lg-6">
               <div className="head-right float-end px-5">
-                  <Button name='connect wallets' className={['wr-primary-theme-btn wr-primary-theme-btn_header  px-3']}/>
+                  <Button onClick={()=>{}} name='connect wallets' className={['wr-primary-theme-btn wr-primary-theme-btn_header  px-3']}/>
                </div>
             </div>
         </div>
