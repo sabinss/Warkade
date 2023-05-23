@@ -1,14 +1,13 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Dashboard } from './pages/Dashboard';
-
+import {Index } from './pages/Index'
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Dashboard />}></Route>
+        <Route path='/' element={<Index />}></Route>
       </Routes>
     </BrowserRouter>
   );
