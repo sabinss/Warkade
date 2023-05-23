@@ -1,12 +1,10 @@
-import React from "react";
-import Button from 'react-bootstrap/Button';
+import React from 'react';
+import { Header } from '../components';
 
 export const Index = () => {
   return (
-    <div>
-      <h1>fsdf</h1>
-      <Button variant="primary">Primary</Button>{' '}
-      <p>Hrer</p>
+    <div id='landing'>
+      <Header />
     </div>
   );
 };

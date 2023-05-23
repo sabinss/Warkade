@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.scss';
-
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import {Index } from './pages/Index'
+import { Index } from './pages/Index';
+
 function App() {
   return (
     <BrowserRouter>
