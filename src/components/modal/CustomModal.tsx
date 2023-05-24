@@ -1,5 +1,5 @@
-import React from "react";
-import Modal from "react-bootstrap/Modal";
+import React from 'react';
+import Modal from 'react-bootstrap/Modal';
 
 interface ICustomModal {
   children: React.ReactNode;
@@ -9,7 +9,12 @@ interface ICustomModal {
 
 export const CustomModal = ({ children, show, handleClose }: ICustomModal) => {
   return (
-    <Modal show={show} onHide={handleClose} className="modal-overlay">
+    <Modal
+      backdrop='static'
+      show={show}
+      onHide={handleClose}
+      className='modal-overlay'
+    >
       {children}
     </Modal>
   );
