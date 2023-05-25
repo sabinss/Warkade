@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '../UI/Button';
 
-import { MintModal } from './MintModal';
+import { MintModal } from '../modal/MintModal';
 
 export const LandingMain = () => {
   const [mintModal, setMintModal] = useState(false);

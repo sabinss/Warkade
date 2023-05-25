@@ -1,4 +1,4 @@
-import { CustomModal } from '../modal/CustomModal';
+import { CustomModal } from './CustomModal';
 import { AiOutlineClose } from 'react-icons/ai';
 import { Button } from '../UI/Button';
 

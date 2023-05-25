@@ -5,6 +5,7 @@ import './ui.scss';
 interface IButton {
   name: string;
   styles?: any;
+  textStyle?: any;
   className?: string[];
   onClick: () => void;
 }
@@ -13,19 +14,17 @@ export const Button = ({
   className = [''],
   name,
   styles = null,
+  textStyle = null,
   onClick,
 }: IButton) => {
   const btnClassName = className.join(' ');
   return (
     <button
-      onClick={() => {
-        console.log('btn clicked', onClick);
-        onClick();
-      }}
-      className={btnClassName}
+      onClick={onClick}
+      className={`default-btn ${btnClassName}`}
       style={styles}
     >
-      {name}
+      <span style={textStyle}> {name}</span>
     </button>
   );
 };

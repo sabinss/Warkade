@@ -1,5 +1,5 @@
 import { AiOutlineClose } from 'react-icons/ai';
-import { CustomModal } from '../modal/CustomModal';
+import { CustomModal } from './CustomModal';
 import { Button } from '../UI/Button';
 
 interface IMintModal {
@@ -13,7 +13,6 @@ export const MintModal = ({
   handleClose,
   handleMint,
 }: IMintModal) => {
-  console.log({ showModal });
   return (
     <CustomModal
       show={showModal}
@@ -51,7 +50,6 @@ export const MintModal = ({
               name='Mint'
               className={['wr-primary-theme-btn', 'mint-modal-btn']}
               onClick={() => {
-                console.log('clicked sd');
                 handleMint();
               }}
             />
