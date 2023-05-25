@@ -1,5 +1,13 @@
 import React from 'react';
+import { Header ,Footer} from '../components';
+import { CollectionMain } from '../components/';
 
-export const MyCollections = () => {
-  return <div>Collection</div>;
+export const Collections = () => {
+  return (
+    <div className='Collection'>
+      <Header />
+        <CollectionMain/>
+        <Footer/>
+      </div>
+  )
 };

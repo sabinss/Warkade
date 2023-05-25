@@ -3,6 +3,7 @@ import { Button } from "../UI/Button";
 
 import { CustomModal } from "../index";
 import { AiOutlineClose } from "react-icons/ai";
+import { Link } from "react-router-dom";
 export const LandingMain = () => {
   const [showModal, setShowModal] = useState(false);
 
@@ -10,17 +11,18 @@ export const LandingMain = () => {
     console.log("handleMint");
     setShowModal(!showModal);
   };
+   
   return (
     <main>
       <section className="index-home-section">
         <div className="banner-content">
-          <div className="container">
+          <div className="custom-container">
             <div className="text-content">
               <div className="banner-title">
                 <h1>Mint to defeat</h1>
                 <h1>The Darklord</h1>
               </div>
-              <div className="banner-text py-4">
+              <div className="banner-text py-3">
                 <p>
                   Our Civilization is under <span>THREAT</span>. Mint Aptos
                   Warcades to <span>DEFEAT</span> the Dark Lord. Minting 10
@@ -33,7 +35,7 @@ export const LandingMain = () => {
           <div className="banner-bottom px-4">
             <div className="container-fluid">
               <div className="row">
-                <div className="col-lg-10">
+                <div className="col-lg-10 position-relative">
                   <div className="bottom-content">
                     <div className="bottom-title text-center">
                       <h6>Aptos Warcades</h6>
@@ -101,14 +103,45 @@ export const LandingMain = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="bottom-line-grp">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                  <div className="below-bottom-content d-flex align-align-items-start">
+                    <div className="bottom-left  d-inline-block">
+                      <div className="icon-grp-text">
+                          <ul className="list-unstyled d-flex icon-grp">
+                              <li>
+                                <div className="icon-holder">
+                                  <img src={require("../../assets/images/coin.png")} alt="" />
+                                </div>
+                              </li>
+                              <li>
+                                <div className="icon-holder">
+                                  <img src={require("../../assets/images/coin.png")} alt="" />
+                                </div>
+                              </li>
+                              <li>
+                                <div className="icon-holder">
+                                  <img src={require("../../assets/images/coin.png")} alt="" />
+                                </div>
+                              </li>
+                          </ul>
+                        <h6>
+                          <Link to={'/collections'}>
+                          My Collection</Link>
+                        </h6>
+                          
+                      </div>
+                    </div>
+                
+                    <div className="bottom-line-grp  d-inline-block">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
                   </div>
+                 
                 </div>
                 <div className="col-lg-2">
                   <div className="bottom-right">
