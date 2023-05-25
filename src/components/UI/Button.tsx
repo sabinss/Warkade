@@ -5,12 +5,26 @@ import './ui.scss';
 interface IButton {
   name: string;
   styles?: any;
-  className?:string[],
-  onClick:()=>void
+  textStyle?: any;
+  className?: string[];
+  onClick: () => void;
 }
 
-export const Button = ({className=[''], name, styles = null,onClick }: IButton) => {
-  const btnClassName = className.join( ' ');
-  console.log({btnClassName})   
-  return <button onClick={onClick} className={btnClassName} style={styles}>{name}</button>;
+export const Button = ({
+  className = [''],
+  name,
+  styles = null,
+  textStyle = null,
+  onClick,
+}: IButton) => {
+  const btnClassName = className.join(' ');
+  return (
+    <button
+      onClick={onClick}
+      className={`default-btn ${btnClassName}`}
+      style={styles}
+    >
+      <span style={textStyle}> {name}</span>
+    </button>
+  );
 };

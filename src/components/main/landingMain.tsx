@@ -1,15 +1,16 @@
-import React, { useState } from "react";
-import { Button } from "../UI/Button";
+import React, { useState } from 'react';
+import { Button } from '../UI/Button';
+
+import { MintModal } from '../modal/MintModal';
 
 import { CustomModal } from "../index";
 import { AiOutlineClose } from "react-icons/ai";
 import { Link } from "react-router-dom";
 export const LandingMain = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [mintModal, setMintModal] = useState(false);
 
   const handleMint = () => {
-    console.log("handleMint");
-    setShowModal(!showModal);
+    setMintModal(true);
   };
    
   return (
@@ -40,65 +41,65 @@ export const LandingMain = () => {
                     <div className="bottom-title text-center">
                       <h6>Aptos Warcades</h6>
                     </div>
-                    <div className="d-flex banner-image-sprite">
-                      <div className="single-image-holder">
+                    <div className='d-flex banner-image-sprite'>
+                      <div className='single-image-holder'>
                         <img
-                          src={require("../../assets/images/man1.png")}
-                          alt=""
+                          src={require('../../assets/images/man1.png')}
+                          alt=''
                         />
                       </div>
-                      <div className="single-image-holder">
+                      <div className='single-image-holder'>
                         <img
-                          src={require("../../assets/images/man2.png")}
-                          alt=""
+                          src={require('../../assets/images/man2.png')}
+                          alt=''
                         />
                       </div>
-                      <div className="single-image-holder">
+                      <div className='single-image-holder'>
                         <img
-                          src={require("../../assets/images/man3.png")}
-                          alt=""
+                          src={require('../../assets/images/man3.png')}
+                          alt=''
                         />
                       </div>
-                      <div className="single-image-holder">
+                      <div className='single-image-holder'>
                         <img
-                          src={require("../../assets/images/man1.png")}
-                          alt=""
+                          src={require('../../assets/images/man1.png')}
+                          alt=''
                         />
                       </div>
-                      <div className="single-image-holder">
+                      <div className='single-image-holder'>
                         <img
-                          src={require("../../assets/images/man2.png")}
-                          alt=""
+                          src={require('../../assets/images/man2.png')}
+                          alt=''
                         />
                       </div>
-                      <div className="single-image-holder">
+                      <div className='single-image-holder'>
                         <img
-                          src={require("../../assets/images/man3.png")}
-                          alt=""
+                          src={require('../../assets/images/man3.png')}
+                          alt=''
                         />
                       </div>
-                      <div className="single-image-holder">
+                      <div className='single-image-holder'>
                         <img
-                          src={require("../../assets/images/man1.png")}
-                          alt=""
+                          src={require('../../assets/images/man1.png')}
+                          alt=''
                         />
                       </div>
-                      <div className="single-image-holder">
+                      <div className='single-image-holder'>
                         <img
-                          src={require("../../assets/images/man2.png")}
-                          alt=""
+                          src={require('../../assets/images/man2.png')}
+                          alt=''
                         />
                       </div>
-                      <div className="single-image-holder">
+                      <div className='single-image-holder'>
                         <img
-                          src={require("../../assets/images/man3.png")}
-                          alt=""
+                          src={require('../../assets/images/man3.png')}
+                          alt=''
                         />
                       </div>
-                      <div className="single-image-holder">
+                      <div className='single-image-holder'>
                         <img
-                          src={require("../../assets/images/man3.png")}
-                          alt=""
+                          src={require('../../assets/images/man3.png')}
+                          alt=''
                         />
                       </div>
                     </div>
@@ -143,18 +144,20 @@ export const LandingMain = () => {
                   </div>
                  
                 </div>
-                <div className="col-lg-2">
-                  <div className="bottom-right">
-                    <div className="image-holder fire-back">
+                <div className='col-lg-2'>
+                  <div className='bottom-right'>
+                    <div className='image-holder fire-back'>
                       <img
-                        src={require("../../assets/images/image22.png")}
-                        alt=""
+                        src={require('../../assets/images/image22.png')}
+                        alt=''
                       />
                     </div>
                     <Button
-                      name="Mint"
-                      className={["wr-primary-theme-btn"]}
-                      onClick={handleMint}
+                      name='Mint'
+                      className={['wr-primary-theme-btn']}
+                      onClick={() => {
+                        setMintModal(true);
+                      }}
                     />
                   </div>
                 </div>
@@ -163,22 +166,13 @@ export const LandingMain = () => {
           </div>
         </div>
       </section>
-      <CustomModal show={showModal} handleClose={() => {}}>
-        {/* design mint modal here */}
-        <div className="mint-modal">
-          <div className="mint-modal-header">
-            <div className="col-lg-10 mint-modal-header-title">
-              <h2>Mint</h2>
-            </div>
-            <div className="col-lg-2 mint-modal-header-icon" onClick={handleMint}>
-              <AiOutlineClose
-                style={{ color: "#E7D08C", fontWeight: "bold", fontSize: 20 }}
-              />
-            </div>
-          </div>
-          <div className="mint-modal-body">footer</div>
-        </div>
-      </CustomModal>
+      <MintModal
+        showModal={mintModal}
+        handleMint={() => {
+          handleMint();
+        }}
+        handleClose={() => setMintModal(false)}
+      />
     </main>
   );
 };
