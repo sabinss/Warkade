@@ -3,7 +3,11 @@ import React from 'react';
 import HeaderLogo from '../../assets/images/HeaderLogo.png';
 import { Button } from '../UI/Button';
 
-export const Header = ({ handleConnectWallet }: any) => {
+interface IHeader {
+  handleConnectWallet: () => void;
+}
+
+export const Header = ({ handleConnectWallet }: IHeader) => {
   return (
     <header>
       <div className='container-fluid'>
@@ -16,9 +20,7 @@ export const Header = ({ handleConnectWallet }: any) => {
           <div className='col-lg-8'>
             <div className='head-right float-end px-5'>
               <Button
-                onClick={() => {
-                  handleConnectWallet();
-                }}
+                onClick={handleConnectWallet}
                 name='connect wallets'
                 className={[
                   'wr-primary-theme-btn wr-primary-theme-btn_header  px-3',

@@ -12,7 +12,7 @@ export const CustomModal = ({ children, show, handleClose }: ICustomModal) => {
     <Modal
       backdrop='static'
       show={show}
-      onHide={handleClose}
+      onHide={() => handleClose()}
       className='modal-overlay'
     >
       {children}
