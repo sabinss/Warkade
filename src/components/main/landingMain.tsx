@@ -33,10 +33,10 @@ export const LandingMain = () => {
               </div>
             </div>
           </div>
-          <div className="banner-bottom px-4">
+          <div className="banner-bottom ">
             <div className="container-fluid">
               <div className="row">
-                <div className="col-lg-10 position-relative">
+                <div className="col-lg-9 position-relative">
                   <div className="bottom-content">
                     <div className="bottom-title text-center">
                       <h6>Aptos Warcades</h6>
@@ -44,62 +44,62 @@ export const LandingMain = () => {
                     <div className='d-flex banner-image-sprite'>
                       <div className='single-image-holder'>
                         <img
-                          src={require('../../assets/images/man1.png')}
+                          src={require('../../assets/images/man1.jpeg')}
                           alt=''
                         />
                       </div>
                       <div className='single-image-holder'>
                         <img
-                          src={require('../../assets/images/man2.png')}
+                          src={require('../../assets/images/man2.jpeg')}
                           alt=''
                         />
                       </div>
                       <div className='single-image-holder'>
                         <img
-                          src={require('../../assets/images/man3.png')}
+                          src={require('../../assets/images/man3.jpeg')}
                           alt=''
                         />
                       </div>
                       <div className='single-image-holder'>
                         <img
-                          src={require('../../assets/images/man1.png')}
+                          src={require('../../assets/images/man4.jpeg')}
                           alt=''
                         />
                       </div>
                       <div className='single-image-holder'>
                         <img
-                          src={require('../../assets/images/man2.png')}
+                          src={require('../../assets/images/man5.jpeg')}
                           alt=''
                         />
                       </div>
                       <div className='single-image-holder'>
                         <img
-                          src={require('../../assets/images/man3.png')}
+                          src={require('../../assets/images/man6.jpeg')}
                           alt=''
                         />
                       </div>
                       <div className='single-image-holder'>
                         <img
-                          src={require('../../assets/images/man1.png')}
+                          src={require('../../assets/images/man7.jpeg')}
                           alt=''
                         />
                       </div>
                       <div className='single-image-holder'>
                         <img
-                          src={require('../../assets/images/man2.png')}
+                          src={require('../../assets/images/man8.jpeg')}
                           alt=''
                         />
                       </div>
                       <div className='single-image-holder'>
                         <img
-                          src={require('../../assets/images/man3.png')}
+                          src={require('../../assets/images/man9.jpeg')}
                           alt=''
                         />
                       </div>
                       <div className='single-image-holder'>
                         <img
-                          src={require('../../assets/images/man3.png')}
-                          alt=''
+                          src={require('../../assets/images/man10.jpeg')}
+                          alt=''  
                         />
                       </div>
                     </div>
@@ -144,25 +144,85 @@ export const LandingMain = () => {
                   </div>
                  
                 </div>
-                <div className='col-lg-2'>
+                <div className='col-lg-3'>
                   <div className='bottom-right'>
-                    <div className='image-holder fire-back'>
-                      <img
-                        src={require('../../assets/images/image22.png')}
-                        alt=''
-                      />
+                    <div className="img-btn-wrap">
+                      <div className='image-holder fire-back'>
+                        <img
+                          src={require('../../assets/images/image22.png')}
+                          alt=''
+                        />
+                      </div>
+                      <div className="btn-wrap d-flex">
+                        <Button
+                          name='Mint'
+                          className={['wr-primary-theme-btn']}
+                          onClick={() => {
+                            setMintModal(true);
+                          }}
+                        />
+                      </div>
                     </div>
-                    <Button
-                      name='Mint'
-                      className={['wr-primary-theme-btn']}
-                      onClick={() => {
-                        setMintModal(true);
-                      }}
-                    />
+                    
+                    <div className="img-flamesword">
+                      <img src={require('../../assets/images/flamesword.gif')} alt="" />
+                    </div>
                   </div>
+                  
                 </div>
               </div>
             </div>
+          </div>
+          <div className="brick-imgt ">
+                <div className="brick-icon-wrap">
+                    <div className="brick-icon">
+                      <img src={require('../../assets/images/Rectangle37.png')} alt="" />
+                    </div>
+                    <div className="brick-icon">
+                      <img src={require('../../assets/images/Rectangle37.png')} alt="" />
+                    </div>
+                    <div className="brick-icon">
+                      <img src={require('../../assets/images/Rectangle37.png')} alt="" />
+                    </div>
+                </div>
+                <div className="brick-flame-wrap">
+                <div className="img-flame-wrap">
+                    <div className="sword-wrap">
+                      <img src={require('../../assets/images/image3.png')} alt="" />
+                    </div>
+                    <div className="flame-wrap">
+                    <img src={require('../../assets/images/flame1.gif')} alt="" />
+                    </div>
+                  
+                  </div>
+                  <div className="brick-left">
+                    <div className="brick-icon-wrap">
+                        <div className="brick-icon">
+                          <img src={require('../../assets/images/Rectangle37.png')} alt="" />
+                        </div>
+                        <div className="brick-icon">
+                          <img src={require('../../assets/images/Rectangle37.png')} alt="" />
+                        </div>
+                      </div>
+                      <div className="brick-icon-wrap">
+                        <div className="brick-icon">
+                          <img src={require('../../assets/images/Rectangle37.png')} alt="" />
+                        </div>
+                        <div className="brick-icon">
+                          <img src={require('../../assets/images/Rectangle37.png')} alt="" />
+                        </div>
+                      </div>
+                      <div className="brick-icon-wrap">
+                        <div className="brick-icon">
+                          <img src={require('../../assets/images/Rectangle37.png')} alt="" />
+                        </div>
+                        <div className="brick-icon">
+                          <img src={require('../../assets/images/Rectangle37.png')} alt="" />
+                        </div>
+                      </div>
+                  </div>
+                  
+                </div>
           </div>
         </div>
       </section>

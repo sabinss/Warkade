@@ -7,10 +7,10 @@ export const Header = ({ handleConnectWallet }: any) => {
   return (
     <header>
       <div className='container-fluid'>
-        <div className='row'>
+        <div className='row '>
           <div className='col-lg-4'>
-            <div className='header_logo px-5 w-50'>
-              <img src={HeaderLogo} alt='HeaderLogo' />;
+            <div className='header_logo px-5 w-75'>
+              <img src={HeaderLogo} alt='HeaderLogo' />
             </div>
           </div>
           <div className='col-lg-8'>

@@ -5,7 +5,7 @@ export const Footer = () => {
     <footer>
       <div className="containter-fluid px-5">
           <div className="footer-content">
-              <div className="row">
+              <div className="row align-items-center">
                 <div className="col-lg-3">
                   <div className="footer-content-wrap footer-left">
                     <a href="">
