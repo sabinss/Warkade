@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aptos-labs/wallet-adapter-react": "^1.1.0",
+    "@blocto/aptos-wallet-adapter-plugin": "^0.1.8",
+    "@martianwallet/aptos-wallet-adapter": "^0.0.4",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -11,6 +14,7 @@
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
     "bootstrap": "^5.2.3",
+    "petra-plugin-wallet-adapter": "^0.1.5",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-dom": "^18.2.0",
