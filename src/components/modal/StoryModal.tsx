@@ -12,7 +12,6 @@ export const StoryModal = ({ showModal, handleClose }: IStoryModal) => {
     <CustomModal
       show={showModal}
       handleClose={() => {
-        console.log('handleclose');
       }}
     >
       <div className='mint-modal story-modal'>
