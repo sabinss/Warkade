@@ -2,6 +2,7 @@ import React from 'react';
 // import HeaderLogo from '../../assets/svg/Logo.svg';
 import HeaderLogo from '../../assets/images/HeaderLogo.png';
 import { Button } from '../UI/Button';
+import { Link } from 'react-router-dom';
 
 interface IHeader {
   handleConnectWallet: () => void;
@@ -14,7 +15,9 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
         <div className='row '>
           <div className='col-lg-4'>
             <div className='header_logo px-5 w-75'>
-              <img src={HeaderLogo} alt='HeaderLogo' />
+              <Link to ={'/'}>
+                <img src={HeaderLogo} alt='HeaderLogo' />
+              </Link>
             </div>
           </div>
           <div className='col-lg-8'>
