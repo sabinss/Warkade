@@ -609,6 +609,7 @@ header {
                         margin: 0 auto;
                         padding:30px;
                         .mint-modal-body-card{
+                            margin: 0 auto;
                             margin-bottom:20px;
                         }
                         &.story-modal {
@@ -661,4 +662,9 @@ header {
     width: 205px;
     height: 120px;
     margin-right: -50px;
+}
+
+.disconneted-frame{
+    flex-direction: column;
+    height: 100%;           
 }

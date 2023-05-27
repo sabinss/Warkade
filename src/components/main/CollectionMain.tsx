@@ -1,7 +1,74 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { DisconnectWallet } from '../modal/DisconnectWallet';
 
 export const CollectionMain = () => {
+  const [isWalletConnected, setWalletConnected] = useState(false);
+
+  const ConnectedView = () => {
+    return (
+      <>
+        <div className='col-md-4 py-3'>
+          <div className='collection-card'>
+            <div className='card-img'>
+              <img src={require('../../assets/images/image11.png')} alt='' />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-4 py-3'>
+          <div className='collection-card'>
+            <div className='card-img'>
+              <img src={require('../../assets/images/image18.png')} alt='' />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-4 py-3'>
+          <div className='collection-card'>
+            <div className='card-img'>
+              <img src={require('../../assets/images/image12.png')} alt='' />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-4 py-3'>
+          <div className='collection-card'>
+            <div className='card-img'>
+              <img src={require('../../assets/images/image18.png')} alt='' />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-4 py-3'>
+          <div className='collection-card'>
+            <div className='card-img'>
+              <img src={require('../../assets/images/image11.png')} alt='' />
+            </div>
+          </div>
+        </div>
+        <div className='col-md-4 py-3'>
+          <div className='collection-card'>
+            <div className='card-img'>
+              <img src={require('../../assets/images/image12.png')} alt='' />
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  };
+
+  const DisconnectedView = () => {
+    return (
+      <div className='col-lg-12'>
+        <div className='disconneted-frame d-flex align-items-center justify-content-center'>
+          <p>Please Connect Your Wallet to View Your Collection</p>
+          <div className='btn-wrap w-100 py-3'>
+            <button className='wr-primary-theme-btn mx-auto d-block'>
+              Connect wallet
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className='position-relative'>
       <div className='container-fluid custom-container'>
@@ -135,66 +202,7 @@ export const CollectionMain = () => {
             </div>
             <div className='collection-frame'>
               <div className='row h-100 '>
-                <div className='col-md-4 py-3'>
-                  <div className='collection-card'>
-                    <div className='card-img'>
-                      <img
-                        src={require('../../assets/images/image11.png')}
-                        alt=''
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className='col-md-4 py-3'>
-                  <div className='collection-card'>
-                    <div className='card-img'>
-                      <img
-                        src={require('../../assets/images/image18.png')}
-                        alt=''
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className='col-md-4 py-3'>
-                  <div className='collection-card'>
-                    <div className='card-img'>
-                      <img
-                        src={require('../../assets/images/image12.png')}
-                        alt=''
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className='col-md-4 py-3'>
-                  <div className='collection-card'>
-                    <div className='card-img'>
-                      <img
-                        src={require('../../assets/images/image18.png')}
-                        alt=''
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className='col-md-4 py-3'>
-                  <div className='collection-card'>
-                    <div className='card-img'>
-                      <img
-                        src={require('../../assets/images/image11.png')}
-                        alt=''
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className='col-md-4 py-3'>
-                  <div className='collection-card'>
-                    <div className='card-img'>
-                      <img
-                        src={require('../../assets/images/image12.png')}
-                        alt=''
-                      />
-                    </div>
-                  </div>
-                </div>
+                {isWalletConnected ? <ConnectedView /> : <DisconnectedView />}
               </div>
             </div>
           </div>
