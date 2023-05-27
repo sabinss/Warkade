@@ -27,7 +27,7 @@ export const MintModal = ({
             <h2 className='mint-modal-header-title'>Mint</h2>
           </div>
           <div
-            className='col-lg-1 mint-modal-header-icon'
+            className='col-lg-1 mint-modal-header-icon close'
             onClick={handleClose}
           >
             <AiOutlineClose
@@ -35,7 +35,7 @@ export const MintModal = ({
             />
           </div>
         </div>
-        <div className='mint-modal-body'>
+        <div className='mint-modal-body my-3'>
           <div className='mint-modal-body-card-wrapper'>
             <div className='mint-modal-body-card'>
               <img
@@ -45,7 +45,7 @@ export const MintModal = ({
               />
             </div>
           </div>
-          <div style={{ flex: 1 }}>
+          <div className='d-inline-block my-3'>
             <Button
               name='Mint'
               className={['wr-primary-theme-btn', 'mint-modal-btn']}

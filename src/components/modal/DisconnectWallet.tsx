@@ -19,7 +19,7 @@ export const DisconnectWallet = ({
       <div className='modal-border disconnect-wallet'>
         <div className='disconnet-wallet-header d-flex justify-content-between'>
           <h1 className='text-color default-font-size '>Disconnect Wallet</h1>
-          <div onClick={handleClose}>
+          <div onClick={handleClose} className='close'>
             <AiOutlineClose
               style={{ color: '#E7D08C', fontWeight: 'bold', fontSize: 20 }}
             />

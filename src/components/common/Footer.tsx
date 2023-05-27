@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { StoryModal } from '../modal/StoryModal';
+import { FaqModal } from '../modal/FaqModal';
 
 export const Footer = () => {
   const [showStoryModal, setShowStoryModal] = useState(false);
+  const [showFaqModal, setShowFaqModal] = useState(false)
   return (
     <footer>
       <div className='containter-fluid px-5'>
@@ -19,8 +21,8 @@ export const Footer = () => {
                   <li onClick={() => setShowStoryModal(true)}>
                     <p style={{ color: '#E7D08C', fontSize: 12 }}>Story</p>
                   </li>
-                  <li>
-                    <a href=''>FAQs</a>
+                  <li onClick={() => setShowFaqModal(true)}>
+                    <p>FAQs</p>
                   </li>
                 </ul>
               </div>
@@ -45,6 +47,12 @@ export const Footer = () => {
         handleClose={() => {
           setShowStoryModal(false);
         }}
+      />
+      <FaqModal 
+      showModal ={showFaqModal}
+      handleClose={() => {
+        setShowFaqModal(false);
+      }}
       />
     </footer>
   );
