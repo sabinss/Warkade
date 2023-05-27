@@ -464,17 +464,18 @@ header {
     padding:10px;
     cursor: pointer;
     transition: all 0.4s linear;
-    &-active{
-        background-color: #333333;
-    }
+    // &-active{
+    //     background-color: #333333;
+    // }
     &:hover{
         background-color: #333333;
     }
 }
 
-// .wallet-list-item-active {
-//     background-color: #333333;
-// }
+
+.wallet-list-item-active {
+    background-color: #333333;
+}
 
 .connet-wallet-btn {
     background-color: #A48837;

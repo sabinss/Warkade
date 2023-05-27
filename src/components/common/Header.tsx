@@ -2,12 +2,8 @@ import React from 'react';
 // import HeaderLogo from '../../assets/svg/Logo.svg';
 import HeaderLogo from '../../assets/images/HeaderLogo.png';
 import { Button } from '../UI/Button';
-import { useWallet } from '@aptos-labs/wallet-adapter-react';
-import {
-  MartianWallet,
-  MartianWalletName,
-} from '@martianwallet/aptos-wallet-adapter';
 import { Link } from 'react-router-dom';
+import { useWallet } from '@aptos-labs/wallet-adapter-react';
 
 interface IHeader {
   handleConnectWallet: () => void;
@@ -41,9 +37,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
             <div className='head-right float-end px-5'>
               <Button
                 onClick={() => {
-                  console.log('wallet', wallets[3], MartianWalletName);
-                  // connect(wallets[1]?.name);
-                  connect(MartianWalletName);
+                  handleConnectWallet();
                 }}
                 name='connect wallets'
                 className={[
@@ -57,3 +51,8 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
     </header>
   );
 };
+
+// reference
+// https://github.com/aptos-labs/aptos-wallet-adapter/blob/main/packages/wallet-adapter-react/src/WalletProvider.tsx
+// https://github.com/aptos-labs/aptos-wallet-adapter/tree/main/packages/wallet-adapter-react#examples
+// https://aptos.dev/integration/wallet-adapter-for-dapp
