@@ -10,10 +10,10 @@ interface IConnectWallet {
 export const ConnectWallet = ({ handleClose, showModal }: IConnectWallet) => {
   return (
     <CustomModal show={showModal} handleClose={() => {}}>
-      <div className='modal-border connect-wallet-container'>
+      <div className='modal-border connect-wallet-container mint-modal'>
         <div className='connet-wallet-header'>
           <h1 className='text-color connet-wallet-title'>Select a Wallet</h1>
-          <div onClick={handleClose}>
+          <div onClick={handleClose} className='close'>
             <AiOutlineClose
               style={{ color: '#E7D08C', fontWeight: 'bold', fontSize: 20 }}
             />

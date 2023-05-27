@@ -7,6 +7,7 @@ import {
   MartianWallet,
   MartianWalletName,
 } from '@martianwallet/aptos-wallet-adapter';
+import { Link } from 'react-router-dom';
 
 interface IHeader {
   handleConnectWallet: () => void;
@@ -31,7 +32,9 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
         <div className='row '>
           <div className='col-lg-4'>
             <div className='header_logo px-5 w-75'>
-              <img src={HeaderLogo} alt='HeaderLogo' />
+              <Link to={'/'}>
+                <img src={HeaderLogo} alt='HeaderLogo' />
+              </Link>
             </div>
           </div>
           <div className='col-lg-8'>
