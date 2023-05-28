@@ -2,21 +2,60 @@ import { CustomModal } from './CustomModal';
 import { AiOutlineClose } from 'react-icons/ai';
 import { Button } from '../UI/Button';
 import { WalletNames } from '../../enums';
+import { Context as AuthContext } from '../../context';
+import { useContext } from 'react';
+import { getLocalStorageItem } from '../../utils/localstorageService';
 
 interface IDisconnectWallet {
   showModal: boolean;
   handleClose: () => void;
-  connectedWallet: WalletNames;
+  connectedWallet: string;
+  handleDisconnet: () => void;
 }
 
 export const DisconnectWallet = ({
   handleClose,
   showModal,
   connectedWallet,
+  handleDisconnet,
 }: IDisconnectWallet) => {
+  const {
+    state: { connectedWalletName },
+  } = useContext<any>(AuthContext);
+
+  const walletName = getLocalStorageItem('walletName');
+  console.log('connectedWalletName', walletName);
+
+  const showWalletImage = () => {
+    if (walletName.toLowerCase() === 'petra') {
+      return (
+        <img
+          className='wallet-img'
+          src={require('../../assets/images/wallet1.png')}
+        />
+      );
+    } else if (walletName.toLowerCase() === 'martian') {
+      return (
+        <img
+          className='wallet-img'
+          src={require('../../assets/images/wallet3.png')}
+        />
+      );
+    } else if (walletName.toLowerCase() === 'blockto') {
+      return (
+        <img
+          className='wallet-img'
+          src={require('../../assets/images/wallet2.png')}
+        />
+      );
+    }
+  };
   return (
     <CustomModal show={showModal} handleClose={() => {}}>
-      <div className='modal-border disconnect-wallet'>
+      <div
+        className='mint-modal modal-border disconnect-wallet'
+        style={{ width: '60%' }}
+      >
         <div className='disconnet-wallet-header d-flex justify-content-between'>
           <h1 className='text-color default-font-size '>Disconnect Wallet</h1>
           <div onClick={handleClose} className='close'>
@@ -26,19 +65,18 @@ export const DisconnectWallet = ({
           </div>
         </div>
 
-        <div className='disconnet-wallet-body d-flex justify-content-between'>
+        <div className='disconnet-wallet-body d-flex justify-content-between align-items-center'>
           <div className='wallet-list-item d-flex  justify-content-start  align-items-center wallet-list-item-active'>
-            <img
-              className='wallet-img'
-              src={require('../../assets/images/wallet1.png')}
-            />
+            {walletName && showWalletImage()}
             <span className='text-color wallet-text'>{connectedWallet}</span>
           </div>
           <Button
             name='DISCONNECT'
             textStyle={{ fontSize: 9 }}
             className={['wr-primary-theme-btn', 'disconnet-wallet-btn']}
-            onClick={() => {}}
+            onClick={() => {
+              handleDisconnet();
+            }}
           />
         </div>
         <p className='text-color' style={{ fontSize: 10, marginTop: 10 }}>

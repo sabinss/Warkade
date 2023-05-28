@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { DisconnectWallet } from '../modal/DisconnectWallet';
+import { startFetchMyQuery } from './fetchCollectionData';
+import { Context as AuthContext } from '../../context';
 
 export const CollectionMain = () => {
   const [isWalletConnected, setWalletConnected] = useState(false);
+  const { state } = useContext<any>(AuthContext);
+
+  useEffect(() => {
+    startFetchMyQuery(state);
+  }, []);
 
   const ConnectedView = () => {
     return (
@@ -202,7 +209,11 @@ export const CollectionMain = () => {
             </div>
             <div className='collection-frame'>
               <div className='row h-100 '>
-                {isWalletConnected ? <ConnectedView /> : <DisconnectedView />}
+                {state.isWalletConnected ? (
+                  <ConnectedView />
+                ) : (
+                  <DisconnectedView />
+                )}
               </div>
             </div>
           </div>

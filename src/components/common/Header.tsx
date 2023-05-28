@@ -1,27 +1,22 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 // import HeaderLogo from '../../assets/svg/Logo.svg';
 import HeaderLogo from '../../assets/images/HeaderLogo.png';
 import { Button } from '../UI/Button';
 import { Link } from 'react-router-dom';
-import { useWallet } from '@aptos-labs/wallet-adapter-react';
-
+import { Context as AuthContext } from '../../context';
+import { truncateStringInBetween } from '../../utils/stringHelper';
+import { DisconnectWallet } from '../modal/DisconnectWallet';
 interface IHeader {
   handleConnectWallet: () => void;
 }
 
 export const Header = ({ handleConnectWallet }: IHeader) => {
+  const [openDisconnetWallet, setDisconnectWallet] = useState(false);
   const {
-    connect,
-    account,
-    network,
-    connected,
-    disconnect,
-    wallet,
-    wallets,
-    signAndSubmitTransaction,
-    signTransaction,
-    signMessage,
-  } = useWallet();
+    state: { isWalletConnected, walletAccountInfo },
+    disconnectAptosWallet,
+  } = useContext<any>(AuthContext);
+
   return (
     <header>
       <div className='container-fluid'>
@@ -35,19 +30,44 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
           </div>
           <div className='col-lg-8'>
             <div className='head-right float-end px-5'>
-              <Button
-                onClick={() => {
-                  handleConnectWallet();
-                }}
-                name='connect wallets'
-                className={[
-                  'wr-primary-theme-btn wr-primary-theme-btn_header  px-3',
-                ]}
-              />
+              {isWalletConnected && walletAccountInfo ? (
+                <Button
+                  onClick={() => {
+                    setDisconnectWallet(true);
+                    // disconnectAptosWallet();
+                  }}
+                  name={
+                    walletAccountInfo &&
+                    truncateStringInBetween(walletAccountInfo?.address, 20)
+                  }
+                  className={[
+                    'wr-primary-theme-btn wr-primary-theme-btn_header  px-3',
+                  ]}
+                />
+              ) : (
+                <Button
+                  onClick={() => {
+                    handleConnectWallet();
+                  }}
+                  name='connect wallets'
+                  className={[
+                    'wr-primary-theme-btn wr-primary-theme-btn_header  px-3',
+                  ]}
+                />
+              )}
             </div>
           </div>
         </div>
       </div>
+      <DisconnectWallet
+        handleClose={() => setDisconnectWallet(false)}
+        showModal={openDisconnetWallet}
+        connectedWallet={'Petra'}
+        handleDisconnet={() => {
+          setDisconnectWallet(false);
+          disconnectAptosWallet();
+        }}
+      />
     </header>
   );
 };

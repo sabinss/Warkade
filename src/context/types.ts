@@ -1,4 +1,6 @@
 export interface AuthStateType {
-    isloggedIn: boolean;
-  }
-  
+  isloggedIn: boolean;
+  isWalletConnected: null | boolean;
+  walletAccountInfo: any;
+  connectedWalletName: string | null;
+}

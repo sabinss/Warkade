@@ -1,7 +1,12 @@
 import { AiOutlineClose } from 'react-icons/ai';
 import { CustomModal } from './CustomModal';
 import { Button } from '../UI/Button';
-
+import { useContext } from 'react';
+import { useWallet } from '@aptos-labs/wallet-adapter-react';
+import { Context as AuthContext } from '../../context';
+import { useState } from 'react';
+import { AptosClient } from 'aptos';
+import { toast } from 'react-toastify';
 interface IMintModal {
   showModal: boolean;
   handleClose: () => void;
@@ -13,6 +18,20 @@ export const MintModal = ({
   handleClose,
   handleMint,
 }: IMintModal) => {
+  const client = new AptosClient('https://fullnode.testnet.aptoslabs.com/v1');
+
+  const { state } = useContext<any>(AuthContext);
+  const { signAndSubmitTransaction } = useWallet();
+
+  const [minting, setMinting] = useState(false);
+
+  const mint_warcade = {
+    type: 'entry_function_payload',
+    function:
+      '0xfdf9f2962710e0722e2694061419dc1594405a5e478a1d232350069a3253ff94::warkade::mint_warkade',
+    type_arguments: [],
+    arguments: [],
+  };
   return (
     <CustomModal
       show={showModal}
@@ -47,10 +66,32 @@ export const MintModal = ({
           </div>
           <div className='d-inline-block my-3'>
             <Button
-              name='Mint'
+              name={minting ? 'loading..' : 'Mint'}
               className={['wr-primary-theme-btn', 'mint-modal-btn']}
-              onClick={() => {
-                handleMint();
+              onClick={async () => {
+                setMinting(true);
+                // handleMint();
+                try {
+                  const transaction = await signAndSubmitTransaction(
+                    mint_warcade
+                  );
+                  setMinting(false);
+                  console.log({ transaction });
+                } catch (e: any) {
+                  toast.error(e ?? 'Something went wrong', {
+                    position: 'top-center',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'dark',
+                  });
+                  handleClose();
+                  console.log('Mint error', e);
+                  setMinting(false);
+                }
               }}
             />
           </div>

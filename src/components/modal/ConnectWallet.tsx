@@ -1,13 +1,20 @@
 import { CustomModal } from './CustomModal';
 import { AiOutlineClose } from 'react-icons/ai';
-import { Button } from '../UI/Button';
-import { useState } from 'react';
-
+import { useContext, useState } from 'react';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
-
+import {
+  WalletCore,
+  WalletName,
+  NetworkName,
+} from '@aptos-labs/wallet-adapter-core';
 import { MartianWalletName } from '@martianwallet/aptos-wallet-adapter';
 import { PetraWalletName } from 'petra-plugin-wallet-adapter';
 import { BloctoWalletName } from '@blocto/aptos-wallet-adapter-plugin';
+import { Context as AuthContext } from '../../context';
+// wallets
+import { PetraWallet } from 'petra-plugin-wallet-adapter';
+import { BloctoWallet } from '@blocto/aptos-wallet-adapter-plugin';
+import { MartianWallet } from '@martianwallet/aptos-wallet-adapter';
 
 interface IConnectWallet {
   showModal: boolean;
@@ -15,47 +22,58 @@ interface IConnectWallet {
 }
 
 enum AllowededWallets {
-  petro = 'Petro',
+  petra = 'Petra',
   blockto = 'Blockto',
   martian = 'Martian',
 }
 
 export const ConnectWallet = ({ handleClose, showModal }: IConnectWallet) => {
+  const { state, connetAptosWallet, setConnectedWalletName } =
+    useContext<any>(AuthContext);
   const [selectedWallet, setSelectedWallet] = useState('');
+  // for blocto wallet
+  // const client = new AptosClient('https://fullnode.mainnet.aptoslabs.com/v1');
 
-  const {
-    connect,
-    account,
-    network,
-    connected,
-    disconnect,
-    wallet,
-    wallets,
-    signAndSubmitTransaction,
-    signTransaction,
-    signMessage,
-  } = useWallet();
+  const aptosWallet = [
+    new PetraWallet(),
+    new BloctoWallet({
+      network: NetworkName.Testnet,
+      bloctoAppId: '84503da4-7d0f-4ced-b004-ecd81bfc333b',
+    }),
+    new MartianWallet(),
+  ];
+  const { connect, account, disconnect } = useWallet();
+  const aptosWalletNetwork = new WalletCore(aptosWallet);
 
   const handleSelectWallet = (walletName: string) => {
-    setSelectedWallet(walletName);
-  };
-
-  const handleConnectWallet = () => {
-    if (AllowededWallets.petro === selectedWallet) {
-      console.log({
-        connect,
-        account,
-        network,
-        wallets,
-        wallet,
-      });
-      connect(PetraWalletName);
-    } else if (AllowededWallets.martian === selectedWallet) {
-      connect(MartianWalletName);
-    } else if (AllowededWallets.blockto === selectedWallet) {
-      connect(wallets[1]?.name);
+    try {
+      handleConnectWallet(walletName);
+    } catch (e) {
+      console.log('handle conet error', e);
     }
-    handleClose();
+    // setSelectedWallet(walletName);
+  };
+  const handleConnectWallet = async (walletName: string) => {
+    try {
+      setConnectedWalletName(walletName);
+      let openSelectedWallet: any = '';
+
+      if (AllowededWallets.petra === walletName) {
+        openSelectedWallet = PetraWalletName;
+      } else if (AllowededWallets.martian === walletName) {
+        openSelectedWallet = MartianWalletName;
+      } else if (AllowededWallets.blockto === walletName) {
+        openSelectedWallet = BloctoWalletName;
+      }
+
+      await connect(openSelectedWallet);
+      // const wallet = new WalletCore(wallets);
+      connetAptosWallet(account);
+      handleClose();
+    } catch (e) {
+      console.log('conect wallet error', e);
+      throw e;
+    }
   };
 
   return (
@@ -79,18 +97,18 @@ export const ConnectWallet = ({ handleClose, showModal }: IConnectWallet) => {
         <div className='wallet-list'>
           <div
             className={`wallet-list-item d-flex  justify-content-start  align-items-center ${
-              selectedWallet === AllowededWallets.petro
+              selectedWallet === AllowededWallets.petra
                 ? 'wallet-list-item-active'
                 : ''
             }`}
-            onClick={() => handleSelectWallet(AllowededWallets.petro)}
+            onClick={() => handleSelectWallet(AllowededWallets.petra)}
           >
             <img
               className='wallet-img'
               src={require('../../assets/images/wallet1.png')}
             />
             <span className='text-color wallet-text'>
-              {AllowededWallets.petro}
+              {AllowededWallets.petra}
             </span>
           </div>
           <div
@@ -131,14 +149,14 @@ export const ConnectWallet = ({ handleClose, showModal }: IConnectWallet) => {
           className='d-flex justify-content-center mt-10'
           style={{ marginTop: 25 }}
         >
-          <Button
+          {/* <Button
             name='CONNECT WALLET'
             className={['wr-primary-theme-btn', 'connect-wallet-btn']}
             onClick={() => {
               handleConnectWallet();
               // connect(wallets[1]?.name);
             }}
-          />
+          /> */}
         </div>
       </div>
     </CustomModal>
