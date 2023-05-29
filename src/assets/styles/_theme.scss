@@ -3,12 +3,21 @@ body{
     background-color: #000;
     max-height: 100vh;
     overflow-x: hidden;
-    color: $primary-color;
+    color: $primary-color;     
+    position:fixed;
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+
     main{
         height: 82vh;
         align-items: center;
-        display: flex;
+        display: block;
         justify-content: flex-end;
+        @include breakpoint(md){
+            display: flex;
+        }
     }
 }
 a{
@@ -46,18 +55,24 @@ header {
         height: 100%;
         position: relative;
         .text-content{
-            width: 80%;
+            width: 100%;
+            @include breakpoint(sm){
+                width: 80%;
+            }
             .banner-title{
                 display:inline-block;
                 width: 100%;
                 h1{
                     color: $primary-color;
                     text-transform: capitalize;
-                    font-size: 40px;
+                    font-size: 25px;
                     padding:10px 0px;
+                    @include breakpoint(sm){
+                        font-size: 40px;
+                    }
                     &:nth-child(2){
                         display: block;
-                        float: right;
+                        float: none;
                         background-color: $secondary-color;
                         color: white;
                        padding-right: 50px;
@@ -74,6 +89,9 @@ header {
                             background-color: #fff;
                             animation: blink 0.8s linear infinite;
                         }
+                        @include breakpoint(sm){
+                            float: right;
+                        }
                     }
                 }
             }
@@ -88,9 +106,12 @@ header {
                     width: 100%;
                     color: $primary-color;
                     line-height: 2.5;
-                    font-size: 14px;
+                    font-size: 10px;
                     position: relative;
                     padding-left:30px;
+                    @include breakpoint(sm){
+                        font-size: 10px;
+                    }
                     span{
                         color: $secondary-color;
                     }
@@ -127,9 +148,18 @@ header {
                 }
                 .banner-image-sprite{
                     border-bottom: 8px solid #fff;
+                    flex-wrap: wrap;
+                    @include breakpoint(md){
+                    
+                        flex-wrap: nowrap;
+                    }
                     .single-image-holder{
-                        width: 10%;
-                        height:95px;
+                        width:25%;
+                        height:95px;    
+                       
+                        @include breakpoint(md){
+                            width: 10%;
+                        }
                     }
                 }
                 
@@ -178,6 +208,10 @@ header {
         .brick-imgt{
             left: auto;
             right: 0;
+        
+            @include breakpoint(sm){
+                z-index: -1;
+            }
             .brick-flame-wrap{
                 .brick-icon-wrap{
                     justify-content: right;
@@ -213,6 +247,7 @@ header {
         display: block;
         position: relative;
         height: 8px;
+        display: none;
         &::after{
             content: "";
             right: 12%;
@@ -264,13 +299,19 @@ header {
             }
            
         }
+        @include breakpoint(sm){
+            display: block;
+        }
     }
 }
   footer{
     background-color: #242424;
-    position: fixed;
+    position: static;
     bottom: 0;
     width: 100%;
+    @include breakpoint(sm){
+        // position: absolute;
+    }
     .footer-content{
         padding:10px 0px;
         padding-left: 20px;
