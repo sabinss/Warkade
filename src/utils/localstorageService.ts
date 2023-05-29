@@ -4,7 +4,6 @@ const setLocalStorageItem = (key: string, value: any) => {
 
 const getLocalStorageItem = (key: string) => {
   const value = localStorage.getItem(key);
-  console.log('getLocalStorageItem', value);
   if (value) {
     return JSON.parse(value);
   } else return '';
