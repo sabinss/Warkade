@@ -3,4 +3,7 @@ export interface AuthStateType {
   isWalletConnected: null | boolean;
   walletAccountInfo: any;
   connectedWalletName: string | null;
+  isMinting: boolean;
+  mintImageUrl: null | string;
+  mintError: any;
 }

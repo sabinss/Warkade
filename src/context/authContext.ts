@@ -8,6 +8,9 @@ const initialState: AuthStateType = {
   isWalletConnected: null,
   walletAccountInfo: null,
   connectedWalletName: null,
+  isMinting: false,
+  mintImageUrl: null,
+  mintError: null,
 };
 const authReducer: React.Reducer<AuthStateType, any> = (
   state = initialState,
@@ -32,10 +35,54 @@ const authReducer: React.Reducer<AuthStateType, any> = (
         ...state,
         connectedWalletName: action.payload,
       };
+    case 'minting': {
+      return { ...state, isMinting: true };
+    }
+    case 'minting_success': {
+      return { ...state, isMinting: false, mintImageUrl: action.payload };
+    }
+    case 'minting_failure': {
+      return {
+        ...state,
+        isMinting: false,
+        mintImageUrl: null,
+        mintError: action.payload,
+      };
+    }
     default:
       return state;
   }
 };
+
+const startMinting =
+  (dispatch: any) => async (transactionHash: string, callback: any) => {
+    dispatch({ type: 'minting' });
+    try {
+      var myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
+
+      var urlencoded = new URLSearchParams();
+      urlencoded.append('txn', transactionHash);
+
+      var requestOptions: any = {
+        method: 'POST',
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: 'follow',
+      };
+
+      const response = await fetch(
+        'https://api.aptoswarcade.com/generate',
+        requestOptions
+      );
+      const mintImage = await response.json();
+      callback(mintImage?.urls?.image);
+      dispatch({ type: 'minting_success', payload: mintImage?.urls?.image });
+    } catch (err) {
+      console.log({ err });
+      dispatch({ type: 'minting_failure', payload: err });
+    }
+  };
 
 const connetAptosWallet = (dispatch: any) => async (data: any) => {
   setLocalStorageItem('walletInfo', data);
@@ -65,6 +112,7 @@ export const { Context, Provider } = createDataContext(
     disconnectAptosWallet,
     updateWalletState,
     setConnectedWalletName,
+    startMinting,
   },
   initialState
 );
