@@ -45,6 +45,73 @@ export const MintModal = ({
     type_arguments: [],
     arguments: [],
   };
+
+  const showMintingView = () => {
+    if (minting) {
+      return (
+        <div>
+          <p className='text-color'>Minting in progress...</p>
+          <p className='text-color'>please wait.</p>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          {/* <Button name='congratulations' onClick={() => {}} /> */}
+          {mintImageUri && (
+            <div>
+              <p className='text-color'>Congratulation</p>
+            </div>
+          )}
+          <Button
+            name={mintImageUri ? 'Mint Again' : 'Mint'}
+            className={[
+              'wr-primary-theme-btn',
+              'mint-modal-btn',
+              ...(mintImageUri ? ['success-mint'] : []),
+            ]}
+            onClick={async () => {
+              setMinting(true);
+              // handleMint();
+              try {
+                const transaction = await signAndSubmitTransaction(
+                  mint_warcade
+                );
+                startMinting(transaction?.hash, (mintImageUri: string) => {
+                  setMintImageUri(mintImageUri);
+                });
+                setMinting(false);
+              } catch (e: any) {
+                toast.error(e ?? 'Something went wrong', {
+                  position: 'top-center',
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: 'dark',
+                });
+                handleClose();
+                console.log('Mint error', e);
+                setMinting(false);
+              }
+            }}
+          />
+          {mintImageUri && (
+            <h1
+              className='text-color close-btn'
+              style={{ fontSize: 26 }}
+              onClick={handleClose}
+            >
+              Close
+            </h1>
+          )}
+        </div>
+      );
+    }
+  };
+
   return (
     <CustomModal
       show={showModal}
@@ -85,41 +152,7 @@ export const MintModal = ({
               )}
             </div>
           </div>
-          <div className='d-inline-block my-3'>
-            <Button
-              name={
-                minting ? 'loading..' : mintImageUri ? 'Mint Again' : 'Mint'
-              }
-              className={['wr-primary-theme-btn', 'mint-modal-btn']}
-              onClick={async () => {
-                setMinting(true);
-                // handleMint();
-                try {
-                  const transaction = await signAndSubmitTransaction(
-                    mint_warcade
-                  );
-                  startMinting(transaction?.hash, (mintImageUri: string) => {
-                    setMintImageUri(mintImageUri);
-                  });
-                  setMinting(false);
-                } catch (e: any) {
-                  toast.error(e ?? 'Something went wrong', {
-                    position: 'top-center',
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: 'dark',
-                  });
-                  handleClose();
-                  console.log('Mint error', e);
-                  setMinting(false);
-                }
-              }}
-            />
-          </div>
+          <div className='d-inline-block my-3'>{showMintingView()}</div>
         </div>
       </div>
     </CustomModal>
