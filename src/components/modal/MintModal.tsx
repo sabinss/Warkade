@@ -62,6 +62,7 @@ export const MintModal = ({
             ]}
             onClick={async () => {
               setMinting(true);
+              setMintImageUri(null);
               // handleMint();
               try {
                 const transaction = await signAndSubmitTransaction(

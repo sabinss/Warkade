@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Header, Footer } from '../components';
-import { LandingMain } from '../components/main/landingMain';
+import { LandingMain } from '../components/main/LandingMain';
 import { ConnectWallet } from '../components/modal/ConnectWallet';
 import { DisconnectWallet } from '../components/modal/DisconnectWallet';
 import { WalletNames } from '../enums';
 import { Context as AuthContext } from '../context/authContext';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
+
 export const Landing = () => {
   const [connectWalletModal, setConnectWalletModal] = useState(false);
 
