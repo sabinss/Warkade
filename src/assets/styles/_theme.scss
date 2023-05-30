@@ -23,6 +23,13 @@ body{
 a{
     text-decoration: none;
 }
+#landing{
+    position: relative;
+    height: auto;
+    @include breakpoint(md){
+        height: 100vh;
+    }
+}
 header {
     display: inline-flex;
     justify-content: space-between;
@@ -310,7 +317,8 @@ header {
     bottom: 0;
     width: 100%;
     @include breakpoint(sm){
-        // position: absolute;
+        position: absolute;
+        bottom: 0;
     }
     .footer-content{
         padding:10px 0px;
@@ -401,7 +409,7 @@ header {
         .collection-card{
             margin:0px 0px 15px;
             background-color:#686868 ;
-            height: 100%;
+            height: 225px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -444,6 +452,17 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+    .mint-char-list{
+        overflow: hidden;
+        &.animate-list{
+            animation: randomize 0.9s linear infinite ;
+            li{
+                padding: 20px;
+                border-bottom: 2px solid #000;
+            }
+        }
+    }
 }
 
 .mint-modal-body {

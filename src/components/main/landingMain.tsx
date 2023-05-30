@@ -173,6 +173,8 @@ export const LandingMain = () => {
                           name='Mint'
                           className={['wr-primary-theme-btn']}
                           onClick={() => {
+                            setMintModal(true);
+                            return ;
                             if (walletAccountInfo) {
                               setMintModal(true);
                             } else {

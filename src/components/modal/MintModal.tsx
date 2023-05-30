@@ -137,7 +137,7 @@ export const MintModal = ({
         <div className='mint-modal-body my-3'>
           <div className='mint-modal-body-card-wrapper'>
             <div className='mint-modal-body-card'>
-              {!minting && mintImageUri ? (
+              {/* {!minting && mintImageUri ? (
                 <img
                   src={mintImageUri}
                   alt=''
@@ -149,7 +149,39 @@ export const MintModal = ({
                   alt=''
                   style={{ width: '71px', height: '70px' }}
                 />
-              )}
+              )} */}
+              <ul className='list-unstyled overflow-hidden mint-char-list animate-list'>
+                <li>
+                  <div className="mint-img-holder">
+                    <img src={require('../../assets/images/image16.png')} alt="" />
+                  </div>
+                </li>
+                <li>
+                  <div className="mint-img-holder">
+                    <img src={require('../../assets/images/image11.png')} alt="" />
+                  </div>
+                </li>
+                <li>
+                  <div className="mint-img-holder">
+                    <img src={require('../../assets/images/image18.png')} alt="" />
+                  </div>
+                </li>
+                <li>
+                  <div className="mint-img-holder">
+                    <img src={require('../../assets/images/image16.png')} alt="" />
+                  </div>
+                </li>
+                <li>
+                  <div className="mint-img-holder">
+                    <img src={require('../../assets/images/image11.png')} alt="" />
+                  </div>
+                </li>
+                <li>
+                  <div className="mint-img-holder">
+                    <img src={require('../../assets/images/image18.png')} alt="" />
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
           <div className='d-inline-block my-3'>{showMintingView()}</div>
