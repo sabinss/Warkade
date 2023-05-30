@@ -19,16 +19,6 @@ export const MintModal = ({
   handleClose,
   handleMint,
 }: IMintModal) => {
-  const images = [
-    require('../../assets/images/_.png'),
-    require('../../assets/images/man1.jpeg'),
-    require('../../assets/images/man2.jpeg'),
-    require('../../assets/images/man3.jpeg'),
-    require('../../assets/images/man4.jpeg'),
-    require('../../assets/images/man5.jpeg'),
-    require('../../assets/images/man6.jpeg'),
-    require('../../assets/images/man7.jpeg'),
-  ];
   const client = new AptosClient('https://fullnode.testnet.aptoslabs.com/v1');
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -93,7 +83,6 @@ export const MintModal = ({
                   theme: 'dark',
                 });
                 handleClose();
-                console.log('Mint error', e);
                 setMinting(false);
               }
             }}
@@ -108,6 +97,67 @@ export const MintModal = ({
             </h1>
           )}
         </div>
+      );
+    }
+  };
+
+  const showCardImage = () => {
+    if (!minting && !mintImageUri) {
+      return (
+        <img
+          src={require('../../assets/images/_.png')}
+          alt=''
+          style={{ width: '71px', height: '70px' }}
+        />
+      );
+    }
+    if (minting && !mintImageUri) {
+      return (
+        <ul
+          className={`list-unstyled overflow-hidden mint-char-list ${
+            minting ? 'animate-list' : ''
+          }`}
+        >
+          <li>
+            <div className='mint-img-holder'>
+              <img src={require('../../assets/images/image16.png')} alt='' />
+            </div>
+          </li>
+          <li>
+            <div className='mint-img-holder'>
+              <img src={require('../../assets/images/image11.png')} alt='' />
+            </div>
+          </li>
+          <li>
+            <div className='mint-img-holder'>
+              <img src={require('../../assets/images/image18.png')} alt='' />
+            </div>
+          </li>
+          <li>
+            <div className='mint-img-holder'>
+              <img src={require('../../assets/images/image18.png')} alt='' />
+            </div>
+          </li>
+          <li>
+            <div className='mint-img-holder'>
+              <img src={require('../../assets/images/image11.png')} alt='' />
+            </div>
+          </li>
+          <li>
+            <div className='mint-img-holder'>
+              <img src={require('../../assets/images/image18.png')} alt='' />
+            </div>
+          </li>
+        </ul>
+      );
+    }
+    if (!minting && mintImageUri) {
+      return (
+        <img
+          src={mintImageUri}
+          alt=''
+          style={{ width: '71px', height: '70px' }}
+        />
       );
     }
   };
@@ -136,21 +186,7 @@ export const MintModal = ({
         </div>
         <div className='mint-modal-body my-3'>
           <div className='mint-modal-body-card-wrapper'>
-            <div className='mint-modal-body-card'>
-              {!minting && mintImageUri ? (
-                <img
-                  src={mintImageUri}
-                  alt=''
-                  style={{ width: '100%', height: '100%' }}
-                />
-              ) : (
-                <img
-                  src={images[currentIndex]}
-                  alt=''
-                  style={{ width: '71px', height: '70px' }}
-                />
-              )}
-            </div>
+            <div className='mint-modal-body-card'>{showCardImage()}</div>
           </div>
           <div className='d-inline-block my-3'>{showMintingView()}</div>
         </div>
@@ -158,3 +194,4 @@ export const MintModal = ({
     </CustomModal>
   );
 };
+// Mizan Shrestha
