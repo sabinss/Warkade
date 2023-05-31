@@ -7,15 +7,15 @@ export const Footer = () => {
   const [showFaqModal, setShowFaqModal] = useState(false)
   return (
     <footer>
-      <div className='containter-fluid px-5'>
+      <div className='containter-fluid px-lg-5 px-sm-2'>
         <div className='footer-content'>
           <div className='row align-items-center'>
-            <div className='col-lg-3'>
+            <div className='col-lg-3 col-12'>
               <div className='footer-content-wrap footer-left'>
                 <a href=''>© APTOS WARCADES</a>
               </div>
             </div>
-            <div className='col-lg-4'>
+            <div className='col-lg-4 col-12'>
               <div className='footer-content-wrap footer-mid'>
                 <ul className='list-unstyled d-flex'>
                   <li onClick={() => setShowStoryModal(true)}>
@@ -27,7 +27,7 @@ export const Footer = () => {
                 </ul>
               </div>
             </div>
-            <div className='col-lg-5'>
+            <div className='col-lg-5 col-12'>
               <div className='footer-content-wrap footer-right'>
                 <ul className='list-unstyled d-flex'>
                   <li>
