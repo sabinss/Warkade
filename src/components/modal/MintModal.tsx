@@ -121,32 +121,42 @@ export const MintModal = ({
         >
           <li>
             <div className='mint-img-holder'>
-              <img src={require('../../assets/images/image16.png')} alt='' />
+              <img src={require('../../assets/images/man1.jpeg')} alt='' />
             </div>
           </li>
           <li>
             <div className='mint-img-holder'>
-              <img src={require('../../assets/images/image11.png')} alt='' />
+              <img src={require('../../assets/images/man2.jpeg')} alt='' />
             </div>
           </li>
           <li>
             <div className='mint-img-holder'>
-              <img src={require('../../assets/images/image18.png')} alt='' />
+              <img src={require('../../assets/images/man3.jpeg')} alt='' />
             </div>
           </li>
           <li>
             <div className='mint-img-holder'>
-              <img src={require('../../assets/images/image18.png')} alt='' />
+              <img src={require('../../assets/images/man4.jpeg')} alt='' />
             </div>
           </li>
           <li>
             <div className='mint-img-holder'>
-              <img src={require('../../assets/images/image11.png')} alt='' />
+              <img src={require('../../assets/images/man5.jpeg')} alt='' />
             </div>
           </li>
           <li>
             <div className='mint-img-holder'>
-              <img src={require('../../assets/images/image18.png')} alt='' />
+              <img src={require('../../assets/images/man6.jpeg')} alt='' />
+            </div>
+          </li>
+          <li>
+            <div className='mint-img-holder'>
+              <img src={require('../../assets/images/man7.jpeg')} alt='' />
+            </div>
+          </li>
+          <li>
+            <div className='mint-img-holder'>
+              <img src={require('../../assets/images/man8.jpeg')} alt='' />
             </div>
           </li>
         </ul>

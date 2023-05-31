@@ -5,7 +5,7 @@ body{
     overflow-x: hidden;
     color: $primary-color;     
    position: static;
-    @include breakpoint(sm){
+    @include breakpoint(md){
         position:fixed;
         top:0px;
         bottom:0px;
@@ -233,6 +233,9 @@ header {
                     padding: 30px 0px;
                     padding-left: 0px;
                     width: 100%;
+                    @include breakpoint(sm){
+                        width: 50%;
+                    }
                    @include breakpoint(md){
                     width: 35%;
                    }
@@ -314,7 +317,10 @@ header {
     }
   }
   .bottom-line-grp{
-    width: 65%;
+    width: 50%;
+    @include breakpoint(md){
+        width: 65%;
+    }
     span{
         width: 100%;
         display: block;
@@ -392,7 +398,7 @@ header {
         padding:10px 0px;
         padding-left: 20px;
         .footer-content-wrap{
-            padding: 15px 0px;
+            padding: 10px 0px;
             display: inline-block;
             @include breakpoint(sm){
                 padding: 0;
@@ -428,6 +434,14 @@ header {
                 ul{
                     float: right;
                     margin-bottom: 0;
+                    li{
+                        a{
+                            font-size: 10px;
+                            @include breakpoint(sm){
+                                font-size: 12px;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -451,6 +465,7 @@ header {
   .mint-modal{
    background-color: #090909;
    border-radius: 10px;
+   position: relative;
    box-shadow: 0 0 0 0 #CFB56A, 0 5px 0 0 #CFB56A, -5px 0 0 0 #CFB56A;
   }
 
@@ -470,6 +485,10 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
 }
 
 .mint-modal-header-icon:hover{
@@ -572,7 +591,9 @@ header {
         }
     }
 }
-
+.modal-dialog{
+    margin-bottom: 0;
+}
 .mint-modal-body {
     height: 100%;
     text-align: center;
@@ -788,9 +809,12 @@ header {
                     border-radius: 10px;
                     background-color: #1E1E1E;;
                     .mint-modal{
-                        width: 30%;
                         margin: 20px auto;
                         padding:30px;
+                        width: 95%;
+                        @include breakpoint(sm){
+                            width: 30%;
+                        }
                         .mint-modal-body-card{
                             margin: 0 auto;
                             margin-bottom:20px;
@@ -801,22 +825,35 @@ header {
                             max-width: 900px;
                             width: 100%;
                             overflow-x: hidden;
-                            width: 900px;
+                            width: 95%;
                             margin-top: 130px;
+                            @include breakpoint(sm){
+                                width: 900px;
+                            }
                             .story-content-p {
-                                font-size: 14px;
                                 line-height: 25px;
+                                font-size: 10px;
+                                @include breakpoint(sm){
+                                    font-size: 12px;
+                                }
                                 .story-modal-title {
                                     font-size: 18px;
                                 }
                             }
                         }
                         &.faq-modal{
-                            width: 50%;
+                            width: 100%;
+                            @include breakpoint(md){
+                                width: 50%;
+                            }
                             .faq-card{
                                 ol{
                                     li{
                                         padding: 10px 0px;
+                                        font-size: 10px;
+                                        @include breakpoint(sm){
+                                            font-size: 12px;
+                                        }
                                         p{
                                             margin: 10px 0px;
                                         }
@@ -825,7 +862,10 @@ header {
                             }
                         }
                         &.connect-wallet-container{
-                            width: 30%;
+                            width: 95%;
+                            @include breakpoint(sm){
+                                width: 30%;
+                            }
                         }
                     }
                    
@@ -849,8 +889,11 @@ header {
 
 .story-content {
     position: relative;
-    display: flex;
+    display: block;
     align-items: end;
+    @include breakpoint(md){
+        display: flex;
+    }
 }
 
 .story-content-img {
