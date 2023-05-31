@@ -452,10 +452,14 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow: hidden    ;
     .mint-char-list{
         overflow: hidden;
+        opacity: 0;
+        position: absolute;
         &.animate-list{
+            opacity: 1;
+            position:static;
             animation: randomize 0.9s linear infinite ;
             li{
                 padding: 20px;
