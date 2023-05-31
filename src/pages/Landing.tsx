@@ -6,6 +6,7 @@ import { DisconnectWallet } from '../components/modal/DisconnectWallet';
 import { WalletNames } from '../enums';
 import { Context as AuthContext } from '../context/authContext';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
+
 export const Landing = () => {
   const [connectWalletModal, setConnectWalletModal] = useState(false);
 

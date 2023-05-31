@@ -7,56 +7,35 @@ import { Context as AuthContext } from '../../context';
 export const CollectionMain = () => {
   const [isWalletConnected, setWalletConnected] = useState(false);
   const { state } = useContext<any>(AuthContext);
+  const [mintImages, setMintImages] = useState<any[]>([]);
+  const [fetchingMintImages, setFetchingMintImages] = useState(true);
 
   useEffect(() => {
-    startFetchMyQuery(state);
-  }, []);
+    startFetchMyQuery(state, (data) => {
+      if (data) {
+        console.log('mint Images', data);
+        setFetchingMintImages(false);
+        setMintImages(data);
+      } else {
+        setFetchingMintImages(false);
+      }
+    });
+  }, [state.walletAccountInfo]);
 
   const ConnectedView = () => {
     return (
       <>
-        <div className='col-md-4 py-3'>
-          <div className='collection-card'>
-            <div className='card-img'>
-              <img src={require('../../assets/images/image11.png')} alt='' />
+        {mintImages.map((mintImage: any) => {
+          return (
+            <div className='col-md-4 py-3'>
+              <div className='collection-card'>
+                <div className='card-img'>
+                  <img src={mintImage.image} alt='' />
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div className='col-md-4 py-3'>
-          <div className='collection-card'>
-            <div className='card-img'>
-              <img src={require('../../assets/images/image18.png')} alt='' />
-            </div>
-          </div>
-        </div>
-        <div className='col-md-4 py-3'>
-          <div className='collection-card'>
-            <div className='card-img'>
-              <img src={require('../../assets/images/image12.png')} alt='' />
-            </div>
-          </div>
-        </div>
-        <div className='col-md-4 py-3'>
-          <div className='collection-card'>
-            <div className='card-img'>
-              <img src={require('../../assets/images/image18.png')} alt='' />
-            </div>
-          </div>
-        </div>
-        <div className='col-md-4 py-3'>
-          <div className='collection-card'>
-            <div className='card-img'>
-              <img src={require('../../assets/images/image11.png')} alt='' />
-            </div>
-          </div>
-        </div>
-        <div className='col-md-4 py-3'>
-          <div className='collection-card'>
-            <div className='card-img'>
-              <img src={require('../../assets/images/image12.png')} alt='' />
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </>
     );
   };
@@ -207,7 +186,11 @@ export const CollectionMain = () => {
                 <Link to={'/collections'}>My Collection</Link>
               </h6>
             </div>
-            <div className='collection-frame'>
+            <div
+              className={`collection-frame ${
+                mintImages.length <= 6 ? 'hide-scrollbar' : 'show-scrollbar'
+              }`}
+            >
               <div className='row h-100 '>
                 {state.isWalletConnected ? (
                   <ConnectedView />
