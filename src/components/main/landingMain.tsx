@@ -119,7 +119,7 @@ export const LandingMain = () => {
                           <li>
                             <div className='icon-holder'>
                               <img
-                                src={require('../../assets/images/coin.png')}
+                                src={require('../../assets/images/WarcadiaCoinAnimation.gif')}
                                 alt=''
                               />
                             </div>
@@ -127,7 +127,7 @@ export const LandingMain = () => {
                           <li>
                             <div className='icon-holder'>
                               <img
-                                src={require('../../assets/images/coin.png')}
+                                src={require('../../assets/images/WarcadiaCoinAnimation.gif')}
                                 alt=''
                               />
                             </div>
@@ -135,7 +135,7 @@ export const LandingMain = () => {
                           <li>
                             <div className='icon-holder'>
                               <img
-                                src={require('../../assets/images/coin.png')}
+                                src={require('../../assets/images/WarcadiaCoinAnimation.gif')}
                                 alt=''
                               />
                             </div>
@@ -164,7 +164,7 @@ export const LandingMain = () => {
                     <div className='img-btn-wrap'>
                       <div className='image-holder fire-back'>
                         <img
-                          src={require('../../assets/images/image22.png')}
+                          src={require('../../assets/images/DarkLordAnimation.gif')}
                           alt=''
                         />
                       </div>
@@ -218,14 +218,20 @@ export const LandingMain = () => {
               </div>
             </div>
             <div className='brick-flame-wrap'>
-              <div className='img-flame-wrap'>
-                <div className='sword-wrap'>
-                  <img src={require('../../assets/images/image3.png')} alt='' />
+            <div className='img-flame-wrap'>
+                  <div className='sword-wrap'>
+                    <img
+                      src={require('../../assets/images/Burning-Sword.gif')}
+                      alt=''
+                    />
+                  </div>
+                  <div className='flame-wrap'>
+                    <img
+                      src={require('../../assets/images/Torch.gif')}
+                      alt=''
+                    />
+                  </div>
                 </div>
-                <div className='flame-wrap'>
-                  <img src={require('../../assets/images/flame1.gif')} alt='' />
-                </div>
-              </div>
               <div className='brick-left'>
                 <div className='brick-icon-wrap'>
                   <div className='brick-icon'>
