@@ -129,13 +129,13 @@ export const CollectionMain = () => {
                 <div className='img-flame-wrap'>
                   <div className='sword-wrap'>
                     <img
-                      src={require('../../assets/images/image3.png')}
+                      src={require('../../assets/images/Burning-Sword.gif')}
                       alt=''
                     />
                   </div>
                   <div className='flame-wrap'>
                     <img
-                      src={require('../../assets/images/flame1.gif')}
+                      src={require('../../assets/images/Torch.gif')}
                       alt=''
                     />
                   </div>
@@ -168,17 +168,17 @@ export const CollectionMain = () => {
               <ul className='list-unstyled d-flex icon-grp'>
                 <li>
                   <div className='icon-holder'>
-                    <img src={require('../../assets/images/coin.png')} alt='' />
+                    <img src={require('../../assets/images/WarcadiaCoinAnimation.gif')} alt='' />
                   </div>
                 </li>
                 <li>
                   <div className='icon-holder'>
-                    <img src={require('../../assets/images/coin.png')} alt='' />
+                    <img src={require('../../assets/images/WarcadiaCoinAnimation.gif')} alt='' />
                   </div>
                 </li>
                 <li>
                   <div className='icon-holder'>
-                    <img src={require('../../assets/images/coin.png')} alt='' />
+                    <img src={require('../../assets/images/WarcadiaCoinAnimation.gif')} alt='' />
                   </div>
                 </li>
               </ul>

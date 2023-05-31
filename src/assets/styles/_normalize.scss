@@ -40,7 +40,7 @@ img{
         li{
             padding: 0px 5px;
             .icon-holder{
-                animation: rotation 4s ease-in infinite;
+                width: 30px;
             }
         }
     }
@@ -107,14 +107,14 @@ display: none;
         .img-flame-wrap{
             .flame-wrap{
               
-                width: 80px;
+                width: 50px;
                 margin: 0 auto;
-                margin-top: -40px;
+                margin-top: -20px;
                 height: 80px;
                 position: relative;
                 &::before{
                     content: "";
-                    left: -3%;
+                    left: -28%;
                     top: -18%;
                     background-color: #d8d8d8;
                     position: absolute;
@@ -127,7 +127,7 @@ display: none;
                 }
                 &::after{
                     content: "";
-                    left: 15%;
+                    left: 2%;
                     top: 1%;
                     background-color: #fff;
                     position: absolute;
@@ -139,7 +139,7 @@ display: none;
                 }
             }
             .sword-wrap{
-                width: 125px;
+                width: 115px;
                 height: auto;
             }
         }
