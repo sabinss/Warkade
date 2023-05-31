@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 // import HeaderLogo from '../../assets/svg/Logo.svg';
 import HeaderLogo from '../../assets/images/HeaderLogo.png';
 import { Button } from '../UI/Button';
@@ -12,10 +12,19 @@ interface IHeader {
 
 export const Header = ({ handleConnectWallet }: IHeader) => {
   const [openDisconnetWallet, setDisconnectWallet] = useState(false);
+  const [connecting, setConnecting] = useState(false);
   const {
     state: { isWalletConnected, walletAccountInfo },
     disconnectAptosWallet,
   } = useContext<any>(AuthContext);
+
+  const handleConnecting = () => {
+    setConnecting(true);
+  };
+
+  useEffect(() => {
+    setConnecting(false);
+  }, [walletAccountInfo, isWalletConnected]);
 
   return (
     <header>
@@ -47,11 +56,14 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
               ) : (
                 <Button
                   onClick={() => {
+                    handleConnecting();
                     handleConnectWallet();
                   }}
                   name='connect wallets'
                   className={[
-                    'wr-primary-theme-btn wr-primary-theme-btn_header  px-3',
+                    `wr-primary-theme-btn wr-primary-theme-btn_header  px-3 ${
+                      connecting && 'button-animation '
+                    }`,
                   ]}
                 />
               )}

@@ -79,7 +79,6 @@ const startMinting =
       callback(mintImage?.urls?.image);
       dispatch({ type: 'minting_success', payload: mintImage?.urls?.image });
     } catch (err) {
-      console.log({ err });
       dispatch({ type: 'minting_failure', payload: err });
     }
   };
@@ -91,7 +90,6 @@ const connetAptosWallet = (dispatch: any) => async (data: any) => {
 
 const setConnectedWalletName =
   (dispatch: any) => async (walletName: string) => {
-    console.log('walletName', walletName);
     setLocalStorageItem('walletName', walletName);
     dispatch({ type: 'connected_wallet_name', payload: walletName });
   };
@@ -101,7 +99,6 @@ const updateWalletState = (dispatch: any) => async (data: any) => {
 };
 
 const disconnectAptosWallet = (dispatch: any) => async (data: any) => {
-  console.log('connetAptosWallet', data);
   dispatch({ type: 'wallet_disconnected' });
 };
 

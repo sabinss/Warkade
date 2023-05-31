@@ -48,9 +48,7 @@ export const ConnectWallet = ({ handleClose, showModal }: IConnectWallet) => {
   const handleSelectWallet = (walletName: string) => {
     try {
       handleConnectWallet(walletName);
-    } catch (e) {
-      console.log('handle conet error', e);
-    }
+    } catch (e) {}
     // setSelectedWallet(walletName);
   };
   const handleConnectWallet = async (walletName: string) => {

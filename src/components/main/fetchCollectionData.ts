@@ -118,11 +118,9 @@ export async function startFetchMyQuery(
   let mintImages = [];
   if (errors) {
     // handle those errors like a pro
-    console.error(errors);
     callback(null);
   } else if (data) {
     // do something great with this precious data
-    console.log(data);
     mintImages = data.current_token_ownerships_v2.map(async (mint: any) => {
       const {
         current_token_data: { token_uri },

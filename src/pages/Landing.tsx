@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Header, Footer } from '../components';
-import { LandingMain } from '../components/main/LandingMain';
+import { LandingMain } from '../components/main/landingMain';
 import { ConnectWallet } from '../components/modal/ConnectWallet';
 import { DisconnectWallet } from '../components/modal/DisconnectWallet';
 import { WalletNames } from '../enums';
@@ -35,7 +35,6 @@ export const Landing = () => {
     updateWalletAccount();
   }, [account]);
 
-  console.log('account222', account);
   return (
     <div id='landing'>
       <Header

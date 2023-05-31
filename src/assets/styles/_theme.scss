@@ -44,13 +44,17 @@ header {
     .head-right{
         button{
             margin: 0 auto;
-            animation: border-animate 3s linear infinite;
             @include breakpoint(sm){
                 margin-left: auto;
                 margin-right: 0;
             }
         }
     }
+  }
+
+  .button-animation {
+    animation: border-animate 3s linear infinite;
+
   }
 
   .text-color {

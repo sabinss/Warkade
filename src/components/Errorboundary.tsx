@@ -5,8 +5,6 @@ const ErrorBoundary = ({ children }: { children: any }) => {
 
   useEffect(() => {
     const errorHandler = (error: any) => {
-      console.log('Error:', error);
-      // You can perform additional error handling here, such as logging the error or displaying a generic error message
       setHasError(true);
     };
 

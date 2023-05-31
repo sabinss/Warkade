@@ -24,7 +24,6 @@ export const DisconnectWallet = ({
   } = useContext<any>(AuthContext);
 
   const walletName = getLocalStorageItem('walletName');
-  console.log('connectedWalletName', walletName);
 
   const showWalletImage = () => {
     if (walletName.toLowerCase() === 'petra') {

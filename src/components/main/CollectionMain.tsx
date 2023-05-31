@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import { DisconnectWallet } from '../modal/DisconnectWallet';
 import { startFetchMyQuery } from './fetchCollectionData';
 import { Context as AuthContext } from '../../context';
+import { ConnectWallet } from '../modal/ConnectWallet';
 
 export const CollectionMain = () => {
   const [isWalletConnected, setWalletConnected] = useState(false);
   const { state } = useContext<any>(AuthContext);
   const [mintImages, setMintImages] = useState<any[]>([]);
   const [fetchingMintImages, setFetchingMintImages] = useState(true);
+  const [connectWalletModal, setConnectWalletModal] = useState(false);
 
   useEffect(() => {
     startFetchMyQuery(state, (data) => {
@@ -28,8 +30,14 @@ export const CollectionMain = () => {
         {mintImages.map((mintImage: any) => {
           return (
             <div className='col-md-4 py-3'>
-              <div className='collection-card'>
-                <div className='card-img'>
+              <div
+                className='collection-card'
+                style={{ borderRadius: 10, height: 200 }}
+              >
+                <div
+                  className='card-img'
+                  style={{ width: '90%', height: '90%' }}
+                >
                   <img src={mintImage.image} alt='' />
                 </div>
               </div>
@@ -46,7 +54,12 @@ export const CollectionMain = () => {
         <div className='disconneted-frame d-flex align-items-center justify-content-center'>
           <p>Please Connect Your Wallet to View Your Collection</p>
           <div className='btn-wrap w-100 py-3'>
-            <button className='wr-primary-theme-btn mx-auto d-block'>
+            <button
+              className='wr-primary-theme-btn mx-auto d-block'
+              onClick={() => {
+                setConnectWalletModal(true);
+              }}
+            >
               Connect wallet
             </button>
           </div>
@@ -200,6 +213,12 @@ export const CollectionMain = () => {
               </div>
             </div>
           </div>
+          <ConnectWallet
+            showModal={connectWalletModal}
+            handleClose={() => {
+              setConnectWalletModal(false);
+            }}
+          />
         </div>
       </div>
     </div>
