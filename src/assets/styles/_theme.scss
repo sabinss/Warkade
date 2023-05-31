@@ -4,24 +4,34 @@ body{
     max-height: 100vh;
     overflow-x: hidden;
     color: $primary-color;     
-    position:fixed;
-    top:0px;
-    bottom:0px;
-    left:0px;
-    right:0px;
-
+   position: static;
+    @include breakpoint(sm){
+        position:fixed;
+        top:0px;
+        bottom:0px;
+        left:0px;
+        right:0px;
+    }
     main{
-        height: 82vh;
+        height: auto;
         align-items: center;
         display: block;
         justify-content: flex-end;
         @include breakpoint(md){
             display: flex;
+            height: 82vh;
         }
     }
 }
 a{
     text-decoration: none;
+}
+#landing{
+    position: relative;
+    height: auto;
+    @include breakpoint(md){
+        height: 100vh;
+    }
 }
 header {
     display: inline-flex;
@@ -30,6 +40,16 @@ header {
     width: 100%;
     .header-logo{
         display: inline-block;
+    }
+    .head-right{
+        button{
+            margin: 0 auto;
+            animation: border-animate 3s linear infinite;
+            @include breakpoint(sm){
+                margin-left: auto;
+                margin-right: 0;
+            }
+        }
     }
   }
 
@@ -45,6 +65,47 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    // .card__line{
+    //     position: absolute;
+    //     display: none;
+    //     animation: 2s 1s linear infinite;
+    //     &.card__line_left{
+    //         left: 0;
+    //         bottom: -100%;
+    //         width: 0.2em;
+    //         height: 100%;
+    //         background-color: white;
+    //         animation-name: to-top;
+    //     }
+    //     &.card__line_right{
+    //         animation-name: to-bottom;
+    //         background-color: white;
+    //         right: 0;
+    //         top: -100%;
+    //         width: 0.2em;
+    //         height: 100%;
+    //     }
+    //     &.card__line_top{
+    //         width: 100%;
+    //         height: 0.2em;
+    //         top: 0;
+    //         left: -100%;
+    //         animation-delay: 1.5s;
+    //         animation-name: to-right;
+    //         background-color: white;
+    //     }
+    //     &.card__line_bottom{
+    //         bottom: 0;
+    //         right: -100%;
+    //         width: 100%;
+    //         height: 0.2em;
+    //         background-color: white;
+    //             animation-delay: 1.5s;
+    // animation-name: to-left;
+
+    //     }
+    // }
   }
   
   .index-home-section{
@@ -65,7 +126,7 @@ header {
                 h1{
                     color: $primary-color;
                     text-transform: capitalize;
-                    font-size: 25px;
+                    font-size: 20px;
                     padding:10px 0px;
                     @include breakpoint(sm){
                         font-size: 40px;
@@ -136,8 +197,11 @@ header {
             margin: 0 auto;
            
             .bottom-content{
-                width: 90%;
+                width: 100%;
                 padding-left: 0px;
+                @include breakpoint(sm){
+                    width: 90%;
+                }
                 .bottom-title{
                     background-color: #424242;
                     padding: 10px 0px;
@@ -168,16 +232,21 @@ header {
                 .bottom-left{
                     padding: 30px 0px;
                     padding-left: 0px;
+                    width: 100%;
+                   @include breakpoint(md){
                     width: 35%;
-                   
+                   }
                 }
               
             }
           
             .bottom-right{
-                display: flex;
+                display: block;
                 height: 100%;
                 align-items: end;
+                @include breakpoint(sm){
+                    display: flex;
+                }
                .img-btn-wrap{
                 width: 75%;
                 height: 100%;
@@ -185,10 +254,18 @@ header {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
+                margin: 0 auto;
+                @include breakpoint(sm){
+                    
+                }
                }
                .img-flamesword{
                 width: 125px;
                 height: 125px;
+                display: none;
+                @include breakpoint(sm){
+                    display: block;
+                }
                }
                 .image-holder{
                     height: 60%;
@@ -309,13 +386,22 @@ header {
     position: static;
     bottom: 0;
     width: 100%;
+    margin-top: 20px;
     @include breakpoint(sm){
-        // position: absolute;
+        position: absolute;
+        bottom: 0;
+        margin-top: 0;
     }
     .footer-content{
         padding:10px 0px;
         padding-left: 20px;
         .footer-content-wrap{
+            padding: 15px 0px;
+            display: inline-block;
+            @include breakpoint(sm){
+                padding: 0;
+                
+            }
             a,p{
                 color: $primary-color;
                 font-size: 12px;
@@ -327,14 +413,22 @@ header {
                         color: $primary-color;
                         font-size: 12px;
                         display: block;
-                        padding: 0px 25px;
+                        padding: 0px 0px;
+                        padding-right: 20px;
                         margin-bottom: 0;
                         cursor: pointer;
+                        @include breakpoint(sm){
+                            padding: 0px 25px;
+                        }
                     }
                 }
             }
             &.footer-right{
-                margin-left: 20px;
+                margin-left: 0px;
+                @include breakpoint(sm){
+                    margin-left: 20px;
+                    display: inline-block;
+                }
                 ul{
                     float: right;
                     margin-bottom: 0;
@@ -551,6 +645,7 @@ header {
     padding:10px;
     cursor: pointer;
     transition: all 0.4s linear;
+    margin-bottom: 20px;
     // &-active{
     //     background-color: #333333;
     // }
@@ -689,13 +784,16 @@ header {
                 height: 100%;
                 margin-top: 0;
                 padding-top: 20px;
-                background-color: #1E1E1E;
+                background-color: transparent;
+                position: relative;
+                display: flex;
+                align-items: center;
                 .modal-content{
                     border-radius: 10px;
                     background-color: #1E1E1E;;
                     .mint-modal{
                         width: 30%;
-                        margin: 0 auto;
+                        margin: 20px auto;
                         padding:30px;
                         .mint-modal-body-card{
                             margin: 0 auto;
@@ -708,6 +806,7 @@ header {
                             width: 100%;
                             overflow-x: hidden;
                             width: 900px;
+                            margin-top: 130px;
                             .story-content-p {
                                 font-size: 14px;
                                 line-height: 25px;
@@ -734,6 +833,17 @@ header {
                         }
                     }
                    
+                }
+                &::after{
+                    content: "";
+                    position: absolute;
+                    width: 100%;
+                    top: 0;
+                    left: 0;
+                    height: 100%;
+                    opacity: 0.5;
+                    background-color: #1E1E1E;
+                    z-index: -1;
                 }
             }
         }

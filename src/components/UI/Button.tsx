@@ -25,6 +25,10 @@ export const Button = ({
       style={styles}
     >
       <span style={textStyle}> {name}</span>
+      {/* <span className='card__line card__line_left'></span>
+      <span className='card__line card__line_top'></span>
+      <span className='card__line card__line_right'></span>
+      <span className='card__line card__line_bottom'></span> */}
     </button>
   );
 };

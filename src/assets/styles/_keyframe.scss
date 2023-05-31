@@ -17,7 +17,6 @@
             opacity: 1;
         }
 }
-
 @keyframes randomize {
     0%{
         transform: translateY(200px);
@@ -30,3 +29,47 @@
         transform: translateY(-300px);
     }
 }
+@keyframes border-animate {
+    0%{
+        border: 4px solid #E7D08C;
+        border-left: 7px solid #fffefa;
+    }
+    25%{
+        border: 4px solid #E7D08C;
+        border-top: 7px solid #fffefa;
+       
+    }
+    50%{
+        border: 4px solid #E7D08C;
+        border-right: 7px solid #fffefa;
+    }
+    75%{
+        border: 4px solid #E7D08C;
+        border-bottom: 7px solid #fffefa;
+       
+    }
+    100%{
+        border: 4px solid #E7D08C;
+        border-left: 7px solid #fffefa;
+    }
+}
+// @keyframes to-top {
+//     to {
+//       bottom: 200%; } 
+//     }
+  
+//   @keyframes to-bottom {
+//     to {
+//       top: 200%; } 
+//     }
+  
+//   @keyframes to-left {
+//     to {
+//       right: 200%; } 
+//     }
+  
+//   @keyframes to-right {
+//     to {
+//       left: 200%; } 
+//     }
+  

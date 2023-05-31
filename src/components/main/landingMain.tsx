@@ -112,7 +112,7 @@ export const LandingMain = () => {
                       </div>
                     </div>
                   </div>
-                  <div className='below-bottom-content d-flex align-align-items-start'>
+                  <div className='below-bottom-content d-lg-flex align-align-items-start'>
                     <div className='bottom-left  d-inline-block'>
                       <div className='icon-grp-text'>
                         <ul className='list-unstyled d-flex icon-grp'>
@@ -173,6 +173,8 @@ export const LandingMain = () => {
                           name='Mint'
                           className={['wr-primary-theme-btn']}
                           onClick={() => {
+                            setMintModal(true);
+                            return ;
                             if (walletAccountInfo) {
                               setMintModal(true);
                             } else {

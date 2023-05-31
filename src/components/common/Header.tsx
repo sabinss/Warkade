@@ -22,14 +22,14 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
       <div className='container-fluid'>
         <div className='row '>
           <div className='col-lg-4 col-12'>
-            <div className='header_logo px-5 w-75 mb-2'>
+            <div className='header_logo px-5 w-lg-75 mb-2'>
               <Link to={'/'}>
                 <img src={HeaderLogo} alt='HeaderLogo' />
               </Link>
             </div>
           </div>
-          <div className='col-lg-8 col-12s'>
-            <div className='head-right float-end px-5'>
+          <div className='col-lg-8 col-12'>
+            <div className='head-right float--lg-end float-sm-none px-5'>
               {isWalletConnected && walletAccountInfo ? (
                 <Button
                   onClick={() => {
