@@ -54,6 +54,9 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                   ]}
                 />
               ) : (
+                // ${
+                //   connecting && 'button-animation '
+                // }
                 <Button
                   onClick={() => {
                     handleConnecting();
@@ -61,9 +64,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                   }}
                   name='connect wallets'
                   className={[
-                    `wr-primary-theme-btn wr-primary-theme-btn_header  px-3 ${
-                      connecting && 'button-animation '
-                    }`,
+                    `wr-primary-theme-btn wr-primary-theme-btn_header  px-3`,
                   ]}
                 />
               )}
