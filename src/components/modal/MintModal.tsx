@@ -49,15 +49,18 @@ export const MintModal = ({
         <div>
           {/* <Button name='congratulations' onClick={() => {}} /> */}
           {mintImageUri && (
-            <div>
+            <div className="sucess-text">
               <p className='text-color'>Congratulation</p>
             </div>
           )}
+          <div className="gif-holder">
+            <img src={require('../../assets/images/flamesword.gif')} alt="" />
+          </div>
           <Button
             name={mintImageUri ? 'Mint Again' : 'Mint'}
             className={[
               'wr-primary-theme-btn',
-              'mint-modal-btn',
+              'mint-modal-btn mx-auto',
               ...(mintImageUri ? ['success-mint'] : []),
             ]}
             onClick={async () => {
@@ -89,13 +92,13 @@ export const MintModal = ({
             }}
           />
           {mintImageUri && (
-            <h1
+            <h2
               className='text-color close-btn'
-              style={{ fontSize: 26 }}
+              style={{ fontSize: 20 }}
               onClick={handleClose}
             >
               Close
-            </h1>
+            </h2>
           )}
         </div>
       );
@@ -196,8 +199,14 @@ export const MintModal = ({
           </div>
         </div>
         <div className='mint-modal-body my-3'>
-          <div className='mint-modal-body-card-wrapper'>
-            <div className='mint-modal-body-card'>{showCardImage()}</div>
+          <div className='mint-modal-body-card-wrapper d-flex'>
+              <div className="flame-holder">
+                <img src={require('../../assets/images/Torch.gif')} alt="" />
+              </div>
+            <div className='mint-modal-body-card hero-card'>{showCardImage()}</div>
+            <div className="flame-holder">
+                <img src={require('../../assets/images/Torch.gif')} alt="" />
+              </div>
           </div>
           <div className='d-inline-block my-3'>{showMintingView()}</div>
         </div>
