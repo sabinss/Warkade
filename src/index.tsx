@@ -19,9 +19,11 @@ import {
 } from '@aptos-labs/wallet-adapter-core';
 
 import { AptosWalletAdapterProvider } from '@aptos-labs/wallet-adapter-react';
-import ErrorBoundary from './components/Errorboundary';
+// import ErrorBoundary from './components/Errorboundary';
+import { ErrorBoundary } from 'react-error-boundary';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 let network = NetworkName.Testnet;
 // let network = NetworkName.Mainnet;
 const root = ReactDOM.createRoot(
@@ -39,9 +41,20 @@ const wallets = [
 
 export const aptosWallet = new WalletCore(wallets);
 
+function ErrorFallback({ error, resetErrorBoundary }: any) {
+  console.log('error', error, resetErrorBoundary);
+  return (
+    <div>
+      <h2>Something went wrong:</h2>
+      <pre>{error.message}</pre>
+      <button onClick={resetErrorBoundary}>Try Again</button>
+    </div>
+  );
+}
+
 root.render(
   <React.StrictMode>
-    <ErrorBoundary>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
       <AptosWalletAdapterProvider plugins={wallets} autoConnect={true}>
         <WarKade />
         <ToastContainer />

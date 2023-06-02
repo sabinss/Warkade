@@ -4,6 +4,7 @@ import { DisconnectWallet } from '../modal/DisconnectWallet';
 import { startFetchMyQuery } from './fetchCollectionData';
 import { Context as AuthContext } from '../../context';
 import { ConnectWallet } from '../modal/ConnectWallet';
+import ErrorBoundary from '../Errorboundary';
 
 export const CollectionMain = () => {
   const [isWalletConnected, setWalletConnected] = useState(false);
@@ -181,17 +182,26 @@ export const CollectionMain = () => {
               <ul className='list-unstyled d-flex icon-grp'>
                 <li>
                   <div className='icon-holder'>
-                    <img src={require('../../assets/images/WarcadiaCoinAnimation.gif')} alt='' />
+                    <img
+                      src={require('../../assets/images/WarcadiaCoinAnimation.gif')}
+                      alt=''
+                    />
                   </div>
                 </li>
                 <li>
                   <div className='icon-holder'>
-                    <img src={require('../../assets/images/WarcadiaCoinAnimation.gif')} alt='' />
+                    <img
+                      src={require('../../assets/images/WarcadiaCoinAnimation.gif')}
+                      alt=''
+                    />
                   </div>
                 </li>
                 <li>
                   <div className='icon-holder'>
-                    <img src={require('../../assets/images/WarcadiaCoinAnimation.gif')} alt='' />
+                    <img
+                      src={require('../../assets/images/WarcadiaCoinAnimation.gif')}
+                      alt=''
+                    />
                   </div>
                 </li>
               </ul>
@@ -206,7 +216,9 @@ export const CollectionMain = () => {
             >
               <div className='row h-100 '>
                 {state.isWalletConnected ? (
-                  <ConnectedView />
+                  <ErrorBoundary>
+                    <ConnectedView />
+                  </ErrorBoundary>
                 ) : (
                   <DisconnectedView />
                 )}

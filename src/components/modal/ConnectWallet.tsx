@@ -1,6 +1,6 @@
 import { CustomModal } from './CustomModal';
 import { AiOutlineClose } from 'react-icons/ai';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
 import {
   WalletCore,
@@ -31,6 +31,7 @@ export const ConnectWallet = ({ handleClose, showModal }: IConnectWallet) => {
   const { state, connetAptosWallet, setConnectedWalletName } =
     useContext<any>(AuthContext);
   const [selectedWallet, setSelectedWallet] = useState('');
+
   // for blocto wallet
   // const client = new AptosClient('https://fullnode.mainnet.aptoslabs.com/v1');
 
@@ -64,7 +65,7 @@ export const ConnectWallet = ({ handleClose, showModal }: IConnectWallet) => {
         openSelectedWallet = BloctoWalletName;
       }
 
-      await connect(openSelectedWallet);
+      connect(openSelectedWallet);
       // const wallet = new WalletCore(wallets);
       connetAptosWallet(account);
       handleClose();

@@ -23,6 +23,11 @@ body{
         }
     }
 }
+
+body > iframe {
+    display: none;
+  }
+  
 a{
     text-decoration: none;
 }
