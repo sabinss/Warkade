@@ -11,6 +11,7 @@ const initialState: AuthStateType = {
   isMinting: false,
   mintImageUrl: null,
   mintError: null,
+  walletConnetLoading: true,
 };
 const authReducer: React.Reducer<AuthStateType, any> = (
   state = initialState,
@@ -22,6 +23,7 @@ const authReducer: React.Reducer<AuthStateType, any> = (
         ...state,
         walletAccountInfo: action.payload,
         isWalletConnected: true,
+        walletConnetLoading: false,
       };
     }
     case 'wallet_disconnected':
@@ -41,6 +43,9 @@ const authReducer: React.Reducer<AuthStateType, any> = (
     case 'minting_success': {
       return { ...state, isMinting: false, mintImageUrl: action.payload };
     }
+    case 'loading': {
+      return { ...state, walletConnetLoading: action.payload };
+    }
     case 'minting_failure': {
       return {
         ...state,
@@ -52,6 +57,10 @@ const authReducer: React.Reducer<AuthStateType, any> = (
     default:
       return state;
   }
+};
+
+const setLoading = (dispatch: any) => async (isLoading: boolean) => {
+  dispatch({ type: 'loading', payload: isLoading });
 };
 
 const startMinting =
@@ -84,6 +93,7 @@ const startMinting =
   };
 
 const connetAptosWallet = (dispatch: any) => async (data: any) => {
+  console.log('connetAptosWallet');
   setLocalStorageItem('walletInfo', data);
   dispatch({ type: 'wallet_conected', payload: data });
 };
@@ -110,6 +120,7 @@ export const { Context, Provider } = createDataContext(
     updateWalletState,
     setConnectedWalletName,
     startMinting,
+    setLoading,
   },
   initialState
 );

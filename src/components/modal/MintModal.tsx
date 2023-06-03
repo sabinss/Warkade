@@ -49,12 +49,12 @@ export const MintModal = ({
         <div>
           {/* <Button name='congratulations' onClick={() => {}} /> */}
           {mintImageUri && (
-            <div className="sucess-text">
+            <div className='sucess-text'>
               <p className='text-color'>Congratulation</p>
             </div>
           )}
-          <div className="gif-holder">
-            <img src={require('../../assets/images/flamesword.gif')} alt="" />
+          <div className='gif-holder'>
+            <img src={require('../../assets/images/flamesword.gif')} alt='' />
           </div>
           <Button
             name={mintImageUri ? 'Mint Again' : 'Mint'}
@@ -76,16 +76,20 @@ export const MintModal = ({
                 });
                 setMinting(false);
               } catch (e: any) {
-                toast.error(e ?? 'Something went wrong', {
-                  position: 'top-center',
-                  autoClose: 5000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: 'dark',
-                });
+                toast.error(
+                  'We couldnot approve the transaction.' ??
+                    'Something went wrong',
+                  {
+                    position: 'top-center',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'dark',
+                  }
+                );
                 handleClose();
                 setMinting(false);
               }
@@ -170,7 +174,7 @@ export const MintModal = ({
         <img
           src={mintImageUri}
           alt=''
-          style={{ width: '71px', height: '70px' }}
+          style={{ width: '100%', height: '100%' }}
         />
       );
     }
@@ -200,13 +204,15 @@ export const MintModal = ({
         </div>
         <div className='mint-modal-body my-3'>
           <div className='mint-modal-body-card-wrapper d-flex'>
-              <div className="flame-holder">
-                <img src={require('../../assets/images/Torch.gif')} alt="" />
-              </div>
-            <div className='mint-modal-body-card hero-card'>{showCardImage()}</div>
-            <div className="flame-holder">
-                <img src={require('../../assets/images/Torch.gif')} alt="" />
-              </div>
+            <div className='flame-holder'>
+              <img src={require('../../assets/images/Torch.gif')} alt='' />
+            </div>
+            <div className='mint-modal-body-card hero-card'>
+              {showCardImage()}
+            </div>
+            <div className='flame-holder'>
+              <img src={require('../../assets/images/Torch.gif')} alt='' />
+            </div>
           </div>
           <div className='d-inline-block my-3'>{showMintingView()}</div>
         </div>

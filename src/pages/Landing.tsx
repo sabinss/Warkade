@@ -1,11 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Header, Footer } from '../components';
-import { LandingMain } from '../components/main/LandingMain';
+import { LandingMain } from '../components/main/landingMain';
 import { ConnectWallet } from '../components/modal/ConnectWallet';
-import { DisconnectWallet } from '../components/modal/DisconnectWallet';
-import { WalletNames } from '../enums';
 import { Context as AuthContext } from '../context/authContext';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
+import { CollectionLoader } from '../components/common/CollectionLoader';
 
 export const Landing = () => {
   const [connectWalletModal, setConnectWalletModal] = useState(false);
@@ -23,8 +22,9 @@ export const Landing = () => {
     signMessage,
   } = useWallet();
   const {
-    state: {},
+    state: { walletAccountInfo },
     connetAptosWallet,
+    setLoading,
   } = useContext<any>(AuthContext);
 
   const updateWalletAccount = () => {
@@ -32,6 +32,7 @@ export const Landing = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     updateWalletAccount();
   }, [account]);
 

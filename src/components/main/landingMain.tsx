@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 
 import { Context as AuthContext } from '../../context/authContext';
 import { ConnectWallet } from '../modal/ConnectWallet';
+import { CollectionLoader } from '../common/CollectionLoader';
 
 export const LandingMain = () => {
   const {
@@ -173,8 +174,6 @@ export const LandingMain = () => {
                           name='Mint'
                           className={['wr-primary-theme-btn']}
                           onClick={() => {
-                            setMintModal(true);
-                            return ;
                             if (walletAccountInfo) {
                               setMintModal(true);
                             } else {
@@ -218,20 +217,17 @@ export const LandingMain = () => {
               </div>
             </div>
             <div className='brick-flame-wrap'>
-            <div className='img-flame-wrap'>
-                  <div className='sword-wrap'>
-                    <img
-                      src={require('../../assets/images/Burning-Sword.gif')}
-                      alt=''
-                    />
-                  </div>
-                  <div className='flame-wrap'>
-                    <img
-                      src={require('../../assets/images/Torch.gif')}
-                      alt=''
-                    />
-                  </div>
+              <div className='img-flame-wrap'>
+                <div className='sword-wrap'>
+                  <img
+                    src={require('../../assets/images/Burning-Sword.gif')}
+                    alt=''
+                  />
                 </div>
+                <div className='flame-wrap'>
+                  <img src={require('../../assets/images/Torch.gif')} alt='' />
+                </div>
+              </div>
               <div className='brick-left'>
                 <div className='brick-icon-wrap'>
                   <div className='brick-icon'>

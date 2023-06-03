@@ -5,6 +5,7 @@ import { startFetchMyQuery } from './fetchCollectionData';
 import { Context as AuthContext } from '../../context';
 import { ConnectWallet } from '../modal/ConnectWallet';
 import ErrorBoundary from '../Errorboundary';
+import { CollectionLoader } from '../common/CollectionLoader';
 
 export const CollectionMain = () => {
   const [isWalletConnected, setWalletConnected] = useState(false);
@@ -12,18 +13,37 @@ export const CollectionMain = () => {
   const [mintImages, setMintImages] = useState<any[]>([]);
   const [fetchingMintImages, setFetchingMintImages] = useState(true);
   const [connectWalletModal, setConnectWalletModal] = useState(false);
+  const [mintingImageLoading, setMintingImageLoading] = useState(false);
 
   useEffect(() => {
+    setMintingImageLoading(true);
+    if (!state.walletAccountInfo) {
+      setMintingImageLoading(false);
+    }
     startFetchMyQuery(state, (data) => {
       if (data) {
-        console.log('mint Images', data);
         setFetchingMintImages(false);
         setMintImages(data);
       } else {
         setFetchingMintImages(false);
       }
+      setMintingImageLoading(false);
     });
   }, [state.walletAccountInfo]);
+
+  const MintingImageLoading = () => {
+    return (
+      <>
+        {Array.from(Array(6)).map((x) => {
+          return (
+            <div className='col-md-4 py-3'>
+              <CollectionLoader />
+            </div>
+          );
+        })}
+      </>
+    );
+  };
 
   const ConnectedView = () => {
     return (
@@ -215,7 +235,9 @@ export const CollectionMain = () => {
               }`}
             >
               <div className='row h-100 '>
-                {state.isWalletConnected ? (
+                {mintingImageLoading ? (
+                  <MintingImageLoading />
+                ) : state.isWalletConnected ? (
                   <ErrorBoundary>
                     <ConnectedView />
                   </ErrorBoundary>
