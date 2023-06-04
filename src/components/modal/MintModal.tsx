@@ -56,7 +56,7 @@ export const MintModal = ({
       );
     } else {
       return (
-        <div>
+        <div className='sucessBox'>
           {/* <Button name='congratulations' onClick={() => {}} /> */}
           {mintImageUri && (
             <div className='sucess-text'>
@@ -226,7 +226,11 @@ export const MintModal = ({
             <div className='flame-holder'>
               <img src={require('../../assets/images/Torch.gif')} alt='' />
             </div>
-            <div className='mint-modal-body-card hero-card'>
+            <div
+              className={`mint-modal-body-card ${
+                mintImageUri ? ' hero-card' : ''
+              }`}
+            >
               {showCardImage()}
             </div>
             <div className='flame-holder'>

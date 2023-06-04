@@ -584,6 +584,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
     overflow: hidden;
     .mint-char-list{
         overflow: hidden;
@@ -592,7 +593,7 @@ header {
         &.animate-list{
             opacity: 1;
             position:static;
-            animation: randomize 0.9s linear infinite ;
+            animation: randomize 0.5s linear infinite ;
             li{
                 padding: 20px;
                 border-bottom: 2px solid #000;
@@ -603,7 +604,7 @@ header {
     &.hero-card{
         border: 4px solid $primary-color;
         border-radius: 10px;
-        position: relative;
+      
         &::before{
             content: '';
             width: 100%;
@@ -968,7 +969,10 @@ header {
         color: #090909;
         margin-bottom: 0;
     }
-    &~.gif-holder{
+
+}
+.sucessBox{
+    .gif-holder{
         width: 40%;
         height: auto;
         margin: 0 auto;
