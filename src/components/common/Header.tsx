@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 // import HeaderLogo from '../../assets/svg/Logo.svg';
-import HeaderLogo from '../../assets/images/HeaderLogo.png';
+import HeaderLogo from '../../assets/images/logonew.png';
 import { Button } from '../UI/Button';
 import { Link } from 'react-router-dom';
 import { Context as AuthContext } from '../../context';
@@ -46,9 +46,9 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
             </div>
           </div>
           <div className='col-lg-8 col-sm-6 col-12'>
-            <div className='head-right float-lg-end  float-sm-none px-lg-5 d-flex'>
+            <div className='head-right float-lg-end  float-sm-none px-lg--5 d-flex'>
               <Button name='00.00' onClick={() => {
-                    
+                    setBalanceModal(true)
                     // disconnectAptosWallet();
                   }}   className={[
                     'wr-primary-theme-btn wr-primary-theme-btn_header  mx-2  px-3',
@@ -100,11 +100,11 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
       {/* // balanceModal */}
     {
       balanceModal &&
-      <CustomModal show={true} handleClose={()=>{}}>
+      <CustomModal show={true} handleClose={()=>{setBalanceModal(false)}}>
           <div className="deposit-modal">
             <div className="modal-header">
               <h4 className='mb-3 text-center'>Deposit Now</h4>
-              <div onClick={()=>{}} className='close'>
+              <div onClick={()=>{setBalanceModal(false)}} className='close'>
             <AiOutlineClose
               style={{ color: '#E7D08C', fontWeight: 'bold', fontSize: 20 }}
             />

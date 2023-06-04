@@ -69,7 +69,7 @@ img{
 .brick-imgt{
     position: absolute;
     left: 0;
-    top: 5%;
+    top: 15%;
     z-index: -1;
 display: none;
 @include breakpoint(sm){
