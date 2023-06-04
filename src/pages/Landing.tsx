@@ -22,7 +22,7 @@ export const Landing = () => {
     signMessage,
   } = useWallet();
   const {
-    state: { walletAccountInfo },
+    state: { walletAccountInfo, walletConnetLoading },
     connetAptosWallet,
     setLoading,
   } = useContext<any>(AuthContext);
@@ -38,11 +38,14 @@ export const Landing = () => {
 
   return (
     <div id='landing'>
-      <Header
-        handleConnectWallet={() => {
-          setConnectWalletModal(true);
-        }}
-      />
+      {!walletConnetLoading && (
+        <Header
+          handleConnectWallet={() => {
+            setConnectWalletModal(true);
+          }}
+        />
+      )}
+
       <LandingMain />
       <Footer />
       <ConnectWallet

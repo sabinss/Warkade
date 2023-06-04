@@ -7,17 +7,19 @@ import { Landing } from './pages/Landing';
 import { Provider as AuthProvider } from './context/authContext';
 import { Collections } from './pages/Collection';
 
-import { getLocalStorageItem } from './utils/localstorageService';
+import { AppInit } from './hoc/AppInit';
 
 function WarKade() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Landing />}></Route>
-          <Route path='/collections' element={<Collections />}></Route>
-        </Routes>
-      </BrowserRouter>
+      <AppInit>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<Landing />}></Route>
+            <Route path='/collections' element={<Collections />}></Route>
+          </Routes>
+        </BrowserRouter>
+      </AppInit>
     </AuthProvider>
   );
 }

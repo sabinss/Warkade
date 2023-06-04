@@ -38,7 +38,7 @@ const authReducer: React.Reducer<AuthStateType, any> = (
         connectedWalletName: action.payload,
       };
     case 'minting': {
-      return { ...state, isMinting: true };
+      return { ...state, isMinting: true, mintImageUrl: null };
     }
     case 'minting_success': {
       return { ...state, isMinting: false, mintImageUrl: action.payload };

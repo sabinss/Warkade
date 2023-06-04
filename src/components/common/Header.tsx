@@ -18,11 +18,17 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
     disconnectAptosWallet,
   } = useContext<any>(AuthContext);
 
+  const [loading, setLoading] = useState(false);
+
   const handleConnecting = () => {
     setConnecting(true);
   };
 
   useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 4000);
     setConnecting(false);
   }, [walletAccountInfo, isWalletConnected]);
 
@@ -62,7 +68,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                     handleConnecting();
                     handleConnectWallet();
                   }}
-                  name='connect wallets'
+                  name={`${loading ? 'loading...' : 'connect wallets'}`}
                   className={[
                     `wr-primary-theme-btn wr-primary-theme-btn_header  px-3`,
                   ]}

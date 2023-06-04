@@ -22,11 +22,21 @@ export const MintModal = ({
   const client = new AptosClient('https://fullnode.testnet.aptoslabs.com/v1');
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { state, startMinting } = useContext<any>(AuthContext);
+  const {
+    state: { mintImageUrl: stateMintImageUrl },
+    startMinting,
+  } = useContext<any>(AuthContext);
   const { signAndSubmitTransaction } = useWallet();
 
   const [minting, setMinting] = useState(false);
   const [mintImageUri, setMintImageUri] = useState<null | string>(null);
+  const [isFirstOpen, setIsFirstOpen] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      setIsFirstOpen(false);
+    };
+  }, []);
 
   const mint_warcade = {
     type: 'entry_function_payload',
@@ -64,6 +74,7 @@ export const MintModal = ({
               ...(mintImageUri ? ['success-mint'] : []),
             ]}
             onClick={async () => {
+              setIsFirstOpen(true);
               setMinting(true);
               setMintImageUri(null);
               // handleMint();
@@ -72,9 +83,11 @@ export const MintModal = ({
                   mint_warcade
                 );
                 startMinting(transaction?.hash, (mintImageUri: string) => {
-                  setMintImageUri(mintImageUri);
+                  setMinting(() => true);
+                  setMintImageUri(() => mintImageUri);
+                  setMinting(() => false);
                 });
-                setMinting(false);
+                setMinting(() => false);
               } catch (e: any) {
                 toast.error(
                   'We couldnot approve the transaction.' ??
@@ -98,7 +111,7 @@ export const MintModal = ({
           {mintImageUri && (
             <h2
               className='text-color close-btn'
-              style={{ fontSize: 20 }}
+              style={{ fontSize: 15 }}
               onClick={handleClose}
             >
               Close
@@ -110,14 +123,19 @@ export const MintModal = ({
   };
 
   const showCardImage = () => {
-    if (!minting && !mintImageUri) {
-      return (
-        <img
-          src={require('../../assets/images/_.png')}
-          alt=''
-          style={{ width: '71px', height: '70px' }}
-        />
-      );
+    console.log({ minting, mintImageUri });
+    if (!minting && !mintImageUri && !stateMintImageUrl) {
+      if (!isFirstOpen) {
+        return (
+          <img
+            src={require('../../assets/images/_.png')}
+            alt=''
+            style={{ width: '71px', height: '70px' }}
+          />
+        );
+      } else {
+        return null;
+      }
     }
     if (minting && !mintImageUri) {
       return (
@@ -178,6 +196,7 @@ export const MintModal = ({
         />
       );
     }
+    return null;
   };
 
   return (
