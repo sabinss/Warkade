@@ -541,6 +541,7 @@ header {
     background-color: #1E1E1E;
     &.show{
         opacity: 0.9;
+        width: 100%;
     }
 }
 
@@ -1041,8 +1042,14 @@ header {
     flex-direction: column;
     justify-content: center;
 
-    width: 25%;
+    width: 100%;
     margin: 0 auto;
+    @include breakpoint(sm){
+        width: 50%;
+    }
+    @include breakpoint(md){
+        width: 25%;
+    }
     .modal-header{
         text-align: left;
         border-bottom: 0;
@@ -1063,7 +1070,7 @@ header {
             flex-wrap: wrap;
        
             .depo_selector{
-                width: 30%;
+                width: 100%;
                 height: 80px;
                 position: relative;
                 border-radius: 10px;

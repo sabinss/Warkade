@@ -113,30 +113,50 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
             <div className="modal-body">
              
                 <form action="">
-                  <div className="form-grp depo_selector">
+                  <div className="row">
+                    <div className="col-md-4 col-lg-4 col-sm-6 col-6">
+                    <div className="form-grp depo_selector">
                     <input type="radio" name='amnt' value='0.1' className='hidden-check'  />
                     <label htmlFor="0.1">0.1</label>
                   </div>
-                  <div className="form-grp depo_selector">
+                    </div>
+                    <div className="col-md-4 col-lg-4 col-sm-6 col-6">
+                    <div className="form-grp depo_selector">
                     <input type="radio" name='amnt' value='0.2' className='hidden-check'  />
                     <label htmlFor="0.2">0.2</label>
                   </div>
-                  <div className="form-grp depo_selector">
+                      </div>
+                      <div className="col-md-4 col-lg-4 col-sm-6 col-6">
+                      <div className="form-grp depo_selector">
                     <input type="radio" name='amnt' value='0.3' className='hidden-check'  />
                     <label htmlFor="0.3">0.3</label>
                   </div>
-                  <div className="form-grp depo_selector">
+                      </div>
+                      <div className="col-md-4 col-lg-4 col-sm-6 col-6">
+                      <div className="form-grp depo_selector">
                     <input type="radio" name='amnt' value='0.5' className='hidden-check'  />
                     <label htmlFor="0.5">0.5</label>
                   </div>
+                      </div>
+                      <div className="col-md-4 col-lg-4 col-sm-6 col-6">
+                        
                   <div className="form-grp depo_selector">
                     <input type="radio" name='amnt' value='0.7' className='hidden-check'  />
                     <label htmlFor="0.7">0.7</label>
                   </div>
-                  <div className="form-grp depo_selector">
+                      </div>
+                      <div className="col-md-4 col-lg-4 col-sm-6 col-6">
+                      <div className="form-grp depo_selector">
                     <input type="radio" name='amnt' value='1.0' className='hidden-check'  />
                     <label htmlFor="1.0">1.0</label>
                   </div>
+                      </div>
+                  </div>
+               
+             
+               
+             
+                
                 </form>
                 <Button name='Deposit now' onClick={() => {
                     
