@@ -64,7 +64,7 @@ export const MintModal = ({
             </div>
           )}
           <div className='gif-holder'>
-            <img src={require('../../assets/images/flamesword.gif')} alt='' />
+            <img src={require('../../assets/images/Burning-Sword.gif')} alt='' />
           </div>
           <Button
             name={mintImageUri ? 'Mint Again' : 'Mint'}
@@ -237,7 +237,7 @@ export const MintModal = ({
               <img src={require('../../assets/images/Torch.gif')} alt='' />
             </div>
           </div>
-          <div className='d-inline-block my-3'>{showMintingView()}</div>
+          <div className='d-inline-block mb-3'>{showMintingView()}</div>
         </div>
       </div>
     </CustomModal>

@@ -13,11 +13,21 @@ img{
     font-size: 12px;
     position: relative;
     height: 50px;
+    
     &_header{
        background-color: transparent; 
        color: $primary-color;
        text-transform: uppercase;
+       &_border-none{
+        border: none;
+       }
+       &_border-x{
+        border: 0;
+        border-left: 2px solid $primary-color;
+        border-right: 2px solid $primary-color;
+       }
     }
+    
 }
 .custom-container{
     padding: 0px 20px;

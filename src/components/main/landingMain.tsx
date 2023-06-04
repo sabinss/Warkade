@@ -186,7 +186,7 @@ export const LandingMain = () => {
 
                     <div className='img-flamesword'>
                       <img
-                        src={require('../../assets/images/flamesword.gif')}
+                        src={require('../../assets/images/heart.png')}
                         alt=''
                       />
                     </div>
@@ -195,6 +195,18 @@ export const LandingMain = () => {
               </div>
             </div>
           </div>
+          <div className="total-mint-detail ">
+        <ul className='list-unstyled'>
+          <li>
+            <strong>Health : </strong>
+            <span>100.0</span>
+          </li>
+          <li>
+            <strong>Total warcades minted : </strong>
+            <span>1.0</span>
+          </li>
+        </ul>
+    </div>
           <div className='brick-imgt '>
             <div className='brick-icon-wrap'>
               <div className='brick-icon'>
