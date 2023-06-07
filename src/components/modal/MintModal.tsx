@@ -23,8 +23,10 @@ export const MintModal = ({
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const {
-    state: { mintImageUrl: stateMintImageUrl },
+    state: { walletAccountInfo, mintImageUrl: stateMintImageUrl },
     startMinting,
+    fetchRemainingMint,
+    fetchTotalMint,
   } = useContext<any>(AuthContext);
   const { signAndSubmitTransaction } = useWallet();
 
@@ -64,7 +66,10 @@ export const MintModal = ({
             </div>
           )}
           <div className='gif-holder'>
-            <img src={require('../../assets/images/Burning-Sword.gif')} alt='' />
+            <img
+              src={require('../../assets/images/Burning-Sword.gif')}
+              alt=''
+            />
           </div>
           <Button
             name={mintImageUri ? 'Mint Again' : 'Mint'}
@@ -82,10 +87,13 @@ export const MintModal = ({
                 const transaction = await signAndSubmitTransaction(
                   mint_warcade
                 );
+
                 startMinting(transaction?.hash, (mintImageUri: string) => {
                   setMinting(() => true);
                   setMintImageUri(() => mintImageUri);
                   setMinting(() => false);
+                  fetchTotalMint(walletAccountInfo?.address);
+                  fetchRemainingMint(walletAccountInfo?.address);
                 });
                 setMinting(() => false);
               } catch (e: any) {
@@ -112,7 +120,10 @@ export const MintModal = ({
             <h2
               className='text-color close-btn'
               style={{ fontSize: 15 }}
-              onClick={handleClose}
+              onClick={() => {
+                handleClose();
+                reset();
+              }}
             >
               Close
             </h2>
@@ -122,15 +133,20 @@ export const MintModal = ({
     }
   };
 
+  const reset = () => {
+    setMintImageUri(null);
+    setMinting(false);
+    setIsFirstOpen(false);
+  };
+
   const showCardImage = () => {
-    console.log({ minting, mintImageUri });
     if (!minting && !mintImageUri && !stateMintImageUrl) {
       if (!isFirstOpen) {
         return (
           <img
-            src={require('../../assets/images/_.png')}
+            src={require('../../assets/images/Characters-shuffle.gif')}
             alt=''
-            style={{ width: '71px', height: '70px' }}
+            style={{ width: '100%', height: '100%' }}
           />
         );
       } else {
@@ -204,6 +220,7 @@ export const MintModal = ({
       show={showModal}
       handleClose={() => {
         handleClose();
+        reset();
       }}
     >
       {/* design mint modal here */}
@@ -214,7 +231,10 @@ export const MintModal = ({
           </div>
           <div
             className='col-lg-1 mint-modal-header-icon close'
-            onClick={handleClose}
+            onClick={() => {
+              handleClose();
+              reset();
+            }}
           >
             <AiOutlineClose
               style={{ color: '#E7D08C', fontWeight: 'bold', fontSize: 20 }}

@@ -7,4 +7,7 @@ export interface AuthStateType {
   mintImageUrl: null | string;
   mintError: any;
   walletConnetLoading: boolean;
+  mintRemaining: any;
+  fetchingNoMint: boolean;
+  totalMinted: null | number;
 }
