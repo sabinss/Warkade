@@ -1085,9 +1085,10 @@ header {
                     height: 100%;
                     &:checked{
                         &~label{
-                           border: 2px solid #696969;
-                           box-shadow: none;
-                           background-color: #e5c050;
+                            background-color: $primary-color;
+                            color: white;
+                            border: 1px solid #f5f5f5;
+                            box-shadow: inset 0px 0px 4px 3px #ddd;
                         }
                     }
                 }
@@ -1097,17 +1098,18 @@ header {
                     left: 0;
                     display: flex;
                     border-radius: 10px;
-                    border: 1px solid #f5f5f5;
-                    box-shadow: inset 0px 0px 4px 3px #ddd;
+                  
                     align-items: center;
                     justify-content: center;
                     transition: all 0.2s linear;
                     top: 0;
                     height: 100%;  
-                    background-color: $primary-color;
                     color: white;
                     font-size: 18px;
                     font-weight: 800;
+                    border: 2px solid #696969;
+                    box-shadow: none;
+                    background-color: #e5c050;
                 }
                 &:nth-child(3n){
                     margin-right: 0;
