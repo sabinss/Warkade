@@ -23,7 +23,11 @@ export const MintModal = ({
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const {
-    state: { walletAccountInfo, mintImageUrl: stateMintImageUrl },
+    state: {
+      walletAccountInfo,
+      mintImageUrl: stateMintImageUrl,
+      totalNumberOfMintRemaining,
+    },
     startMinting,
     fetchRemainingMint,
     fetchTotalMint,
@@ -43,7 +47,7 @@ export const MintModal = ({
   const mint_warcade = {
     type: 'entry_function_payload',
     function:
-      '0xfdf9f2962710e0722e2694061419dc1594405a5e478a1d232350069a3253ff94::warkade::mint_warkade',
+      '0x74533a9947300fba32287f4d65e0cee49fbdc629a9f439701f3918901eb5c797::warkade::mint',
     type_arguments: [],
     arguments: [],
   };
@@ -237,10 +241,25 @@ export const MintModal = ({
             }}
           >
             <AiOutlineClose
-              style={{ color: '#E7D08C', fontWeight: 'bold', fontSize: 20 }}
+              style={{
+                color: '#E7D08C',
+                fontWeight: 'bold',
+                fontSize: 20,
+                marginTop: 10,
+              }}
             />
           </div>
         </div>
+        <p
+          style={{
+            fontSize: 10,
+            textAlign: 'center',
+            marginTop: 10,
+            marginBottom: 10,
+          }}
+        >
+          Total Remaining Mint: {totalNumberOfMintRemaining}
+        </p>
         <div className='mint-modal-body my-3'>
           <div className='mint-modal-body-card-wrapper d-flex'>
             <div className='flame-holder'>

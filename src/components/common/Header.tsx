@@ -23,8 +23,9 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
   } = useContext<any>(AuthContext);
   const [balanceModal, setBalanceModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [depositedAmount, setDepositedAmount] = useState<null | number>(null);
 
-  const { signAndSubmitTransaction } = useWallet();
+  const { signAndSubmitTransaction, disconnect } = useWallet();
 
   const handleConnecting = () => {
     setConnecting(true);
@@ -46,15 +47,18 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
       function:
         '0x74533a9947300fba32287f4d65e0cee49fbdc629a9f439701f3918901eb5c797::warkade::deposit',
       type_arguments: [],
-      arguments: ['10000000'],
+      arguments: [depositedAmount],
     };
-
     try {
       const transaction = await signAndSubmitTransaction(deposit_payload);
       console.log({ transaction });
     } catch (error) {
       console.log('Deposit failed', error);
     }
+  };
+
+  const setDepositAmount = (depositAmount: any) => {
+    setDepositedAmount(() => Math.pow(10, 8) * +depositAmount);
   };
 
   return (
@@ -70,21 +74,24 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
           </div>
           <div className='col-lg-8 col-sm-6 col-12'>
             <div className='head-right float-lg-end  float-sm-none px-lg--5 d-flex'>
-              <Button
-                name={mintRemaining?.totalBalance || '00.00'}
-                onClick={() => {
-                  setBalanceModal(true);
-                  // disconnectAptosWallet();
-                }}
-                className={[
-                  'wr-primary-theme-btn wr-primary-theme-btn_header  mx-2  px-3',
-                ]}
-              />
+              {isWalletConnected && walletAccountInfo && (
+                <Button
+                  name={mintRemaining?.totalBalance || '00.00'}
+                  onClick={() => {
+                    setBalanceModal(true);
+                    // disconnectAptosWallet();
+                  }}
+                  className={[
+                    'wr-primary-theme-btn wr-primary-theme-btn_header  mx-2  px-3',
+                  ]}
+                />
+              )}
               {isWalletConnected && walletAccountInfo ? (
                 <Button
                   onClick={() => {
+                    disconnect();
                     setDisconnectWallet(true);
-                    // disconnectAptosWallet();
+                    disconnectAptosWallet();
                   }}
                   name={
                     walletAccountInfo &&
@@ -153,6 +160,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                         type='radio'
                         name='amnt'
                         value='0.1'
+                        onClick={() => setDepositAmount('0.1')}
                         className='hidden-check'
                       />
                       <label htmlFor='0.1'>0.1</label>
@@ -164,6 +172,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                         type='radio'
                         name='amnt'
                         value='0.2'
+                        onClick={() => setDepositAmount('0.2')}
                         className='hidden-check'
                       />
                       <label htmlFor='0.2'>0.2</label>
@@ -175,6 +184,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                         type='radio'
                         name='amnt'
                         value='0.3'
+                        onClick={() => setDepositAmount('0.3')}
                         className='hidden-check'
                       />
                       <label htmlFor='0.3'>0.3</label>
@@ -186,6 +196,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                         type='radio'
                         name='amnt'
                         value='0.5'
+                        onClick={() => setDepositAmount('0.5')}
                         className='hidden-check'
                       />
                       <label htmlFor='0.5'>0.5</label>
@@ -197,6 +208,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                         type='radio'
                         name='amnt'
                         value='0.7'
+                        onClick={() => setDepositAmount('0.7')}
                         className='hidden-check'
                       />
                       <label htmlFor='0.7'>0.7</label>
@@ -208,6 +220,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                         type='radio'
                         name='amnt'
                         value='1.0'
+                        onClick={() => setDepositAmount('1.0')}
                         className='hidden-check'
                       />
                       <label htmlFor='1.0'>1.0</label>
@@ -217,7 +230,9 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
               </form>
               <Button
                 name='Deposit now'
-                onClick={handleDeposit}
+                onClick={() => {
+                  handleDeposit();
+                }}
                 className={[
                   'wr-primary-theme-btn my-3 mx-auto d-block px-3  text-uppercase',
                 ]}

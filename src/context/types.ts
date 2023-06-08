@@ -10,4 +10,5 @@ export interface AuthStateType {
   mintRemaining: any;
   fetchingNoMint: boolean;
   totalMinted: null | number;
+  totalNumberOfMintRemaining: null | number;
 }

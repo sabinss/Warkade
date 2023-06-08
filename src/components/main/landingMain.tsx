@@ -12,9 +12,17 @@ import { ConnectWallet } from '../modal/ConnectWallet';
 import { CollectionLoader } from '../common/CollectionLoader';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
 
+import { toast } from 'react-toastify';
+
 export const LandingMain = () => {
   const {
-    state: { walletAccountInfo, mintRemaining, totalMinted },
+    state: {
+      isWalletConnected,
+      walletAccountInfo,
+      mintRemaining,
+      totalMinted,
+      totalNumberOfMintRemaining,
+    },
     fetchTotalMint,
     fetchRemainingMint,
   } = useContext<any>(AuthContext);
@@ -38,13 +46,13 @@ export const LandingMain = () => {
     };
 
     try {
-      const transaction = await signAndSubmitTransaction(deposit_payload);
+      await signAndSubmitTransaction(deposit_payload);
       setBalanceModal(false);
       fetchTotalMint(walletAccountInfo?.address);
       fetchRemainingMint(walletAccountInfo?.address);
-      console.log({ transaction });
-    } catch (error) {
-      console.log('Deposit failed', error);
+      toast.success('Amount has been deposited successfully.');
+    } catch (error: any) {
+      toast.error(error?.message ?? 'Deposit failed. Please try again!.');
     }
   };
 
@@ -221,29 +229,32 @@ export const LandingMain = () => {
                         />
                       </div>
                     </div>
-
-                    <div className='img-flamesword'>
-                      <img
-                        src={require('../../assets/images/heart.png')}
-                        alt=''
-                      />
-                    </div>
+                    {isWalletConnected && walletAccountInfo && (
+                      <div className='img-flamesword'>
+                        <img
+                          src={require('../../assets/images/heart.png')}
+                          alt=''
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div className='total-mint-detail '>
-            <ul className='list-unstyled'>
-              <li>
-                <strong>Health : </strong>
-                <span>{mintRemaining?.health}</span>
-              </li>
-              <li>
-                <strong>Total warcades minted : </strong>
-                <span>{totalMinted?.guid_creation_num}</span>
-              </li>
-            </ul>
+            {isWalletConnected && walletAccountInfo && (
+              <ul className='list-unstyled'>
+                <li>
+                  <strong>Health : </strong>
+                  <span>{mintRemaining?.health}</span>
+                </li>
+                <li>
+                  <strong>Total warcades minted : </strong>
+                  <span>{totalMinted?.guid_creation_num}</span>
+                </li>
+              </ul>
+            )}
           </div>
           <div className='brick-imgt '>
             <div className='brick-icon-wrap'>

@@ -18,6 +18,7 @@ const initialState: AuthStateType = {
   mintRemaining: null,
   fetchingNoMint: false,
   totalMinted: null,
+  totalNumberOfMintRemaining: null,
 };
 const authReducer: React.Reducer<AuthStateType, any> = (
   state = initialState,
@@ -47,17 +48,23 @@ const authReducer: React.Reducer<AuthStateType, any> = (
       return { ...state, isMinting: true, mintImageUrl: null };
     }
     case 'minting_success': {
+      let remainingMint = state.totalNumberOfMintRemaining
+        ? state.totalNumberOfMintRemaining - 1
+        : 0;
       return { ...state, isMinting: false, mintImageUrl: action.payload };
     }
     case 'loading': {
       return { ...state, walletConnetLoading: action.payload };
     }
     case 'remaining_mint': {
-      return { ...state, mintRemaining: action.payload };
+      return {
+        ...state,
+        mintRemaining: action.payload,
+        totalNumberOfMintRemaining: action.payload.totalNumberOfMintRemaining,
+      };
     }
 
     case 'total_mint': {
-      console.log('redux,total_mint', action.payload?.data);
       return { ...state, totalMinted: action.payload?.data };
     }
     case 'minting_failure': {
@@ -141,7 +148,12 @@ const fetchRemainingMint = (dispatch: any) => async (walletAddress: string) => {
 
       dispatch({
         type: 'remaining_mint',
-        payload: { ...data, health, totalBalance },
+        payload: {
+          ...data,
+          health,
+          totalBalance,
+          totalNumberOfMintRemaining: +data.data.mints_remaining,
+        },
       });
     } catch (err) {
       console.log('fetch mint error', err);
