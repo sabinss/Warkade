@@ -1,94 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { DisconnectWallet } from '../modal/DisconnectWallet';
-import { startFetchMyQuery } from './fetchCollectionData';
-import { Context as AuthContext } from '../../context';
-import { ConnectWallet } from '../modal/ConnectWallet';
-import ErrorBoundary from '../Errorboundary';
-import { CollectionLoader } from '../common/CollectionLoader';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-export const CollectionMain = () => {
-  const [isWalletConnected, setWalletConnected] = useState(false);
-  const { state } = useContext<any>(AuthContext);
-  const [mintImages, setMintImages] = useState<any[]>([]);
-  const [fetchingMintImages, setFetchingMintImages] = useState(true);
-  const [connectWalletModal, setConnectWalletModal] = useState(false);
-  const [mintingImageLoading, setMintingImageLoading] = useState(false);
-
-  useEffect(() => {
-    setMintingImageLoading(true);
-    if (!state.walletAccountInfo) {
-      setMintingImageLoading(false);
-    }
-    startFetchMyQuery(state, (data) => {
-      if (data) {
-        setFetchingMintImages(false);
-        setMintImages(data);
-      } else {
-        setFetchingMintImages(false);
-      }
-      setMintingImageLoading(false);
-    });
-  }, [state.walletAccountInfo]);
-
-  const MintingImageLoading = () => {
-    return (
-      <>
-        {Array.from(Array(6)).map((x) => {
-          return (
-            <div className='col-md-4 py-3'>
-              <CollectionLoader />
-            </div>
-          );
-        })}
-      </>
-    );
-  };
-
-  const ConnectedView = () => {
-    return (
-      <>
-        {mintImages.map((mintImage: any) => {
-          return (
-            <div className='col-md-4 py-3'>
-              <div
-                className='collection-card'
-                style={{ borderRadius: 10, height: 200 }}
-              >
-                <div
-                  className='card-img'
-                  style={{ width: '90%', height: '90%' }}
-                >
-                  <img src={mintImage.image} alt='' />
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </>
-    );
-  };
-
-  const DisconnectedView = () => {
-    return (
-      <div className='col-lg-12'>
-        <div className='disconneted-frame d-flex align-items-center justify-content-center'>
-          <p>Please Connect Your Wallet to View Your Collection</p>
-          <div className='btn-wrap w-100 py-3'>
-            <button
-              className='wr-primary-theme-btn mx-auto d-block'
-              onClick={() => {
-                setConnectWalletModal(true);
-              }}
-            >
-              Connect wallet
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
+export const MystryMain = () => {
   return (
     <div className='position-relative'>
       <div className='container-fluid custom-container'>
@@ -198,17 +111,18 @@ export const CollectionMain = () => {
             </div>
           </div>
           <div className='col-lg-8'>
-            <div className="tab-link-wrap">
-              <ul>
-                <li>
-                    <Link to ='/collection'> My Collection</Link>
-                </li>
-                <li className='selected'>
-                    <Link to ='/mystrybox'> Mystry Box</Link>
-                </li>
-              </ul>
-            </div>
             <div className='icon-grp-text icon-grp-text_reversed'>
+              <div className="tab-link-wrap">
+                <ul>
+                  <li>
+                  
+                      <Link to ='/collections'> My Collection</Link>
+                  </li>
+                  <li className='selected'>
+                      <Link to ='/mystrybox'> Mystry Box</Link>
+                  </li>
+                </ul>
+              </div>
               <ul className='list-unstyled d-flex icon-grp'>
                 <li>
                   <div className='icon-holder'>
@@ -236,35 +150,22 @@ export const CollectionMain = () => {
                 </li>
               </ul>
               <h6>
-                <Link to={'/collections'}>My Collection</Link>
+                Mystry Page
               </h6>
             </div>
-            <div
-              className={`collection-frame ${
-                mintImages.length <= 6 ? 'hide-scrollbar' : 'show-scrollbar'
-              }`}
-            >
+            <div className=''>
               <div className='row h-100 '>
-                {mintingImageLoading ? (
-                  <MintingImageLoading />
-                ) : state.isWalletConnected ? (
-                  <ErrorBoundary>
-                    <ConnectedView />
-                  </ErrorBoundary>
-                ) : (
-                  <DisconnectedView />
-                )}
+                <div className="collection-frame hide-scrollbar">
+                Mystry page
+                </div>
+                           
               </div>
             </div>
           </div>
-          <ConnectWallet
-            showModal={connectWalletModal}
-            handleClose={() => {
-              setConnectWalletModal(false);
-            }}
-          />
+         
+     
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

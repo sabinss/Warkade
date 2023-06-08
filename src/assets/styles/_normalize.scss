@@ -64,8 +64,25 @@ img{
     &_reversed{
         flex-direction: row-reverse;
     }
+   
 }
-
+.tab-link-wrap{
+    ul{
+        list-style: none;
+        display: flex;
+        padding-left: 0;
+        li{
+            a{
+                display: block;
+                color: white;
+                background-color: $primary-color;
+                border-radius:15px;
+                padding: 10px;
+                margin: 0px 10px;
+            }
+        }
+    }
+}
 .brick-imgt{
     position: absolute;
     left: 0;
