@@ -71,7 +71,6 @@ export const ConnectWallet = ({ handleClose, showModal }: IConnectWallet) => {
       connetAptosWallet(account);
       handleClose();
     } catch (e) {
-      console.log('conect wallet error', e);
       throw e;
     }
   };

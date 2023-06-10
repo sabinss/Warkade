@@ -32,7 +32,6 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
   };
 
   useEffect(() => {
-    console.log('mintRemaining', mintRemaining);
     fetchRemainingMint();
     setLoading(true);
     setTimeout(() => {
@@ -51,7 +50,6 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
     };
     try {
       const transaction = await signAndSubmitTransaction(deposit_payload);
-      console.log({ transaction });
     } catch (error) {
       console.log('Deposit failed', error);
     }

@@ -131,6 +131,7 @@ export async function startFetchMyQuery(
       return mintImage;
     });
     const finalMintImages = await Promise.all(mintImages);
+    console.log('finalMintImages', finalMintImages);
     callback(finalMintImages);
   }
 }

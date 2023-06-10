@@ -116,11 +116,9 @@ const startMinting =
 const fetchTotalMint = (dispatch: any) => async (walletAddress: string) => {
   if (walletAddress) {
     const totlal_mint_count_uri = `https://fullnode.testnet.aptoslabs.com/v1/accounts/${walletAddress}/resource/0x1::account::Account`;
-    console.log('get_mint_uri', totlal_mint_count_uri);
     try {
       const response = await fetch(totlal_mint_count_uri);
       const data = await response.json();
-      console.log('totlal_mint_count_uri', data?.data?.guid_creation_num);
 
       dispatch({
         type: 'total_mint',

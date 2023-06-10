@@ -19,7 +19,6 @@ export const AppInit = ({ children }: any) => {
 
     if (walletInfo?.address) {
       connetAptosWallet(walletInfo, () => {
-        console.log('init---', walletInfo);
         fetchRemainingMint(walletInfo?.address);
         fetchTotalMint(walletInfo?.address);
       });
