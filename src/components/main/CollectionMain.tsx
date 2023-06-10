@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { DisconnectWallet } from '../modal/DisconnectWallet';
 import { startFetchMyQuery } from './fetchCollectionData';
 import { Context as AuthContext } from '../../context';
 import { ConnectWallet } from '../modal/ConnectWallet';
@@ -14,6 +13,7 @@ export const CollectionMain = () => {
   const [fetchingMintImages, setFetchingMintImages] = useState(true);
   const [connectWalletModal, setConnectWalletModal] = useState(false);
   const [mintingImageLoading, setMintingImageLoading] = useState(false);
+  const [imageExists, setImageExists] = useState(true);
 
   useEffect(() => {
     setMintingImageLoading(true);
@@ -24,6 +24,7 @@ export const CollectionMain = () => {
       if (data) {
         setFetchingMintImages(false);
         setMintImages(data);
+        checkImageExistence(data);
       } else {
         setFetchingMintImages(false);
       }
@@ -31,12 +32,33 @@ export const CollectionMain = () => {
     });
   }, [state.walletAccountInfo]);
 
+  const checkImageExistence = async (images: any) => {
+    try {
+      setMintingImageLoading(true);
+      const promises = images.map((x: any) => {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.onload = () => resolve(x);
+          img.onerror = () => resolve(null);
+          img.src = x.image;
+        });
+      });
+      const results = await Promise.all(promises);
+      const filteredUrls = results.filter((url) => url !== null);
+
+      setMintImages(filteredUrls);
+      setMintingImageLoading(false);
+    } catch (error) {
+      setMintingImageLoading(false);
+    }
+  };
+
   const MintingImageLoading = () => {
     return (
       <>
-        {Array.from(Array(6)).map((x) => {
+        {Array.from(Array(6)).map((x, index) => {
           return (
-            <div className='col-md-4 py-3'>
+            <div className='col-md-4 py-3' key={index}>
               <CollectionLoader />
             </div>
           );
@@ -48,7 +70,14 @@ export const CollectionMain = () => {
   const ConnectedView = () => {
     return (
       <>
-        {mintImages.map((mintImage: any) => {
+        {mintImages.map((mintImage: any, index: number) => {
+          setImageExists(() => true);
+          const handleImageError = (
+            event: React.SyntheticEvent<HTMLImageElement>
+          ) => {
+            event.currentTarget.style.display = 'none';
+            setImageExists(() => false); // Hide the image on error
+          };
           return (
             <div className='col-md-4 py-3'>
               <div
@@ -59,7 +88,15 @@ export const CollectionMain = () => {
                   className='card-img'
                   style={{ width: '90%', height: '90%' }}
                 >
-                  <img src={mintImage.image} alt='' />
+                  {imageExists ? (
+                    <img
+                      src={mintImage.image}
+                      alt=''
+                      onError={handleImageError}
+                    />
+                  ) : (
+                    <p>No image found</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -167,17 +204,12 @@ export const CollectionMain = () => {
                       alt=''
                     />
                   </div>
-                  <div className='flame-wrap'>
-                    <img
-                      src={require('../../assets/images/Torch.gif')}
-                      alt=''
-                    />
-                  </div>
+               
                 </div>
               </div>
             </div>
             <div className='side-bottom'>
-              <p>So much NFT collecting, so little time.</p>
+              
               <div className='bottom-image-wrap'>
                 <div className='img-wrap'>
                   <img
@@ -198,37 +230,17 @@ export const CollectionMain = () => {
             </div>
           </div>
           <div className='col-lg-8'>
-            <div className='icon-grp-text icon-grp-text_reversed'>
-              <ul className='list-unstyled d-flex icon-grp'>
+            <div className='tab-link-wrap'>
+              <ul>
                 <li>
-                  <div className='icon-holder'>
-                    <img
-                      src={require('../../assets/images/WarcadiaCoinAnimation.gif')}
-                      alt=''
-                    />
-                  </div>
+                  <Link to='/collections'> My Collection</Link>
                 </li>
-                <li>
-                  <div className='icon-holder'>
-                    <img
-                      src={require('../../assets/images/WarcadiaCoinAnimation.gif')}
-                      alt=''
-                    />
-                  </div>
-                </li>
-                <li>
-                  <div className='icon-holder'>
-                    <img
-                      src={require('../../assets/images/WarcadiaCoinAnimation.gif')}
-                      alt=''
-                    />
-                  </div>
+                <li className='selected'>
+                  <Link to='/mysterybox'> Mystery Box</Link>
                 </li>
               </ul>
-              <h6>
-                <Link to={'/collections'}>My Collection</Link>
-              </h6>
             </div>
+        
             <div
               className={`collection-frame ${
                 mintImages.length <= 6 ? 'hide-scrollbar' : 'show-scrollbar'

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button } from '../UI/Button';
 
 import { MintModal } from '../modal/MintModal';
@@ -10,16 +10,51 @@ import { Link } from 'react-router-dom';
 import { Context as AuthContext } from '../../context/authContext';
 import { ConnectWallet } from '../modal/ConnectWallet';
 import { CollectionLoader } from '../common/CollectionLoader';
+import { useWallet } from '@aptos-labs/wallet-adapter-react';
+
+import { toast } from 'react-toastify';
 
 export const LandingMain = () => {
   const {
-    state: { walletAccountInfo },
+    state: {
+      isWalletConnected,
+      walletAccountInfo,
+      mintRemaining,
+      totalMinted,
+      totalNumberOfMintRemaining,
+    },
+    fetchTotalMint,
+    fetchRemainingMint,
   } = useContext<any>(AuthContext);
   const [mintModal, setMintModal] = useState(false);
   const [openConnectWallet, setConnectWallet] = useState(false);
-
+  const [balanceModal, setBalanceModal] = useState(false);
   const handleMint = () => {
     setMintModal(true);
+  };
+
+  const { signAndSubmitTransaction } = useWallet();
+  useEffect(() => {}, [walletAccountInfo?.address, totalMinted]);
+
+  const handleDeposit = async () => {
+    const deposit_payload = {
+      type: 'entry_function_payload',
+      function:
+        '0x74533a9947300fba32287f4d65e0cee49fbdc629a9f439701f3918901eb5c797::warkade::deposit',
+      type_arguments: [],
+      arguments: ['10000000'],
+    };
+
+    try {
+      await signAndSubmitTransaction(deposit_payload);
+      setBalanceModal(false);
+      fetchTotalMint(walletAccountInfo?.address);
+      fetchRemainingMint(walletAccountInfo?.address);
+      setBalanceModal(() => false);
+      toast.success('Amount has been deposited successfully.');
+    } catch (error: any) {
+      toast.error(error?.message ?? 'Deposit failed. Please try again!.');
+    }
   };
 
   return (
@@ -30,15 +65,7 @@ export const LandingMain = () => {
             <div className='text-content'>
               <div className='banner-title'>
                 <h1>Mint to defeat</h1>
-                <h1>The Darklord</h1>
-              </div>
-              <div className='banner-text py-3'>
-                <p>
-                  Our Civilization is under <span>THREAT</span>. Mint Aptos
-                  Warcades to <span>DEFEAT</span> the Dark Lord. Minting 10
-                  Aptos Warcades <span>KILLS </span>one Dark Lord. Dark Lord has
-                  many faces but <span>VICTORY </span>can be acheived
-                </p>
+                <h1><span>The Darklord</span></h1>
               </div>
             </div>
           </div>
@@ -157,6 +184,7 @@ export const LandingMain = () => {
                       <span></span>
                       <span></span>
                       <span></span>
+                      <span></span>
                     </div>
                   </div>
                 </div>
@@ -174,26 +202,66 @@ export const LandingMain = () => {
                           name='Mint'
                           className={['wr-primary-theme-btn']}
                           onClick={() => {
-                            if (walletAccountInfo) {
-                              setMintModal(true);
-                            } else {
+                            // if (+mintRemaining?.totalBalance < 0) {
+                            // } else {
+                            //   setBalanceModal(true);
+                            // }
+                            if (!walletAccountInfo) {
                               setConnectWallet(true);
+                            } else if (
+                              walletAccountInfo &&
+                              +mintRemaining?.totalBalance > 0
+                            ) {
+                              setMintModal(true);
+                            } else if (
+                              walletAccountInfo &&
+                              +mintRemaining?.totalBalance <= 0
+                            ) {
+                              setBalanceModal(true);
                             }
                           }}
                         />
                       </div>
                     </div>
-
-                    <div className='img-flamesword'>
-                      <img
-                        src={require('../../assets/images/flamesword.gif')}
-                        alt=''
-                      />
-                    </div>
+                    {isWalletConnected && walletAccountInfo && (
+                      <div className='img-flamesword'>
+                          {/* <div className="lifeline_heart nil-heart">
+                              <img src={require('../../assets/images/lifelines/0.gif')} alt="" />
+                          </div> */}
+                          {/* <div className="lifeline_heart low-heart">
+                              <img src={require('../../assets/images/1.png')} alt="" />
+                          </div> */}
+                          {/* <div className="lifeline_heart medium-heart">
+                              <img src={require('../../assets/images/lifelines/2.gif')} alt="" />
+                          </div> */}
+                          {/* <div className="lifeline_heart medium-heart">
+                              <img src={require('../../assets/images/lifelines/3.gif')} alt="" />
+                          </div> */}
+                          <div className="lifeline_heart full-heart">
+                              <img src={require('../../assets/images/lifelines/4.gif')} alt="" />
+                          </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+          <div className='total-mint-detail '>
+            {isWalletConnected && walletAccountInfo && (
+              <ul className='list-unstyled'>
+                <li>
+                  <strong>Health : </strong>
+                  <span>
+                    {mintRemaining?.health ? mintRemaining?.health : 0}
+                  </span>
+                </li>
+                <li>
+                  <strong>Total warcades minted : </strong>
+                  <span>{totalMinted?.guid_creation_num}</span>
+                </li>
+              </ul>
+            )}
           </div>
           <div className='brick-imgt '>
             <div className='brick-icon-wrap'>
@@ -224,9 +292,7 @@ export const LandingMain = () => {
                     alt=''
                   />
                 </div>
-                <div className='flame-wrap'>
-                  <img src={require('../../assets/images/Torch.gif')} alt='' />
-                </div>
+             
               </div>
               <div className='brick-left'>
                 <div className='brick-icon-wrap'>
@@ -289,6 +355,113 @@ export const LandingMain = () => {
           setConnectWallet(false);
         }}
       />
+      {/* // balanceModal */}
+      {balanceModal && (
+        <CustomModal
+          show={true}
+          handleClose={() => {
+            setBalanceModal(false);
+          }}
+        >
+          <div className='deposit-modal'>
+            <div className='modal-header'>
+              <h4 className='mb-3 text-center'>Deposit Now</h4>
+              <div
+                onClick={() => {
+                  setBalanceModal(false);
+                }}
+                className='close'
+              >
+                <AiOutlineClose
+                  style={{ color: '#E7D08C', fontWeight: 'bold', fontSize: 20 }}
+                />
+              </div>
+            </div>
+            <div className='modal-body'>
+              <form action=''>
+                <div className='row'>
+                  <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
+                    <div className='form-grp depo_selector'>
+                      <input
+                        type='radio'
+                        name='amnt'
+                        value='0.1'
+                        className='hidden-check'
+                      />
+                      <label  htmlFor='0.1'><span className='apt-btn'> 0.1</span></label>
+                    </div>
+                  </div>
+                  <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
+                    <div className='form-grp depo_selector'>
+                      <input
+                        type='radio'
+                        name='amnt'
+                        value='0.2'
+                        className='hidden-check'
+                      />
+                      <label  htmlFor='0.2'><span className='apt-btn'>0.2</span></label>
+                    </div>
+                  </div>
+                  <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
+                    <div className='form-grp depo_selector'>
+                      <input
+                        type='radio'
+                        name='amnt'
+                        value='0.3'
+                        className='hidden-check'
+                      />
+                      <label  htmlFor='0.3'><span className='apt-btn'>0.3</span></label>
+                    </div>
+                  </div>
+                  <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
+                    <div className='form-grp depo_selector'>
+                      <input
+                        type='radio'
+                        name='amnt'
+                        value='0.5'
+                        className='hidden-check'
+                      />
+                      <label  htmlFor='0.5'><span className='apt-btn'>0.5</span></label>
+                    </div>
+                  </div>
+                  <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
+                    <div className='form-grp depo_selector'>
+                      <input
+                        type='radio'
+                        name='amnt'
+                        value='0.7'
+                        className='hidden-check'
+                      />
+                      <label  htmlFor='0.7'><span className='apt-btn'>0.7</span></label>
+                    </div>
+                  </div>
+                  <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
+                    <div className='form-grp depo_selector'>
+                      <input
+                        type='radio'
+                        name='amnt'
+                        value='1.0'
+                        className='hidden-check'
+                      />
+                      <label  htmlFor='1.0'><span className='apt-btn'>1.0</span></label>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <Button
+                name='Deposit now'
+                onClick={() => {
+                  handleDeposit();
+                  setBalanceModal(false);
+                }}
+                className={[
+                  'wr-primary-theme-btn my-3 mx-auto d-block px-3  text-uppercase',
+                ]}
+              />
+            </div>
+          </div>
+        </CustomModal>
+      )}
     </main>
   );
 };

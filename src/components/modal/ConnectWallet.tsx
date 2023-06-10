@@ -28,12 +28,9 @@ enum AllowededWallets {
 }
 
 export const ConnectWallet = ({ handleClose, showModal }: IConnectWallet) => {
-  const { state, connetAptosWallet, setConnectedWalletName } =
+  const { state, connetAptosWallet, setConnectedWalletName, setLoading } =
     useContext<any>(AuthContext);
   const [selectedWallet, setSelectedWallet] = useState('');
-
-  // for blocto wallet
-  // const client = new AptosClient('https://fullnode.mainnet.aptoslabs.com/v1');
 
   const aptosWallet = [
     new PetraWallet(),
@@ -43,17 +40,29 @@ export const ConnectWallet = ({ handleClose, showModal }: IConnectWallet) => {
     }),
     new MartianWallet(),
   ];
+
   const { connect, account, disconnect } = useWallet();
   const aptosWalletNetwork = new WalletCore(aptosWallet);
+
+  // useEffect(() => {
+  //   if (account) {
+  //     setLoading(false);
+  //   }
+  // }, [account]);
+
+  // for blocto wallet
+  // const client = new AptosClient('https://fullnode.mainnet.aptoslabs.com/v1');
 
   const handleSelectWallet = (walletName: string) => {
     try {
       handleConnectWallet(walletName);
     } catch (e) {}
     // setSelectedWallet(walletName);
+    //
   };
   const handleConnectWallet = async (walletName: string) => {
     try {
+      setLoading(true);
       setConnectedWalletName(walletName);
       let openSelectedWallet: any = '';
 
@@ -67,10 +76,12 @@ export const ConnectWallet = ({ handleClose, showModal }: IConnectWallet) => {
 
       connect(openSelectedWallet);
       // const wallet = new WalletCore(wallets);
-      connetAptosWallet(account);
+      connetAptosWallet(account, () => {
+        setLoading(false);
+      });
       handleClose();
     } catch (e) {
-      console.log('conect wallet error', e);
+      setLoading(false);
       throw e;
     }
   };

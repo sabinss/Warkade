@@ -17,6 +17,7 @@ export const Landing = () => {
     disconnect,
     wallet,
     wallets,
+
     signAndSubmitTransaction,
     signTransaction,
     signMessage,
