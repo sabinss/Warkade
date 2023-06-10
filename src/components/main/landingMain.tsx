@@ -247,7 +247,9 @@ export const LandingMain = () => {
               <ul className='list-unstyled'>
                 <li>
                   <strong>Health : </strong>
-                  <span>{mintRemaining?.health}</span>
+                  <span>
+                    {mintRemaining?.health ? mintRemaining?.health : 0}
+                  </span>
                 </li>
                 <li>
                   <strong>Total warcades minted : </strong>

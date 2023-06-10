@@ -144,18 +144,14 @@ export const MintModal = ({
   };
 
   const showCardImage = () => {
-    if (!minting && !mintImageUri && !stateMintImageUrl) {
-      if (!isFirstOpen) {
-        return (
-          <img
-            src={require('../../assets/images/Characters-shuffle.gif')}
-            alt=''
-            style={{ width: '100%', height: '100%' }}
-          />
-        );
-      } else {
-        return null;
-      }
+    if (!minting && !mintImageUri) {
+      return (
+        <img
+          src={require('../../assets/images/Characters-shuffle.gif')}
+          alt=''
+          style={{ width: '100%', height: '100%' }}
+        />
+      );
     }
     if (minting && !mintImageUri) {
       return (
@@ -216,7 +212,13 @@ export const MintModal = ({
         />
       );
     }
-    return null;
+    return (
+      <img
+        src={require('../../assets/images/Characters-shuffle.gif')}
+        alt=''
+        style={{ width: '100%', height: '100%' }}
+      />
+    );
   };
 
   return (

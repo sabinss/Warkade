@@ -127,6 +127,7 @@ export async function startFetchMyQuery(
       } = mint;
       const response = await fetch(token_uri);
       const mintImage = await response.json();
+
       return mintImage;
     });
     const finalMintImages = await Promise.all(mintImages);

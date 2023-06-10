@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { DisconnectWallet } from '../modal/DisconnectWallet';
 import { startFetchMyQuery } from './fetchCollectionData';
 import { Context as AuthContext } from '../../context';
 import { ConnectWallet } from '../modal/ConnectWallet';
@@ -14,6 +13,7 @@ export const CollectionMain = () => {
   const [fetchingMintImages, setFetchingMintImages] = useState(true);
   const [connectWalletModal, setConnectWalletModal] = useState(false);
   const [mintingImageLoading, setMintingImageLoading] = useState(false);
+  const [imageExists, setImageExists] = useState(true);
 
   useEffect(() => {
     setMintingImageLoading(true);
@@ -24,12 +24,34 @@ export const CollectionMain = () => {
       if (data) {
         setFetchingMintImages(false);
         setMintImages(data);
+        checkImageExistence(data);
       } else {
         setFetchingMintImages(false);
       }
       setMintingImageLoading(false);
     });
   }, [state.walletAccountInfo]);
+
+  const checkImageExistence = async (images: any) => {
+    try {
+      setMintingImageLoading(true);
+      const promises = images.map((x: any) => {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.onload = () => resolve(x);
+          img.onerror = () => resolve(null);
+          img.src = x.image;
+        });
+      });
+      const results = await Promise.all(promises);
+      const filteredUrls = results.filter((url) => url !== null);
+
+      setMintImages(filteredUrls);
+      setMintingImageLoading(false);
+    } catch (error) {
+      setMintingImageLoading(false);
+    }
+  };
 
   const MintingImageLoading = () => {
     return (
@@ -48,7 +70,14 @@ export const CollectionMain = () => {
   const ConnectedView = () => {
     return (
       <>
-        {mintImages.map((mintImage: any) => {
+        {mintImages.map((mintImage: any, index: number) => {
+          setImageExists(() => true);
+          const handleImageError = (
+            event: React.SyntheticEvent<HTMLImageElement>
+          ) => {
+            event.currentTarget.style.display = 'none';
+            setImageExists(() => false); // Hide the image on error
+          };
           return (
             <div className='col-md-4 py-3'>
               <div
@@ -59,7 +88,15 @@ export const CollectionMain = () => {
                   className='card-img'
                   style={{ width: '90%', height: '90%' }}
                 >
-                  <img src={mintImage.image} alt='' />
+                  {imageExists ? (
+                    <img
+                      src={mintImage.image}
+                      alt=''
+                      onError={handleImageError}
+                    />
+                  ) : (
+                    <p>No image found</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -198,13 +235,13 @@ export const CollectionMain = () => {
             </div>
           </div>
           <div className='col-lg-8'>
-            <div className="tab-link-wrap">
+            <div className='tab-link-wrap'>
               <ul>
                 <li>
-                    <Link to ='/collection'> My Collection</Link>
+                  <Link to='/collection'> My Collection</Link>
                 </li>
                 <li className='selected'>
-                    <Link to ='/mystrybox'> Mystry Box</Link>
+                  <Link to='/mystrybox'> Mystry Box</Link>
                 </li>
               </ul>
             </div>
