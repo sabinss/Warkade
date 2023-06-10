@@ -65,15 +65,7 @@ export const LandingMain = () => {
             <div className='text-content'>
               <div className='banner-title'>
                 <h1>Mint to defeat</h1>
-                <h1>The Darklord</h1>
-              </div>
-              <div className='banner-text py-3'>
-                <p>
-                  Our Civilization is under <span>THREAT</span>. Mint Aptos
-                  Warcades to <span>DEFEAT</span> the Dark Lord. Minting 10
-                  Aptos Warcades <span>KILLS </span>one Dark Lord. Dark Lord has
-                  many faces but <span>VICTORY </span>can be acheived
-                </p>
+                <h1><span>The Darklord</span></h1>
               </div>
             </div>
           </div>
@@ -192,6 +184,7 @@ export const LandingMain = () => {
                       <span></span>
                       <span></span>
                       <span></span>
+                      <span></span>
                     </div>
                   </div>
                 </div>
@@ -232,10 +225,21 @@ export const LandingMain = () => {
                     </div>
                     {isWalletConnected && walletAccountInfo && (
                       <div className='img-flamesword'>
-                        <img
-                          src={require('../../assets/images/heart.png')}
-                          alt=''
-                        />
+                          {/* <div className="lifeline_heart nil-heart">
+                              <img src={require('../../assets/images/lifelines/0.gif')} alt="" />
+                          </div> */}
+                          {/* <div className="lifeline_heart low-heart">
+                              <img src={require('../../assets/images/1.png')} alt="" />
+                          </div> */}
+                          {/* <div className="lifeline_heart medium-heart">
+                              <img src={require('../../assets/images/lifelines/2.gif')} alt="" />
+                          </div> */}
+                          {/* <div className="lifeline_heart medium-heart">
+                              <img src={require('../../assets/images/lifelines/3.gif')} alt="" />
+                          </div> */}
+                          <div className="lifeline_heart full-heart">
+                              <img src={require('../../assets/images/lifelines/4.gif')} alt="" />
+                          </div>
                       </div>
                     )}
                   </div>
@@ -288,9 +292,7 @@ export const LandingMain = () => {
                     alt=''
                   />
                 </div>
-                <div className='flame-wrap'>
-                  <img src={require('../../assets/images/Torch.gif')} alt='' />
-                </div>
+             
               </div>
               <div className='brick-left'>
                 <div className='brick-icon-wrap'>
@@ -386,7 +388,7 @@ export const LandingMain = () => {
                         value='0.1'
                         className='hidden-check'
                       />
-                      <label htmlFor='0.1'>0.1</label>
+                      <label  htmlFor='0.1'><span className='apt-btn'> 0.1</span></label>
                     </div>
                   </div>
                   <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
@@ -397,7 +399,7 @@ export const LandingMain = () => {
                         value='0.2'
                         className='hidden-check'
                       />
-                      <label htmlFor='0.2'>0.2</label>
+                      <label  htmlFor='0.2'><span className='apt-btn'>0.2</span></label>
                     </div>
                   </div>
                   <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
@@ -408,7 +410,7 @@ export const LandingMain = () => {
                         value='0.3'
                         className='hidden-check'
                       />
-                      <label htmlFor='0.3'>0.3</label>
+                      <label  htmlFor='0.3'><span className='apt-btn'>0.3</span></label>
                     </div>
                   </div>
                   <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
@@ -419,7 +421,7 @@ export const LandingMain = () => {
                         value='0.5'
                         className='hidden-check'
                       />
-                      <label htmlFor='0.5'>0.5</label>
+                      <label  htmlFor='0.5'><span className='apt-btn'>0.5</span></label>
                     </div>
                   </div>
                   <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
@@ -430,7 +432,7 @@ export const LandingMain = () => {
                         value='0.7'
                         className='hidden-check'
                       />
-                      <label htmlFor='0.7'>0.7</label>
+                      <label  htmlFor='0.7'><span className='apt-btn'>0.7</span></label>
                     </div>
                   </div>
                   <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
@@ -441,7 +443,7 @@ export const LandingMain = () => {
                         value='1.0'
                         className='hidden-check'
                       />
-                      <label htmlFor='1.0'>1.0</label>
+                      <label  htmlFor='1.0'><span className='apt-btn'>1.0</span></label>
                     </div>
                   </div>
                 </div>

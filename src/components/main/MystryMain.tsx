@@ -78,19 +78,14 @@ export const MystryMain = () => {
                     <img
                       src={require('../../assets/images/Burning-Sword.gif')}
                       alt=''
-                    />
+                  />
                   </div>
-                  <div className='flame-wrap'>
-                    <img
-                      src={require('../../assets/images/Torch.gif')}
-                      alt=''
-                    />
-                  </div>
+                
                 </div>
               </div>
             </div>
             <div className='side-bottom'>
-              <p>So much NFT collecting, so little time.</p>
+             
               <div className='bottom-image-wrap'>
                 <div className='img-wrap'>
                   <img
@@ -119,51 +114,27 @@ export const MystryMain = () => {
                       <Link to ='/collections'> My Collection</Link>
                   </li>
                   <li className='selected'>
-                      <Link to ='/mystrybox'> Mystry Box</Link>
+                      <Link to ='/mysterybox'> Mystery Box</Link>
                   </li>
                 </ul>
               </div>
-              <ul className='list-unstyled d-flex icon-grp'>
-                <li>
-                  <div className='icon-holder'>
-                    <img
-                      src={require('../../assets/images/WarcadiaCoinAnimation.gif')}
-                      alt=''
-                    />
-                  </div>
-                </li>
-                <li>
-                  <div className='icon-holder'>
-                    <img
-                      src={require('../../assets/images/WarcadiaCoinAnimation.gif')}
-                      alt=''
-                    />
-                  </div>
-                </li>
-                <li>
-                  <div className='icon-holder'>
-                    <img
-                      src={require('../../assets/images/WarcadiaCoinAnimation.gif')}
-                      alt=''
-                    />
-                  </div>
-                </li>
-              </ul>
-              <h6>
-                Mystry Page
-              </h6>
+            
             </div>
-            <div className=''>
+            <div className='collection-frame hide-scrollbar'>
               <div className='row h-100 '>
-                <div className="collection-frame hide-scrollbar">
-                Mystry page
-                </div>
-                           
+                <div className="col-md-4 py-2">
+                    <div className="collection-card">
+                      <img src={require('../../assets/images/Mystery.jpg')} alt="" />
+                    </div>
+                </div> 
+                <div className="col-md-4 py-2">
+                    <div className="collection-card">
+                      <img src={require('../../assets/images/Mystery.jpg')} alt="" />
+                    </div>
+                </div>           
               </div>
             </div>
           </div>
-         
-     
         </div>
       </div>
     </div>

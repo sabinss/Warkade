@@ -16,10 +16,11 @@ body{
         height: auto;
         align-items: center;
         display: block;
-        justify-content: flex-end;
+        justify-content: center;
         @include breakpoint(md){
             display: flex;
             height: 82vh;
+            flex-grow: 1;
         }
     }
 }
@@ -149,13 +150,14 @@ header {
   }
   
   .index-home-section{
+    width: 90%;
     .banner-content{
         display: flex;
-        align-items: center;
+        align-items:stretch;
         flex-direction: column;
         height: 100%;
         position: relative;
-        padding-top: 40px;
+        
         .text-content{
             width: 100%;
             @include breakpoint(sm){
@@ -164,6 +166,7 @@ header {
             .banner-title{
                 display:inline-block;
                 width: 100%;
+                padding-bottom: 80px;
                 h1{
                     color: $primary-color;
                     text-transform: capitalize;
@@ -173,11 +176,16 @@ header {
                         font-size: 40px;
                     }
                     &:nth-child(2){
+                        text-align:center;
                         display: block;
+                      span{
+                        display: inline-block;
                         float: none;
                         background-color: $secondary-color;
                         color: white;
                        padding-right: 50px;
+                       padding-top: 15px;
+                       padding-bottom: 15px;
                        padding-left: 20px;
                         text-transform: uppercase;
                         position: relative;
@@ -192,8 +200,10 @@ header {
                             animation: blink 0.8s linear infinite;
                         }
                         @include breakpoint(sm){
-                            float: right;
+                    
                         }
+                      }
+                  
                     }
                 }
             }
@@ -278,7 +288,7 @@ header {
                         width: 50%;
                     }
                    @include breakpoint(md){
-                    width: 35%;
+                    width: 50%;
                    }
                 }
               
@@ -311,6 +321,33 @@ header {
                 margin:0 auto;
                 @include breakpoint(sm){
                     display: block;
+                }
+                .lifeline_heart{
+                    &.low-heart{
+                        img{
+                            animation: pulse 0.8s linear infinite;
+                        }
+                     
+                    }
+                    &.nil-heart{
+                        img{
+                            animation: pulse 0.5s linear infinite;
+                        }
+                     
+                    }
+                    &.medium-heart{
+                        img{
+                            animation: pulse 1.2s linear infinite;
+                        }
+                       
+                    }
+                    &.full-heart{
+                        img{
+                            animation: none;
+                            box-shadow: none!important;
+                        }
+                      
+                    }
                 }
                }
                 .image-holder{
@@ -372,7 +409,7 @@ header {
         display: none;
         &::after{
             content: "";
-            right: 12%;
+            right: 14%;
             position: absolute;
             top: 0;
             width: 3%;
@@ -381,41 +418,47 @@ header {
         }
         &:nth-child(2){
             &::after{
-                right: 10%;
+                right: 12%;
             }
             
         }
         &:nth-child(3){
             &::after{
-                right: 8%;
+                right: 10%;
             }
             
         }
         &:nth-child(4){
             &::after{
-                right: 6%;
+                right: 8%;
             }
            
         }
         &:nth-child(5){
             &::after{
-                right: 4%;
+                right: 6%;
             }
            
         }
         &:nth-child(6){
             &::after{
-                right:2%;
+                right:4%;
             }
            
         }
         &:nth-child(7){
             &::after{
-                right:0%;
+                right:2%;
             }
            
         }
         &:nth-child(8){
+            &::after{
+                right:0%;
+            }
+           
+        }
+        &:nth-child(9){
             &::after{
                 right:-2%;
             }
@@ -555,7 +598,7 @@ header {
 .collection-frame{
    
     background-color: #242424;
-    height: 500px;
+    height: 460px;
     margin: 20px 0px;
     padding: 10px 120px;
     border-radius: 20px;
@@ -563,7 +606,7 @@ header {
         .collection-card{
             margin:0px 0px 15px;
             background-color:#686868 ;
-            height: 225px;
+            height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -792,7 +835,7 @@ header {
             .bottom-line-grp{
                 position: relative;
                 padding-top: 5px;
-                margin-bottom:100px;
+                margin-bottom:60px;
                     &::before{
                         content: '';
                         position: absolute;
@@ -888,8 +931,10 @@ header {
                             max-width: 900px;
                             width: 100%;
                             overflow-x: hidden;
-                            width: 95%;
-                            margin-top: 130px;
+                            width: 90%;
+                            height: 90vh;
+                            overflow-y: scroll;
+                            margin-top: 20px;
                             @include breakpoint(sm){
                                 width: 900px;
                             }
@@ -903,6 +948,18 @@ header {
                                     font-size: 18px;
                                 }
                             }
+                            &::-webkit-scrollbar {
+                                width: 4px;
+                              }
+                              &::-webkit-scrollbar-track {
+                                background: #252525;
+                              }
+                              &::-webkit-scrollbar-thumb {
+                                background: $primary-color;
+                              }
+                              &::-webkit-scrollbar-thumb:hover {
+                                background: #A48837;
+                              }
                         }
                         &.faq-modal{
                             width: 100%;
@@ -1118,4 +1175,28 @@ header {
         }
     }
    
+}
+
+.apt-btn{
+    position: relative;
+    display: block;
+    &::after{
+        content: 'APT';
+        font-size: 7px;
+        width: auto;
+        height: auto;
+        margin-left: 2px;
+        margin-bottom: -5px;
+        color: $primary-color;
+       
+    }
+    &.large{
+        &:after{
+            position: absolute;
+            font-size: 8px;
+            color: white;
+            right: 5px;
+            bottom: 10px;
+        }
+    }
 }

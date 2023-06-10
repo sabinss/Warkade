@@ -18,7 +18,7 @@ function WarKade() {
           <Routes>
             <Route path='/' element={<Landing />}></Route>
             <Route path='/collections' element={<Collections />}></Route>
-            <Route path='/mystrybox' element={<Mystry />}></Route>
+            <Route path='/mysterybox' element={<Mystry />}></Route>
           </Routes>
         </BrowserRouter>
       </AppInit>
