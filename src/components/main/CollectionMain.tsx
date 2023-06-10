@@ -56,9 +56,9 @@ export const CollectionMain = () => {
   const MintingImageLoading = () => {
     return (
       <>
-        {Array.from(Array(6)).map((x) => {
+        {Array.from(Array(6)).map((x, index) => {
           return (
-            <div className='col-md-4 py-3'>
+            <div className='col-md-4 py-3' key={index}>
               <CollectionLoader />
             </div>
           );

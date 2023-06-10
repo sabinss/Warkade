@@ -130,34 +130,36 @@ const fetchTotalMint = (dispatch: any) => async (walletAddress: string) => {
   }
 };
 
-const fetchRemainingMint = (dispatch: any) => async (walletAddress: string) => {
-  if (walletAddress) {
-    const get_mint_uri = `https://fullnode.testnet.aptoslabs.com/v1/accounts/${walletAddress}/resource/0x74533a9947300fba32287f4d65e0cee49fbdc629a9f439701f3918901eb5c797::warkade::Player`;
-    try {
-      const response = await fetch(get_mint_uri);
-      const data = await response.json();
+const fetchRemainingMint =
+  (dispatch: any) => async (walletAddress: string, callback?: any) => {
+    if (walletAddress) {
+      const get_mint_uri = `https://fullnode.testnet.aptoslabs.com/v1/accounts/${walletAddress}/resource/0x74533a9947300fba32287f4d65e0cee49fbdc629a9f439701f3918901eb5c797::warkade::Player`;
+      try {
+        const response = await fetch(get_mint_uri);
+        const data = await response.json();
 
-      let totalBalance = +data.data.mints_remaining / 20;
+        let totalBalance = +data.data.mints_remaining / 20;
 
-      let health =
-        +data.data?.mints_remaining >= 20
-          ? 100
-          : +data.data?.mints_remaining * 5;
+        let health =
+          +data.data?.mints_remaining >= 20
+            ? 100
+            : +data.data?.mints_remaining * 5;
 
-      dispatch({
-        type: 'remaining_mint',
-        payload: {
-          ...data,
-          health,
-          totalBalance,
-          totalNumberOfMintRemaining: +data.data.mints_remaining,
-        },
-      });
-    } catch (err) {
-      console.log('fetch mint error', err);
+        dispatch({
+          type: 'remaining_mint',
+          payload: {
+            ...data,
+            health,
+            totalBalance,
+            totalNumberOfMintRemaining: +data.data.mints_remaining,
+          },
+        });
+        callback && callback();
+      } catch (err) {
+        console.log('fetch mint error', err);
+      }
     }
-  }
-};
+  };
 
 const connetAptosWallet =
   (dispatch: any) => async (data: any, callback: any) => {

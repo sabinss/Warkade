@@ -21,6 +21,8 @@ export const MintModal = ({
 }: IMintModal) => {
   const client = new AptosClient('https://fullnode.testnet.aptoslabs.com/v1');
 
+  const DARK_LORD_CODE = '0x03';
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const {
     state: {
@@ -37,6 +39,7 @@ export const MintModal = ({
   const [minting, setMinting] = useState(false);
   const [mintImageUri, setMintImageUri] = useState<null | string>(null);
   const [isFirstOpen, setIsFirstOpen] = useState(false);
+  const [darkLordMinted, setDarkLordMinted] = useState(false);
 
   useEffect(() => {
     return () => {
@@ -50,6 +53,59 @@ export const MintModal = ({
       '0x74533a9947300fba32287f4d65e0cee49fbdc629a9f439701f3918901eb5c797::warkade::mint',
     type_arguments: [],
     arguments: [],
+  };
+
+  const isDarkLordMinted = (checkDarkLordMint: any) => {
+    try {
+      const { changes } = checkDarkLordMint;
+      console.log({ changes });
+      const darkLordCheckArray = changes.find((obj: any) => {
+        if (obj?.data?.data?.inner?.data) {
+          return obj?.data?.data?.inner?.data;
+        }
+      });
+      console.log({ darkLordCheckArray });
+      const bodyCheck = darkLordCheckArray?.data?.data?.inner?.data.find(
+        (x: any) => x.key.toLowerCase() === 'body'
+      );
+      if (bodyCheck?.value?.value === DARK_LORD_CODE) {
+        console.log('dark lord minted successfully');
+        setDarkLordMinted(() => true);
+      } else {
+        console.log('normal mint');
+        setDarkLordMinted(() => false);
+      }
+    } catch (e) {
+      console.log('e', e);
+    }
+  };
+  // font-size: 10px;
+  // background: red;
+  // width: 100%;
+  // line-height: 18.5px;
+  // margin-bottom: 45px;
+  // margin-top: 20px;
+  const DarkLordMintedView = () => {
+    return (
+      <div style={{ marginBottom: 45, marginTop: 20 }}>
+        <p style={{ fontSize: 10 }}>
+          Congratulations you have been awarded a Mystery Box for minting the
+          Dark Lord.
+        </p>
+        <p style={{ fontSize: 10 }}>Try Again to mint more Dark Lords</p>
+      </div>
+    );
+  };
+
+  const NormalMintView = () => {
+    return (
+      <div style={{ marginBottom: 45, marginTop: 20 }}>
+        <p style={{ fontSize: 10 }}>
+          Congratulations you have minted a Aptos Warcade
+        </p>
+        <p style={{ fontSize: 10 }}>Try Again to mint more Dark Lords</p>
+      </div>
+    );
   };
 
   const showMintingView = () => {
@@ -69,11 +125,17 @@ export const MintModal = ({
               <p className='text-color'>Congratulation</p>
             </div>
           )}
+          {/* <DarkLordMintedView />
+           */}
+          {mintImageUri && darkLordMinted && <DarkLordMintedView />}
+          {mintImageUri && !darkLordMinted && <NormalMintView />}
           <div className='gif-holder'>
-            <img
-              src={require('../../assets/images/Burning-Sword.gif')}
-              alt=''
-            />
+            {!mintImageUri && (
+              <img
+                src={require('../../assets/images/Burning-Sword.gif')}
+                alt=''
+              />
+            )}
           </div>
           <Button
             name={mintImageUri ? 'Mint Again' : 'Mint'}
@@ -91,7 +153,12 @@ export const MintModal = ({
                 const transaction = await signAndSubmitTransaction(
                   mint_warcade
                 );
-
+                console.log({ transaction });
+                const checkDarkLordMint = await client.getTransactionByHash(
+                  transaction?.hash
+                );
+                const isDarkLord = isDarkLordMinted(checkDarkLordMint);
+                console.log({ checkDarkLordMint });
                 startMinting(transaction?.hash, (mintImageUri: string) => {
                   setMinting(() => true);
                   setMintImageUri(() => mintImageUri);

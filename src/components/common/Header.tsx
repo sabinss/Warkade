@@ -17,12 +17,17 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
   const [openDisconnetWallet, setDisconnectWallet] = useState(false);
   const [connecting, setConnecting] = useState(false);
   const {
-    state: { isWalletConnected, walletAccountInfo, mintRemaining },
+    state: {
+      isWalletConnected,
+      walletAccountInfo,
+      mintRemaining,
+      walletConnetLoading: loading,
+    },
     disconnectAptosWallet,
     fetchRemainingMint,
   } = useContext<any>(AuthContext);
   const [balanceModal, setBalanceModal] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [depositedAmount, setDepositedAmount] = useState<null | number>(null);
 
   const { signAndSubmitTransaction, disconnect } = useWallet();
@@ -32,11 +37,11 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
   };
 
   useEffect(() => {
-    fetchRemainingMint();
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 4000);
+    fetchRemainingMint(walletAccountInfo?.address);
+    // setLoading(true);
+    // setTimeout(() => {
+    //   setLoading(false);
+    // }, 3000);
     setConnecting(false);
   }, [walletAccountInfo, isWalletConnected]);
 
@@ -50,6 +55,10 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
     };
     try {
       const transaction = await signAndSubmitTransaction(deposit_payload);
+      // setBalanceModal(false);
+      fetchRemainingMint(walletAccountInfo?.address, () => {
+        setBalanceModal(false);
+      });
     } catch (error) {
       console.log('Deposit failed', error);
     }
@@ -57,6 +66,14 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
 
   const setDepositAmount = (depositAmount: any) => {
     setDepositedAmount(() => Math.pow(10, 8) * +depositAmount);
+  };
+
+  const displayWalletAddress = () => {
+    return (
+      walletAccountInfo?.address.slice(0, 4) +
+      '....' +
+      walletAccountInfo?.address.slice(-4)
+    );
   };
 
   return (
@@ -92,8 +109,8 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                     disconnectAptosWallet();
                   }}
                   name={
-                    walletAccountInfo &&
-                    truncateStringInBetween(walletAccountInfo?.address, 20)
+                    walletAccountInfo && displayWalletAddress()
+                    // truncateStringInBetween(walletAccountInfo?.address, 20)
                   }
                   className={[
                     'wr-primary-theme-btn wr-primary-theme-btn_header  px-3',
@@ -108,7 +125,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                     handleConnecting();
                     handleConnectWallet();
                   }}
-                  name={`${loading ? 'loading...' : 'connect wallets'}`}
+                  name={`${loading ? 'loading...' : 'connect wallet'}`}
                   className={[
                     `wr-primary-theme-btn wr-primary-theme-btn_header  px-3`,
                   ]}

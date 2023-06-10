@@ -50,6 +50,7 @@ export const LandingMain = () => {
       setBalanceModal(false);
       fetchTotalMint(walletAccountInfo?.address);
       fetchRemainingMint(walletAccountInfo?.address);
+      setBalanceModal(() => false);
       toast.success('Amount has been deposited successfully.');
     } catch (error: any) {
       toast.error(error?.message ?? 'Deposit failed. Please try again!.');
@@ -447,7 +448,10 @@ export const LandingMain = () => {
               </form>
               <Button
                 name='Deposit now'
-                onClick={handleDeposit}
+                onClick={() => {
+                  handleDeposit();
+                  setBalanceModal(false);
+                }}
                 className={[
                   'wr-primary-theme-btn my-3 mx-auto d-block px-3  text-uppercase',
                 ]}
