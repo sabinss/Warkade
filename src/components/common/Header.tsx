@@ -82,7 +82,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                     // disconnectAptosWallet();
                   }}
                   className={[
-                    'wr-primary-theme-btn wr-primary-theme-btn_header  mx-2  px-3',
+                    'wr-primary-theme-btn wr-primary-theme-btn_header apt-btn large  mx-2  px-3',
                   ]}
                 />
               )}
@@ -153,7 +153,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
             </div>
             <div className='modal-body'>
               <form action=''>
-                <div className='row'>
+                <div className='row w-100'>
                   <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
                     <div className='form-grp depo_selector'>
                       <input
@@ -163,7 +163,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                         onClick={() => setDepositAmount('0.1')}
                         className='hidden-check'
                       />
-                      <label htmlFor='0.1'>0.1</label>
+                      <label htmlFor='0.1' className='apt-btn large'>0.1</label>
                     </div>
                   </div>
                   <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
@@ -175,7 +175,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                         onClick={() => setDepositAmount('0.2')}
                         className='hidden-check'
                       />
-                      <label htmlFor='0.2'>0.2</label>
+                      <label htmlFor='0.2' className='apt-btn large'>0.2</label>
                     </div>
                   </div>
                   <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
@@ -187,7 +187,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                         onClick={() => setDepositAmount('0.3')}
                         className='hidden-check'
                       />
-                      <label htmlFor='0.3'>0.3</label>
+                      <label htmlFor='0.3' className='apt-btn large'>0.3</label>
                     </div>
                   </div>
                   <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
@@ -199,7 +199,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                         onClick={() => setDepositAmount('0.5')}
                         className='hidden-check'
                       />
-                      <label htmlFor='0.5'>0.5</label>
+                      <label htmlFor='0.5' className='apt-btn large'>0.5</label>
                     </div>
                   </div>
                   <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
@@ -211,7 +211,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                         onClick={() => setDepositAmount('0.7')}
                         className='hidden-check'
                       />
-                      <label htmlFor='0.7'>0.7</label>
+                      <label htmlFor='0.7' className='apt-btn large'>0.7</label>
                     </div>
                   </div>
                   <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
@@ -223,7 +223,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                         onClick={() => setDepositAmount('1.0')}
                         className='hidden-check'
                       />
-                      <label htmlFor='1.0'>1.0</label>
+                      <label htmlFor='1.0' className='apt-btn large'>1.0</label>
                     </div>
                   </div>
                 </div>
@@ -234,7 +234,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                   handleDeposit();
                 }}
                 className={[
-                  'wr-primary-theme-btn my-3 mx-auto d-block px-3  text-uppercase',
+                  'wr-primary-theme-btn my-5 mx-auto d-block px-3  text-uppercase',
                 ]}
               />
             </div>

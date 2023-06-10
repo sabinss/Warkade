@@ -204,17 +204,12 @@ export const CollectionMain = () => {
                       alt=''
                     />
                   </div>
-                  <div className='flame-wrap'>
-                    <img
-                      src={require('../../assets/images/Torch.gif')}
-                      alt=''
-                    />
-                  </div>
+               
                 </div>
               </div>
             </div>
             <div className='side-bottom'>
-              <p>So much NFT collecting, so little time.</p>
+              
               <div className='bottom-image-wrap'>
                 <div className='img-wrap'>
                   <img
@@ -238,44 +233,14 @@ export const CollectionMain = () => {
             <div className='tab-link-wrap'>
               <ul>
                 <li>
-                  <Link to='/collection'> My Collection</Link>
+                  <Link to='/collections'> My Collection</Link>
                 </li>
                 <li className='selected'>
-                  <Link to='/mystrybox'> Mystry Box</Link>
+                  <Link to='/mysterybox'> Mystery Box</Link>
                 </li>
               </ul>
             </div>
-            <div className='icon-grp-text icon-grp-text_reversed'>
-              <ul className='list-unstyled d-flex icon-grp'>
-                <li>
-                  <div className='icon-holder'>
-                    <img
-                      src={require('../../assets/images/WarcadiaCoinAnimation.gif')}
-                      alt=''
-                    />
-                  </div>
-                </li>
-                <li>
-                  <div className='icon-holder'>
-                    <img
-                      src={require('../../assets/images/WarcadiaCoinAnimation.gif')}
-                      alt=''
-                    />
-                  </div>
-                </li>
-                <li>
-                  <div className='icon-holder'>
-                    <img
-                      src={require('../../assets/images/WarcadiaCoinAnimation.gif')}
-                      alt=''
-                    />
-                  </div>
-                </li>
-              </ul>
-              <h6>
-                <Link to={'/collections'}>My Collection</Link>
-              </h6>
-            </div>
+        
             <div
               className={`collection-frame ${
                 mintImages.length <= 6 ? 'hide-scrollbar' : 'show-scrollbar'
