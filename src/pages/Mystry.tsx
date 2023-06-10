@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Header, Footer } from '../components';
 import { CollectionMain } from '../components/';
 import { ConnectWallet } from '../components/modal/ConnectWallet';
+import { CollectionLoader } from '../components/common/CollectionLoader';
+import { MystryMain } from '../components/main/MystryMain';
 
-export const Collections = () => {
+export const Mystry = () => {
   const [showConnectWallet, setShowConnectWallet] = useState(false);
   return (
     <div className='Collection'>
@@ -12,7 +14,7 @@ export const Collections = () => {
           setShowConnectWallet(true);
         }}
       />
-      <CollectionMain />
+        <MystryMain/>
       <ConnectWallet
         showModal={showConnectWallet}
         handleClose={() => setShowConnectWallet(false)}

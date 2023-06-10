@@ -8,6 +8,7 @@ import { truncateStringInBetween } from '../../utils/stringHelper';
 import { DisconnectWallet } from '../modal/DisconnectWallet';
 import { CustomModal } from '../modal/CustomModal';
 import { AiOutlineClose } from 'react-icons/ai';
+import { useWallet } from '@aptos-labs/wallet-adapter-react';
 interface IHeader {
   handleConnectWallet: () => void;
 }
@@ -16,23 +17,64 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
   const [openDisconnetWallet, setDisconnectWallet] = useState(false);
   const [connecting, setConnecting] = useState(false);
   const {
-    state: { isWalletConnected, walletAccountInfo },
+    state: {
+      isWalletConnected,
+      walletAccountInfo,
+      mintRemaining,
+      walletConnetLoading: loading,
+    },
     disconnectAptosWallet,
+    fetchRemainingMint,
   } = useContext<any>(AuthContext);
- const [balanceModal, setBalanceModal] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [balanceModal, setBalanceModal] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  const [depositedAmount, setDepositedAmount] = useState<null | number>(null);
+
+  const { signAndSubmitTransaction, disconnect } = useWallet();
 
   const handleConnecting = () => {
     setConnecting(true);
   };
 
   useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 4000);
+    fetchRemainingMint(walletAccountInfo?.address);
+    // setLoading(true);
+    // setTimeout(() => {
+    //   setLoading(false);
+    // }, 3000);
     setConnecting(false);
   }, [walletAccountInfo, isWalletConnected]);
+
+  const handleDeposit = async () => {
+    const deposit_payload = {
+      type: 'entry_function_payload',
+      function:
+        '0x74533a9947300fba32287f4d65e0cee49fbdc629a9f439701f3918901eb5c797::warkade::deposit',
+      type_arguments: [],
+      arguments: [depositedAmount],
+    };
+    try {
+      const transaction = await signAndSubmitTransaction(deposit_payload);
+      // setBalanceModal(false);
+      fetchRemainingMint(walletAccountInfo?.address, () => {
+        setBalanceModal(false);
+      });
+    } catch (error) {
+      console.log('Deposit failed', error);
+    }
+  };
+
+  const setDepositAmount = (depositAmount: any) => {
+    setDepositedAmount(() => Math.pow(10, 8) * +depositAmount);
+  };
+
+  const displayWalletAddress = () => {
+    return (
+      walletAccountInfo?.address.slice(0, 4) +
+      '....' +
+      walletAccountInfo?.address.slice(-4)
+    );
+  };
 
   return (
     <header>
@@ -47,22 +89,28 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
           </div>
           <div className='col-lg-8 col-sm-6 col-12'>
             <div className='head-right float-lg-end  float-sm-none px-lg--5 d-flex'>
-              <Button name='00.00' onClick={() => {
-                    setBalanceModal(true)
+              {isWalletConnected && walletAccountInfo && (
+                <Button
+                  name={mintRemaining?.totalBalance || '00.00'}
+                  onClick={() => {
+                    setBalanceModal(true);
                     // disconnectAptosWallet();
-                  }}   className={[
-                    'wr-primary-theme-btn wr-primary-theme-btn_header  mx-2  px-3',
+                  }}
+                  className={[
+                    'wr-primary-theme-btn wr-primary-theme-btn_header apt-btn large  mx-2  px-3',
                   ]}
-                  />
+                />
+              )}
               {isWalletConnected && walletAccountInfo ? (
                 <Button
                   onClick={() => {
+                    disconnect();
                     setDisconnectWallet(true);
-                    // disconnectAptosWallet();
+                    disconnectAptosWallet();
                   }}
                   name={
-                    walletAccountInfo &&
-                    truncateStringInBetween(walletAccountInfo?.address, 20)
+                    walletAccountInfo && displayWalletAddress()
+                    // truncateStringInBetween(walletAccountInfo?.address, 20)
                   }
                   className={[
                     'wr-primary-theme-btn wr-primary-theme-btn_header  px-3',
@@ -77,7 +125,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                     handleConnecting();
                     handleConnectWallet();
                   }}
-                  name={`${loading ? 'loading...' : 'connect wallets'}`}
+                  name={`${loading ? 'loading...' : 'connect wallet'}`}
                   className={[
                     `wr-primary-theme-btn wr-primary-theme-btn_header  px-3`,
                   ]}
@@ -98,59 +146,117 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
 
       />
       {/* // balanceModal */}
-    {
-      balanceModal &&
-      <CustomModal show={true} handleClose={()=>{setBalanceModal(false)}}>
-          <div className="deposit-modal">
-            <div className="modal-header">
+      {balanceModal && (
+        <CustomModal
+          show={true}
+          handleClose={() => {
+            setBalanceModal(false);
+          }}
+        >
+          <div className='deposit-modal'>
+            <div className='modal-header'>
               <h4 className='mb-3 text-center'>Deposit Now</h4>
-              <div onClick={()=>{}} className='close'>
-            <AiOutlineClose
-              style={{ color: '#E7D08C', fontWeight: 'bold', fontSize: 20 }}
-            />
-          </div>
+              <div
+                onClick={() => {
+                  setBalanceModal(false);
+                }}
+                className='close'
+              >
+                <AiOutlineClose
+                  style={{ color: '#E7D08C', fontWeight: 'bold', fontSize: 20 }}
+                />
+              </div>
             </div>
-            <div className="modal-body">
-             
-                <form action="">
-                  <div className="form-grp depo_selector">
-                    <input type="radio" name='amnt' value='0.1' className='hidden-check'  />
-                    <label htmlFor="0.1">0.1</label>
+            <div className='modal-body'>
+              <form action=''>
+                <div className='row w-100'>
+                  <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
+                    <div className='form-grp depo_selector'>
+                      <input
+                        type='radio'
+                        name='amnt'
+                        value='0.1'
+                        onClick={() => setDepositAmount('0.1')}
+                        className='hidden-check'
+                      />
+                      <label htmlFor='0.1' className='apt-btn large'>0.1</label>
+                    </div>
                   </div>
-                  <div className="form-grp depo_selector">
-                    <input type="radio" name='amnt' value='0.2' className='hidden-check'  />
-                    <label htmlFor="0.2">0.2</label>
+                  <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
+                    <div className='form-grp depo_selector'>
+                      <input
+                        type='radio'
+                        name='amnt'
+                        value='0.2'
+                        onClick={() => setDepositAmount('0.2')}
+                        className='hidden-check'
+                      />
+                      <label htmlFor='0.2' className='apt-btn large'>0.2</label>
+                    </div>
                   </div>
-                  <div className="form-grp depo_selector">
-                    <input type="radio" name='amnt' value='0.3' className='hidden-check'  />
-                    <label htmlFor="0.3">0.3</label>
+                  <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
+                    <div className='form-grp depo_selector'>
+                      <input
+                        type='radio'
+                        name='amnt'
+                        value='0.3'
+                        onClick={() => setDepositAmount('0.3')}
+                        className='hidden-check'
+                      />
+                      <label htmlFor='0.3' className='apt-btn large'>0.3</label>
+                    </div>
                   </div>
-                  <div className="form-grp depo_selector">
-                    <input type="radio" name='amnt' value='0.5' className='hidden-check'  />
-                    <label htmlFor="0.5">0.5</label>
+                  <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
+                    <div className='form-grp depo_selector'>
+                      <input
+                        type='radio'
+                        name='amnt'
+                        value='0.5'
+                        onClick={() => setDepositAmount('0.5')}
+                        className='hidden-check'
+                      />
+                      <label htmlFor='0.5' className='apt-btn large'>0.5</label>
+                    </div>
                   </div>
-                  <div className="form-grp depo_selector">
-                    <input type="radio" name='amnt' value='0.7' className='hidden-check'  />
-                    <label htmlFor="0.7">0.7</label>
+                  <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
+                    <div className='form-grp depo_selector'>
+                      <input
+                        type='radio'
+                        name='amnt'
+                        value='0.7'
+                        onClick={() => setDepositAmount('0.7')}
+                        className='hidden-check'
+                      />
+                      <label htmlFor='0.7' className='apt-btn large'>0.7</label>
+                    </div>
                   </div>
-                  <div className="form-grp depo_selector">
-                    <input type="radio" name='amnt' value='1.0' className='hidden-check'  />
-                    <label htmlFor="1.0">1.0</label>
+                  <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
+                    <div className='form-grp depo_selector'>
+                      <input
+                        type='radio'
+                        name='amnt'
+                        value='1.0'
+                        onClick={() => setDepositAmount('1.0')}
+                        className='hidden-check'
+                      />
+                      <label htmlFor='1.0' className='apt-btn large'>1.0</label>
+                    </div>
                   </div>
-                </form>
-                <Button name='Deposit now' onClick={() => {
-                    
-                    // disconnectAptosWallet();
-                  }}   className={[
-                    'wr-primary-theme-btn my-3 mx-auto d-block px-3  text-uppercase',
-                  ]}
-                  />
+                </div>
+              </form>
+              <Button
+                name='Deposit now'
+                onClick={() => {
+                  handleDeposit();
+                }}
+                className={[
+                  'wr-primary-theme-btn my-5 mx-auto d-block px-3  text-uppercase',
+                ]}
+              />
             </div>
           </div>
-      </CustomModal>
-    }
-
-
+        </CustomModal>
+      )}
     </header>
   );
 };

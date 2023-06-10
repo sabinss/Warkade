@@ -21,16 +21,25 @@ export const MintModal = ({
 }: IMintModal) => {
   const client = new AptosClient('https://fullnode.testnet.aptoslabs.com/v1');
 
+  const DARK_LORD_CODE = '0x03';
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const {
-    state: { mintImageUrl: stateMintImageUrl },
+    state: {
+      walletAccountInfo,
+      mintImageUrl: stateMintImageUrl,
+      totalNumberOfMintRemaining,
+    },
     startMinting,
+    fetchRemainingMint,
+    fetchTotalMint,
   } = useContext<any>(AuthContext);
   const { signAndSubmitTransaction } = useWallet();
 
   const [minting, setMinting] = useState(false);
   const [mintImageUri, setMintImageUri] = useState<null | string>(null);
   const [isFirstOpen, setIsFirstOpen] = useState(false);
+  const [darkLordMinted, setDarkLordMinted] = useState(false);
 
   useEffect(() => {
     return () => {
@@ -41,9 +50,57 @@ export const MintModal = ({
   const mint_warcade = {
     type: 'entry_function_payload',
     function:
-      '0xfdf9f2962710e0722e2694061419dc1594405a5e478a1d232350069a3253ff94::warkade::mint_warkade',
+      '0x74533a9947300fba32287f4d65e0cee49fbdc629a9f439701f3918901eb5c797::warkade::mint',
     type_arguments: [],
     arguments: [],
+  };
+
+  const isDarkLordMinted = (checkDarkLordMint: any) => {
+    try {
+      const { changes } = checkDarkLordMint;
+      console.log({ changes });
+      const darkLordCheckArray = changes.find((obj: any) => {
+        if (obj?.data?.data?.inner?.data) {
+          return obj?.data?.data?.inner?.data;
+        }
+      });
+      console.log({ darkLordCheckArray });
+      const bodyCheck = darkLordCheckArray?.data?.data?.inner?.data.find(
+        (x: any) => x.key.toLowerCase() === 'body'
+      );
+      if (bodyCheck?.value?.value === DARK_LORD_CODE) {
+        console.log('dark lord minted successfully');
+        setDarkLordMinted(() => true);
+      } else {
+        console.log('normal mint');
+        setDarkLordMinted(() => false);
+      }
+    } catch (e) {
+      console.log('e', e);
+    }
+  };
+
+  const DarkLordMintedView = () => {
+    return (
+      <div style={{ marginBottom: 45, marginTop: 20 }}>
+        <p style={{ fontSize: 10 }}>
+          Congratulations you have been awarded a Mystery Box for minting the
+          Dark Lord.
+        </p>
+        <p style={{ fontSize: 10 }}>Try Again to mint more Dark Lords</p>
+      </div>
+    );
+  };
+
+  const NormalMintView = () => {
+    return (
+      <div style={{ marginBottom: 45, marginTop: 20 }}>
+        <p style={{ fontSize: 10 }}>
+          Congratulations you have minted a Aptos Warcade
+        </p>
+        <p style={{ fontSize: 10 }}>Try Again to mint more Dark Lords</p>
+      </div>
+    );
   };
 
   const showMintingView = () => {
@@ -63,8 +120,16 @@ export const MintModal = ({
               <p className='text-color'>Congratulation</p>
             </div>
           )}
+        
+          {mintImageUri && darkLordMinted && <DarkLordMintedView />}
+          {mintImageUri && !darkLordMinted && <NormalMintView />}
           <div className='gif-holder'>
-            <img src={require('../../assets/images/flamesword.gif')} alt='' />
+            {!mintImageUri && (
+              <img
+                src={require('../../assets/images/Burning-Sword.gif')}
+                alt=''
+              />
+            )}
           </div>
           <Button
             name={mintImageUri ? 'Mint Again' : 'Mint'}
@@ -82,10 +147,18 @@ export const MintModal = ({
                 const transaction = await signAndSubmitTransaction(
                   mint_warcade
                 );
+                console.log({ transaction });
+                const checkDarkLordMint = await client.getTransactionByHash(
+                  transaction?.hash
+                );
+                const isDarkLord = isDarkLordMinted(checkDarkLordMint);
+                console.log({ checkDarkLordMint });
                 startMinting(transaction?.hash, (mintImageUri: string) => {
                   setMinting(() => true);
                   setMintImageUri(() => mintImageUri);
                   setMinting(() => false);
+                  fetchTotalMint(walletAccountInfo?.address);
+                  fetchRemainingMint(walletAccountInfo?.address);
                 });
                 setMinting(() => false);
               } catch (e: any) {
@@ -112,7 +185,10 @@ export const MintModal = ({
             <h2
               className='text-color close-btn'
               style={{ fontSize: 15 }}
-              onClick={handleClose}
+              onClick={() => {
+                handleClose();
+                reset();
+              }}
             >
               Close
             </h2>
@@ -122,20 +198,21 @@ export const MintModal = ({
     }
   };
 
+  const reset = () => {
+    setMintImageUri(null);
+    setMinting(false);
+    setIsFirstOpen(false);
+  };
+
   const showCardImage = () => {
-    console.log({ minting, mintImageUri });
-    if (!minting && !mintImageUri && !stateMintImageUrl) {
-      if (!isFirstOpen) {
-        return (
-          <img
-            src={require('../../assets/images/_.png')}
-            alt=''
-            style={{ width: '71px', height: '70px' }}
-          />
-        );
-      } else {
-        return null;
-      }
+    if (!minting && !mintImageUri) {
+      return (
+        <img
+          src={require('../../assets/images/Characters-shuffle.gif')}
+          alt=''
+          style={{ width: '100%', height: '100%' }}
+        />
+      );
     }
     if (minting && !mintImageUri) {
       return (
@@ -196,7 +273,13 @@ export const MintModal = ({
         />
       );
     }
-    return null;
+    return (
+      <img
+        src={require('../../assets/images/Characters-shuffle.gif')}
+        alt=''
+        style={{ width: '100%', height: '100%' }}
+      />
+    );
   };
 
   return (
@@ -204,6 +287,7 @@ export const MintModal = ({
       show={showModal}
       handleClose={() => {
         handleClose();
+        reset();
       }}
     >
       {/* design mint modal here */}
@@ -214,13 +298,31 @@ export const MintModal = ({
           </div>
           <div
             className='col-lg-1 mint-modal-header-icon close'
-            onClick={handleClose}
+            onClick={() => {
+              handleClose();
+              reset();
+            }}
           >
             <AiOutlineClose
-              style={{ color: '#E7D08C', fontWeight: 'bold', fontSize: 20 }}
+              style={{
+                color: '#E7D08C',
+                fontWeight: 'bold',
+                fontSize: 20,
+                marginTop: 10,
+              }}
             />
           </div>
         </div>
+        <p
+          style={{
+            fontSize: 10,
+            textAlign: 'center',
+            marginTop: 10,
+            marginBottom: 10,
+          }}
+        >
+          Total Remaining Mint: {totalNumberOfMintRemaining}
+        </p>
         <div className='mint-modal-body my-3'>
           <div className='mint-modal-body-card-wrapper d-flex'>
             <div className='flame-holder'>
@@ -237,7 +339,7 @@ export const MintModal = ({
               <img src={require('../../assets/images/Torch.gif')} alt='' />
             </div>
           </div>
-          <div className='d-inline-block my-3'>{showMintingView()}</div>
+          <div className='d-inline-block mb-3'>{showMintingView()}</div>
         </div>
       </div>
     </CustomModal>
