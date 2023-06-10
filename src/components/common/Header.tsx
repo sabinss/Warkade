@@ -97,7 +97,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                     // disconnectAptosWallet();
                   }}
                   className={[
-                    'wr-primary-theme-btn wr-primary-theme-btn_header apt-btn large  mx-2  px-3',
+                    'wr-primary-theme-btn wr-primary-theme-btn_header apt-btn  mx-2  px-3',
                   ]}
                 />
               )}

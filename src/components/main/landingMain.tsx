@@ -231,15 +231,15 @@ export const LandingMain = () => {
                           {/* <div className="lifeline_heart low-heart">
                               <img src={require('../../assets/images/1.png')} alt="" />
                           </div> */}
-                          {/* <div className="lifeline_heart medium-heart">
-                              <img src={require('../../assets/images/lifelines/2.gif')} alt="" />
-                          </div> */}
+                          <div className="lifeline_heart medium-heart">
+                              <img src={require('../../assets/images/lifelines/2.png')} alt="" />
+                          </div>
                           {/* <div className="lifeline_heart medium-heart">
                               <img src={require('../../assets/images/lifelines/3.gif')} alt="" />
                           </div> */}
-                          <div className="lifeline_heart full-heart">
-                              <img src={require('../../assets/images/lifelines/4.gif')} alt="" />
-                          </div>
+                          {/* <div className="lifeline_heart full-heart">
+                              <img src={require('../../assets/images/lifeline/4.png')} alt="" />
+                          </div> */}
                       </div>
                     )}
                   </div>

@@ -323,6 +323,7 @@ header {
                     display: block;
                 }
                 .lifeline_heart{
+                    position: relative;
                     &.low-heart{
                         img{
                             animation: pulse 0.8s linear infinite;
@@ -336,9 +337,13 @@ header {
                      
                     }
                     &.medium-heart{
+              
                         img{
                             animation: pulse 1.2s linear infinite;
+                            position: relative;
+                         
                         }
+
                        
                     }
                     &.full-heart{
