@@ -45,7 +45,6 @@ export const CollectionMain = () => {
       });
       const results = await Promise.all(promises);
       const filteredUrls = results.filter((url) => url !== null);
-
       setMintImages(filteredUrls);
       setMintingImageLoading(false);
     } catch (error) {
@@ -204,12 +203,10 @@ export const CollectionMain = () => {
                       alt=''
                     />
                   </div>
-               
                 </div>
               </div>
             </div>
             <div className='side-bottom'>
-              
               <div className='bottom-image-wrap'>
                 <div className='img-wrap'>
                   <img
@@ -232,15 +229,15 @@ export const CollectionMain = () => {
           <div className='col-lg-8'>
             <div className='tab-link-wrap'>
               <ul>
-                <li>
+                <li className='selected'>
                   <Link to='/collections'> My Collection</Link>
                 </li>
-                <li className='selected'>
+                <li>
                   <Link to='/mysterybox'> Mystery Box</Link>
                 </li>
               </ul>
             </div>
-        
+
             <div
               className={`collection-frame ${
                 mintImages.length <= 6 ? 'hide-scrollbar' : 'show-scrollbar'

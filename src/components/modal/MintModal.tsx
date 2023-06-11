@@ -58,21 +58,17 @@ export const MintModal = ({
   const isDarkLordMinted = (checkDarkLordMint: any) => {
     try {
       const { changes } = checkDarkLordMint;
-      console.log({ changes });
       const darkLordCheckArray = changes.find((obj: any) => {
         if (obj?.data?.data?.inner?.data) {
           return obj?.data?.data?.inner?.data;
         }
       });
-      console.log({ darkLordCheckArray });
       const bodyCheck = darkLordCheckArray?.data?.data?.inner?.data.find(
         (x: any) => x.key.toLowerCase() === 'body'
       );
       if (bodyCheck?.value?.value === DARK_LORD_CODE) {
-        console.log('dark lord minted successfully');
         setDarkLordMinted(() => true);
       } else {
-        console.log('normal mint');
         setDarkLordMinted(() => false);
       }
     } catch (e) {
@@ -153,12 +149,10 @@ export const MintModal = ({
                 const transaction = await signAndSubmitTransaction(
                   mint_warcade
                 );
-                console.log({ transaction });
                 const checkDarkLordMint = await client.getTransactionByHash(
                   transaction?.hash
                 );
                 const isDarkLord = isDarkLordMinted(checkDarkLordMint);
-                console.log({ checkDarkLordMint });
                 startMinting(transaction?.hash, (mintImageUri: string) => {
                   setMinting(() => true);
                   setMintImageUri(() => mintImageUri);

@@ -1,7 +1,7 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-export const MystryMain = () => {
+export const MystryMain = ({ count }: { count: number }) => {
   return (
     <div className='position-relative'>
       <div className='container-fluid custom-container'>
@@ -78,14 +78,12 @@ export const MystryMain = () => {
                     <img
                       src={require('../../assets/images/Burning-Sword.gif')}
                       alt=''
-                  />
+                    />
                   </div>
-                
                 </div>
               </div>
             </div>
             <div className='side-bottom'>
-             
               <div className='bottom-image-wrap'>
                 <div className='img-wrap'>
                   <img
@@ -107,36 +105,38 @@ export const MystryMain = () => {
           </div>
           <div className='col-lg-8'>
             <div className='icon-grp-text icon-grp-text_reversed'>
-              <div className="tab-link-wrap">
+              <div className='tab-link-wrap'>
                 <ul>
                   <li>
-                  
-                      <Link to ='/collections'> My Collection</Link>
+                    <Link to='/collections'> My Collection</Link>
                   </li>
                   <li className='selected'>
-                      <Link to ='/mysterybox'> Mystery Box</Link>
+                    <Link to='/mysterybox'> Mystery Box</Link>
                   </li>
                 </ul>
               </div>
-            
             </div>
             <div className='collection-frame hide-scrollbar'>
               <div className='row h-100 '>
-                <div className="col-md-4 py-2">
-                    <div className="collection-card">
-                      <img src={require('../../assets/images/Mystery.jpg')} alt="" />
-                    </div>
-                </div> 
-                <div className="col-md-4 py-2">
-                    <div className="collection-card">
-                      <img src={require('../../assets/images/Mystery.jpg')} alt="" />
-                    </div>
-                </div>           
+                {Array(count)
+                  .fill(0)
+                  .map((x) => {
+                    return (
+                      <div className='col-md-4 py-2'>
+                        <div className='collection-card'>
+                          <img
+                            src={require('../../assets/images/mystry-box.jpg')}
+                            alt=''
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

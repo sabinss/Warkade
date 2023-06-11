@@ -11,4 +11,5 @@ export interface AuthStateType {
   fetchingNoMint: boolean;
   totalMinted: null | number;
   totalNumberOfMintRemaining: null | number;
+  darkLordCount: number;
 }

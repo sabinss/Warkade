@@ -44,24 +44,30 @@ export async function startFetchMyQuery(
   state: any,
   callback: (mintImage: any) => any
 ) {
-  const { walletAccountInfo } = state;
-  const { errors, data } = await fetchMyQuery(walletAccountInfo);
-  let mintImages = [];
-  if (errors) {
-    // handle those errors like a pro
-    callback(null);
-  } else if (data) {
-    // do something great with this precious data
-    mintImages = data.current_token_ownerships_v2.map(async (mint: any) => {
-      const {
-        current_token_data: { token_uri },
-      } = mint;
-      const response = await fetch(token_uri);
-      const mintImage = await response.json();
+  try {
+    const { walletAccountInfo } = state;
+    const { errors, data } = await fetchMyQuery(walletAccountInfo);
+    let mintImages = [];
+    if (errors) {
+      // handle those errors like a pro
+      callback(null);
+    } else if (data) {
+      // do something great with this precious data
+      mintImages = data.current_token_ownerships_v2.map(async (mint: any) => {
+        const {
+          current_token_data: { token_uri },
+        } = mint;
+        try {
+          const response = await fetch(token_uri);
+          const mintImage = await response.json();
 
-      return mintImage;
-    });
-    const finalMintImages = await Promise.all(mintImages);
-    callback(finalMintImages);
-  }
+          return mintImage;
+        } catch (e) {
+          return null;
+        }
+      });
+      const finalMintImages = await Promise.all(mintImages);
+      callback(finalMintImages.filter((x) => x != null));
+    }
+  } catch (e) {}
 }

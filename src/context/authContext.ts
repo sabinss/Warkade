@@ -19,6 +19,7 @@ const initialState: AuthStateType = {
   fetchingNoMint: false,
   totalMinted: null,
   totalNumberOfMintRemaining: null,
+  darkLordCount: 0,
 };
 const authReducer: React.Reducer<AuthStateType, any> = (
   state = initialState,
@@ -64,6 +65,10 @@ const authReducer: React.Reducer<AuthStateType, any> = (
       };
     }
 
+    case 'fetch_darklord': {
+      return { ...state, darkLordCount: action.payload };
+    }
+
     case 'total_mint': {
       return { ...state, totalMinted: action.payload?.data };
     }
@@ -78,6 +83,15 @@ const authReducer: React.Reducer<AuthStateType, any> = (
     default:
       return state;
   }
+};
+
+const fetchDarkLordMystryBox = (dispatch: any) => async (walletAddres: any) => {
+  const darkLordUri = `https://api.aptoswarcade.com/darklord?wallet_address=${walletAddres}`;
+  try {
+    const response = await fetch(darkLordUri);
+    const data = await response.json();
+    dispatch({ type: 'fetch_darklord', payload: data?.data?.count });
+  } catch (er) {}
 };
 
 const setLoading = (dispatch: any) => async (isLoading: boolean) => {
@@ -193,6 +207,7 @@ export const { Context, Provider } = createDataContext(
     setLoading,
     fetchRemainingMint,
     fetchTotalMint,
+    fetchDarkLordMystryBox,
   },
   initialState
 );
