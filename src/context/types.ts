@@ -6,4 +6,11 @@ export interface AuthStateType {
   isMinting: boolean;
   mintImageUrl: null | string;
   mintError: any;
+  walletConnetLoading: boolean;
+  mintRemaining: any;
+  fetchingNoMint: boolean;
+  totalMinted: null | number;
+  totalNumberOfMintRemaining: null | number;
+  darkLordCount: number;
+  darkLordLoading: boolean;
 }

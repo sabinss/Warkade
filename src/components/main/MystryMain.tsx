@@ -1,58 +1,48 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { startFetchMyQuery } from './fetchCollectionData';
 import { Context as AuthContext } from '../../context';
 import { ConnectWallet } from '../modal/ConnectWallet';
-import ErrorBoundary from '../Errorboundary';
 import { CollectionLoader } from '../common/CollectionLoader';
 
-export const CollectionMain = () => {
-  const [isWalletConnected, setWalletConnected] = useState(false);
-  const { state } = useContext<any>(AuthContext);
-  const [mintImages, setMintImages] = useState<any[]>([]);
-  const [fetchingMintImages, setFetchingMintImages] = useState(true);
+export const MystryMain = ({ count }: { count: number }) => {
   const [connectWalletModal, setConnectWalletModal] = useState(false);
-  const [mintingImageLoading, setMintingImageLoading] = useState(false);
-  const [imageExists, setImageExists] = useState(true);
 
-  useEffect(() => {
-    setMintingImageLoading(true);
-    if (!state.walletAccountInfo) {
-      setMintingImageLoading(false);
-    }
-    if (state.walletAccountInfo) {
-      startFetchMyQuery(state, (data) => {
-        if (data) {
-          setFetchingMintImages(false);
-          setMintImages(data);
-          checkImageExistence(data);
-        } else {
-          setFetchingMintImages(false);
-        }
-        setMintingImageLoading(false);
-      });
+  const {
+    state: { darkLordCount, walletAccountInfo, darkLordLoading },
+    fetchDarkLordMystryBox,
+  } = useContext<any>(AuthContext);
+
+  const DisconnectedView = () => {
+    if (!walletAccountInfo) {
+      return (
+        <div className='col-lg-12'>
+          <div className='disconneted-frame d-flex align-items-center justify-content-center'>
+            <p>Please Connect Your Wallet to View Your Mystry Box</p>
+            <div className='btn-wrap w-100 py-3'>
+              <button
+                className='wr-primary-theme-btn mx-auto d-block'
+                onClick={() => {
+                  setConnectWalletModal(true);
+                }}
+              >
+                Connect wallet
+              </button>
+            </div>
+          </div>
+        </div>
+      );
     } else {
-      setMintImages([]);
-    }
-  }, [state.walletAccountInfo]);
-
-  const checkImageExistence = async (images: any) => {
-    try {
-      setMintingImageLoading(true);
-      const promises = images.map((x: any) => {
-        return new Promise((resolve) => {
-          const img = new Image();
-          img.onload = () => resolve(x);
-          img.onerror = () => resolve(null);
-          img.src = x.image;
-        });
-      });
-      const results = await Promise.all(promises);
-      const filteredUrls = results.filter((url) => url !== null);
-      setMintImages(filteredUrls);
-      setMintingImageLoading(false);
-    } catch (error) {
-      setMintingImageLoading(false);
+      return (
+        <div className='col-lg-12'>
+          <div className='disconneted-frame d-flex align-items-center justify-content-center'>
+            <p>
+              {' '}
+              You have not minted any dark lord yet. Mystery box will be
+              available only if you minted dark lords.
+            </p>
+          </div>
+        </div>
+      );
     }
   };
 
@@ -67,65 +57,6 @@ export const CollectionMain = () => {
           );
         })}
       </>
-    );
-  };
-
-  const ConnectedView = () => {
-    return (
-      <>
-        {mintImages.map((mintImage: any, index: number) => {
-          setImageExists(() => true);
-          const handleImageError = (
-            event: React.SyntheticEvent<HTMLImageElement>
-          ) => {
-            event.currentTarget.style.display = 'none';
-            setImageExists(() => false); // Hide the image on error
-          };
-          return (
-            <div className='col-md-4 py-3'>
-              <div
-                className='collection-card'
-                style={{ borderRadius: 10, height: 200 }}
-              >
-                <div
-                  className='card-img'
-                  style={{ width: '90%', height: '90%' }}
-                >
-                  {imageExists ? (
-                    <img
-                      src={mintImage.image}
-                      alt=''
-                      onError={handleImageError}
-                    />
-                  ) : (
-                    <p>No image found</p>
-                  )}
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </>
-    );
-  };
-
-  const DisconnectedView = () => {
-    return (
-      <div className='col-lg-12'>
-        <div className='disconneted-frame d-flex align-items-center justify-content-center'>
-          <p>Please Connect Your Wallet to View Your Collection</p>
-          <div className='btn-wrap w-100 py-3'>
-            <button
-              className='wr-primary-theme-btn mx-auto d-block'
-              onClick={() => {
-                setConnectWalletModal(true);
-              }}
-            >
-              Connect wallet
-            </button>
-          </div>
-        </div>
-      </div>
     );
   };
 
@@ -231,41 +162,47 @@ export const CollectionMain = () => {
             </div>
           </div>
           <div className='col-lg-8'>
-            <div className='tab-link-wrap'>
-              <ul>
-                <li className='selected'>
-                  <Link to='/collections'> My Collection</Link>
-                </li>
-                <li>
-                  <Link to='/mysterybox'> Mystery Box</Link>
-                </li>
-              </ul>
+            <div className='icon-grp-text icon-grp-text_reversed'>
+              <div className='tab-link-wrap'>
+                <ul>
+                  <li>
+                    <Link to='/collections'> My Collection</Link>
+                  </li>
+                  <li className='selected'>
+                    <Link to='/mysterybox'> Mystery Box</Link>
+                  </li>
+                </ul>
+              </div>
             </div>
-
-            <div
-              className={`collection-frame ${
-                mintImages.length <= 6 ? 'hide-scrollbar' : 'show-scrollbar'
-              }`}
-            >
+            <ConnectWallet
+              showModal={connectWalletModal}
+              handleClose={() => setConnectWalletModal(false)}
+            />
+            <div className='collection-frame hide-scrollbar'>
               <div className='row h-100 '>
-                {mintingImageLoading ? (
+                {darkLordLoading ? (
                   <MintingImageLoading />
-                ) : state.isWalletConnected && state.walletAccountInfo ? (
-                  <ErrorBoundary>
-                    <ConnectedView />
-                  </ErrorBoundary>
+                ) : walletAccountInfo && count > 0 ? (
+                  Array(count)
+                    .fill(0)
+                    .map((x) => {
+                      return (
+                        <div className='col-md-4 py-2'>
+                          <div className='collection-card'>
+                            <img
+                              src={require('../../assets/images/mystry-box.jpg')}
+                              alt=''
+                            />
+                          </div>
+                        </div>
+                      );
+                    })
                 ) : (
                   <DisconnectedView />
                 )}
               </div>
             </div>
           </div>
-          <ConnectWallet
-            showModal={connectWalletModal}
-            handleClose={() => {
-              setConnectWalletModal(false);
-            }}
-          />
         </div>
       </div>
     </div>

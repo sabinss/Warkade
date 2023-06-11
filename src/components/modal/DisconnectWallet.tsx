@@ -5,6 +5,7 @@ import { WalletNames } from '../../enums';
 import { Context as AuthContext } from '../../context';
 import { useContext } from 'react';
 import { getLocalStorageItem } from '../../utils/localstorageService';
+import { useWallet } from '@aptos-labs/wallet-adapter-react';
 
 interface IDisconnectWallet {
   showModal: boolean;
@@ -21,9 +22,11 @@ export const DisconnectWallet = ({
 }: IDisconnectWallet) => {
   const {
     state: { connectedWalletName },
+    disconnectAptosWallet,
   } = useContext<any>(AuthContext);
 
   const walletName = getLocalStorageItem('walletName');
+  const { disconnect } = useWallet();
 
   const showWalletImage = () => {
     if (walletName.toLowerCase() === 'petra') {
@@ -74,7 +77,9 @@ export const DisconnectWallet = ({
             textStyle={{ fontSize: 9 }}
             className={['wr-primary-theme-btn', 'disconnet-wallet-btn']}
             onClick={() => {
+              disconnect();
               handleDisconnet();
+              disconnectAptosWallet();
             }}
           />
         </div>

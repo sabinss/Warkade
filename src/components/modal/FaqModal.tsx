@@ -33,16 +33,16 @@ export const FaqModal = ({showModal, handleClose}:IFaqModal) => {
                     <div className='mint-modal-body-card-wrapper'>
                         <div className='faq-card text-start'>
                             <ol>
-                                <li>Are there any utilities for NFTs?
+                                <li><span>Are there any utilities for NFTs?</span>
                                 <p>There are no utilities for NFTs. The project is just for
                                     fun.</p>
                                 </li>
-                                    <li>Will there be a Season 2?
+                                    <li><span>Will there be a Season 2?</span>
                                     <p>There will be a season 2.</p></li>
-                                    <li>Are there any utilities for NFTs?
+                                    <li> <span>Are there any utilities for NFTs?</span>
                                     <p>There are no utilities for NFTs. The project is just for
                                     fun.</p></li>
-                                    <li>Are there any utilities for NFTs?
+                                    <li><span>Are there any utilities for NFTs?</span>
                                     <p>There are no utilities for NFTs. The project is just for
                                     fun.</p>
                                     </li>

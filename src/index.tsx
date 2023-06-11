@@ -11,17 +11,12 @@ import '../src/assets/styles/index.scss';
 import { PetraWallet } from 'petra-plugin-wallet-adapter';
 import { BloctoWallet } from '@blocto/aptos-wallet-adapter-plugin';
 import { MartianWallet } from '@martianwallet/aptos-wallet-adapter';
-import {
-  WalletCore,
-  WalletName,
-  PluginProvider,
-  NetworkName,
-} from '@aptos-labs/wallet-adapter-core';
+import { WalletCore, NetworkName } from '@aptos-labs/wallet-adapter-core';
 
 import { AptosWalletAdapterProvider } from '@aptos-labs/wallet-adapter-react';
 // import ErrorBoundary from './components/Errorboundary';
 import { ErrorBoundary } from 'react-error-boundary';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 let network = NetworkName.Testnet;
@@ -42,7 +37,6 @@ const wallets = [
 export const aptosWallet = new WalletCore(wallets);
 
 function ErrorFallback({ error, resetErrorBoundary }: any) {
-  console.log('error', error, resetErrorBoundary);
   return (
     <div>
       <h2>Something went wrong:</h2>
