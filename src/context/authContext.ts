@@ -128,9 +128,15 @@ const startMinting =
         requestOptions
       );
       const mintImage = await response.json();
-      callback(mintImage?.urls?.image);
+      console.log(mintImage);
+      mintImage?.msg === 'Some error occured!'
+        ? callback(null, 'error')
+        : callback(mintImage?.urls?.image);
+
       dispatch({ type: 'minting_success', payload: mintImage?.urls?.image });
     } catch (err) {
+      console.log('minting err', err);
+      callback(null, err);
       dispatch({ type: 'minting_failure', payload: err });
     }
   };

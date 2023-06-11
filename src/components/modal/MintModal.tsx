@@ -121,8 +121,7 @@ export const MintModal = ({
               <p className='text-color'>Congratulation</p>
             </div>
           )}
-          {/* <DarkLordMintedView />
-           */}
+
           {mintImageUri && darkLordMinted && <DarkLordMintedView />}
           {mintImageUri && !darkLordMinted && <NormalMintView />}
           <div className='gif-holder'>
@@ -153,13 +152,23 @@ export const MintModal = ({
                   transaction?.hash
                 );
                 const isDarkLord = isDarkLordMinted(checkDarkLordMint);
-                startMinting(transaction?.hash, (mintImageUri: string) => {
-                  setMinting(() => true);
-                  setMintImageUri(() => mintImageUri);
-                  setMinting(() => false);
-                  fetchTotalMint(walletAccountInfo?.address);
-                  fetchRemainingMint(walletAccountInfo?.address);
-                });
+                startMinting(
+                  transaction?.hash,
+                  (mintImageUri: string, err: any) => {
+                    if (mintImageUri) {
+                      // setMinting(() => true);
+                      setMintImageUri(mintImageUri);
+                      setMinting(false);
+                      fetchTotalMint(walletAccountInfo?.address);
+                      fetchRemainingMint(walletAccountInfo?.address);
+                    } else if (err) {
+                      handleClose();
+                      setMinting(() => false);
+                      setMintImageUri(null);
+                      toast.error('Minting failed.Please try again.');
+                    }
+                  }
+                );
                 setMinting(() => false);
               } catch (e: any) {
                 toast.error(
