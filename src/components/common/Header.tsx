@@ -104,7 +104,6 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
               {isWalletConnected && walletAccountInfo ? (
                 <Button
                   onClick={() => {
-                    disconnect();
                     setDisconnectWallet(true);
                     disconnectAptosWallet();
                   }}
@@ -140,6 +139,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
         showModal={openDisconnetWallet}
         connectedWallet={'Petra'}
         handleDisconnet={() => {
+          disconnect();
           setDisconnectWallet(false);
           disconnectAptosWallet();
         }}
@@ -178,7 +178,9 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                         onClick={() => setDepositAmount('0.1')}
                         className='hidden-check'
                       />
-                      <label htmlFor='0.1' className='apt-btn large'>0.1</label>
+                      <label htmlFor='0.1' className='apt-btn large'>
+                        0.1
+                      </label>
                     </div>
                   </div>
                   <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
@@ -190,7 +192,9 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                         onClick={() => setDepositAmount('0.2')}
                         className='hidden-check'
                       />
-                      <label htmlFor='0.2' className='apt-btn large'>0.2</label>
+                      <label htmlFor='0.2' className='apt-btn large'>
+                        0.2
+                      </label>
                     </div>
                   </div>
                   <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
@@ -202,7 +206,9 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                         onClick={() => setDepositAmount('0.3')}
                         className='hidden-check'
                       />
-                      <label htmlFor='0.3' className='apt-btn large'>0.3</label>
+                      <label htmlFor='0.3' className='apt-btn large'>
+                        0.3
+                      </label>
                     </div>
                   </div>
                   <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
@@ -214,7 +220,9 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                         onClick={() => setDepositAmount('0.5')}
                         className='hidden-check'
                       />
-                      <label htmlFor='0.5' className='apt-btn large'>0.5</label>
+                      <label htmlFor='0.5' className='apt-btn large'>
+                        0.5
+                      </label>
                     </div>
                   </div>
                   <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
@@ -226,7 +234,9 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                         onClick={() => setDepositAmount('0.7')}
                         className='hidden-check'
                       />
-                      <label htmlFor='0.7' className='apt-btn large'>0.7</label>
+                      <label htmlFor='0.7' className='apt-btn large'>
+                        0.7
+                      </label>
                     </div>
                   </div>
                   <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
@@ -238,7 +248,9 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
                         onClick={() => setDepositAmount('1.0')}
                         className='hidden-check'
                       />
-                      <label htmlFor='1.0' className='apt-btn large'>1.0</label>
+                      <label htmlFor='1.0' className='apt-btn large'>
+                        1.0
+                      </label>
                     </div>
                   </div>
                 </div>

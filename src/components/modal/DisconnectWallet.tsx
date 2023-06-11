@@ -76,7 +76,6 @@ export const DisconnectWallet = ({
             textStyle={{ fontSize: 9 }}
             className={['wr-primary-theme-btn', 'disconnet-wallet-btn']}
             onClick={() => {
-              console.log('disconnet');
               handleDisconnet();
             }}
           />
