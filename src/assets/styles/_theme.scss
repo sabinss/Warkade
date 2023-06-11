@@ -328,7 +328,7 @@ header {
                             animation: pulse 0.8s linear infinite;
                             
                             rect{
-                                filter: drop-shadow(30px 10px 30px red);
+                                filter: drop-shadow(30px 10px 40px red);
                             }
                         }
                      
@@ -336,6 +336,9 @@ header {
                     &.nil-heart{
                         svg{
                             animation: pulse 0.5s linear infinite;
+                            rect{
+                                filter: drop-shadow(30px 10px 40px red);
+                            }
                         }
                      
                     }
@@ -344,7 +347,9 @@ header {
                         svg{
                             animation: pulse 1.2s linear infinite;
                             position: relative;
-                         
+                            rect{
+                                filter: drop-shadow(30px 10px 40px red);
+                            }
                         }
 
                        
