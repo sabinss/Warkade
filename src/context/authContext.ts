@@ -161,7 +161,7 @@ const fetchTotalMint = (dispatch: any) => async (walletAddress: string) => {
 const fetchRemainingMint =
   (dispatch: any) => async (walletAddress: string, callback?: any) => {
     if (walletAddress) {
-      const get_mint_uri = `https://fullnode.testnet.aptoslabs.com/v1/accounts/${walletAddress}/resource/0x74533a9947300fba32287f4d65e0cee49fbdc629a9f439701f3918901eb5c797::warkade::Player`;
+      const get_mint_uri = `https://fullnode.testnet.aptoslabs.com/v1/accounts/${walletAddress}/resource/0xde47db933dd0148fc85631714a73d90ba56c1150bfcc32179e1ee2200e7838e0::warkade::Player`;
       try {
         const response = await fetch(get_mint_uri);
         const data = await response.json();

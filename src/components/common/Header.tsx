@@ -50,7 +50,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
     const deposit_payload = {
       type: 'entry_function_payload',
       function:
-        '0x74533a9947300fba32287f4d65e0cee49fbdc629a9f439701f3918901eb5c797::warkade::deposit',
+        '0xde47db933dd0148fc85631714a73d90ba56c1150bfcc32179e1ee2200e7838e0::warkade::deposit',
       type_arguments: [],
       arguments: [depositedAmount],
     };

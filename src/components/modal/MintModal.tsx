@@ -21,7 +21,7 @@ export const MintModal = ({
 }: IMintModal) => {
   const client = new AptosClient('https://fullnode.testnet.aptoslabs.com/v1');
 
-  const DARK_LORD_CODE = 'Dark Lord';
+  const DARK_LORD_CODE = '0x094461726b204c6f7264';
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const {
@@ -50,7 +50,7 @@ export const MintModal = ({
   const mint_warcade = {
     type: 'entry_function_payload',
     function:
-      '0x74533a9947300fba32287f4d65e0cee49fbdc629a9f439701f3918901eb5c797::warkade::mint',
+      '0xde47db933dd0148fc85631714a73d90ba56c1150bfcc32179e1ee2200e7838e0::warkade::mint',
     type_arguments: [],
     arguments: [],
   };
@@ -67,7 +67,7 @@ export const MintModal = ({
         (x: any) => x.key.toLowerCase() === 'body'
       );
       if (
-        bodyCheck?.value?.value.toLowerCase() === DARK_LORD_CODE.toLowerCase()
+        bodyCheck?.value?.value === DARK_LORD_CODE
       ) {
         setDarkLordMinted(() => true);
       } else {
