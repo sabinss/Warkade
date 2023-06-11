@@ -71,9 +71,7 @@ export const MintModal = ({
       } else {
         setDarkLordMinted(() => false);
       }
-    } catch (e) {
-      console.log('e', e);
-    }
+    } catch (e) {}
   };
   // font-size: 10px;
   // background: red;

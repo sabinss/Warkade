@@ -4,7 +4,7 @@ import { FaqModal } from '../modal/FaqModal';
 
 export const Footer = () => {
   const [showStoryModal, setShowStoryModal] = useState(false);
-  const [showFaqModal, setShowFaqModal] = useState(false)
+  const [showFaqModal, setShowFaqModal] = useState(false);
   return (
     <footer>
       <div className='containter-fluid px-lg-5 px-sm-2'>
@@ -12,7 +12,7 @@ export const Footer = () => {
           <div className='row align-items-center'>
             <div className='col-lg-3 col-12'>
               <div className='footer-content-wrap footer-left'>
-                <a href=''>© APTOS WARCADES</a>
+                <a href=''>© APTOS WARCADE</a>
               </div>
             </div>
             <div className='col-lg-4 col-12'>
@@ -48,11 +48,11 @@ export const Footer = () => {
           setShowStoryModal(false);
         }}
       />
-      <FaqModal 
-      showModal ={showFaqModal}
-      handleClose={() => {
-        setShowFaqModal(false);
-      }}
+      <FaqModal
+        showModal={showFaqModal}
+        handleClose={() => {
+          setShowFaqModal(false);
+        }}
       />
     </footer>
   );
