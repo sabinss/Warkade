@@ -42,23 +42,26 @@ export const ConnectWallet = ({ handleClose, showModal }: IConnectWallet) => {
   ];
 
   const { connect, account, disconnect } = useWallet();
+
+  console.log('account', account);
   const aptosWalletNetwork = new WalletCore(aptosWallet);
 
-  // useEffect(() => {
-  //   if (account) {
-  //     setLoading(false);
-  //   }
-  // }, [account]);
+  useEffect(() => {
+    if (account) {
+      connetAptosWallet(account, () => {
+        setLoading(false);
+      });
+    }
+  }, [account]);
 
   // for blocto wallet
   // const client = new AptosClient('https://fullnode.mainnet.aptoslabs.com/v1');
 
+  useEffect(() => {}, [account]);
   const handleSelectWallet = (walletName: string) => {
     try {
       handleConnectWallet(walletName);
     } catch (e) {}
-    // setSelectedWallet(walletName);
-    //
   };
   const handleConnectWallet = async (walletName: string) => {
     try {

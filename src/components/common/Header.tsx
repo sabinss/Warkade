@@ -104,8 +104,9 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
               {isWalletConnected && walletAccountInfo ? (
                 <Button
                   onClick={() => {
+                    handleConnectWallet();
                     setDisconnectWallet(true);
-                    disconnectAptosWallet();
+                    // disconnectAptosWallet();
                   }}
                   name={
                     walletAccountInfo && displayWalletAddress()
@@ -139,9 +140,13 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
         showModal={openDisconnetWallet}
         connectedWallet={'Petra'}
         handleDisconnet={() => {
-          disconnect();
-          setDisconnectWallet(false);
-          disconnectAptosWallet();
+          try {
+            disconnect();
+            setDisconnectWallet(false);
+            disconnectAptosWallet();
+          } catch (e) {
+            console.log('diconnect wallet', e);
+          }
         }}
       />
       {/* // balanceModal */}

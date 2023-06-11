@@ -22,6 +22,7 @@ export const DisconnectWallet = ({
 }: IDisconnectWallet) => {
   const {
     state: { connectedWalletName },
+    disconnectAptosWallet,
   } = useContext<any>(AuthContext);
 
   const walletName = getLocalStorageItem('walletName');
@@ -76,7 +77,9 @@ export const DisconnectWallet = ({
             textStyle={{ fontSize: 9 }}
             className={['wr-primary-theme-btn', 'disconnet-wallet-btn']}
             onClick={() => {
+              disconnect();
               handleDisconnet();
+              disconnectAptosWallet();
             }}
           />
         </div>

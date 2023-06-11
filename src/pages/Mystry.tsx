@@ -16,8 +16,6 @@ export const Mystry = () => {
     fetchDarkLordMystryBox(walletAccountInfo?.address);
   }, [walletAccountInfo?.address]);
 
-  console.log({ darkLordCount, walletAccountInfo });
-
   const [showConnectWallet, setShowConnectWallet] = useState(false);
   return (
     <div className='Collection'>
@@ -27,10 +25,7 @@ export const Mystry = () => {
         }}
       />
       <MystryMain count={darkLordCount} />
-      <ConnectWallet
-        showModal={showConnectWallet}
-        handleClose={() => setShowConnectWallet(false)}
-      />
+
       <Footer />
     </div>
   );

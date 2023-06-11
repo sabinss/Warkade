@@ -1,7 +1,65 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { Context as AuthContext } from '../../context';
+import { ConnectWallet } from '../modal/ConnectWallet';
+import { CollectionLoader } from '../common/CollectionLoader';
 
 export const MystryMain = ({ count }: { count: number }) => {
+  const [connectWalletModal, setConnectWalletModal] = useState(false);
+
+  const {
+    state: { darkLordCount, walletAccountInfo, darkLordLoading },
+    fetchDarkLordMystryBox,
+  } = useContext<any>(AuthContext);
+
+  const DisconnectedView = () => {
+    if (!walletAccountInfo) {
+      return (
+        <div className='col-lg-12'>
+          <div className='disconneted-frame d-flex align-items-center justify-content-center'>
+            <p>Please Connect Your Wallet to View Your Mystry Box</p>
+            <div className='btn-wrap w-100 py-3'>
+              <button
+                className='wr-primary-theme-btn mx-auto d-block'
+                onClick={() => {
+                  setConnectWalletModal(true);
+                }}
+              >
+                Connect wallet
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className='col-lg-12'>
+          <div className='disconneted-frame d-flex align-items-center justify-content-center'>
+            <p>
+              {' '}
+              You have not minted any dark lord yet. Mystery box will be
+              available only if you minted dark lords.
+            </p>
+          </div>
+        </div>
+      );
+    }
+  };
+
+  const MintingImageLoading = () => {
+    return (
+      <>
+        {Array.from(Array(6)).map((x, index) => {
+          return (
+            <div className='col-md-4 py-3' key={index}>
+              <CollectionLoader />
+            </div>
+          );
+        })}
+      </>
+    );
+  };
+
   return (
     <div className='position-relative'>
       <div className='container-fluid custom-container'>
@@ -116,22 +174,32 @@ export const MystryMain = ({ count }: { count: number }) => {
                 </ul>
               </div>
             </div>
+            <ConnectWallet
+              showModal={connectWalletModal}
+              handleClose={() => setConnectWalletModal(false)}
+            />
             <div className='collection-frame hide-scrollbar'>
               <div className='row h-100 '>
-                {Array(count)
-                  .fill(0)
-                  .map((x) => {
-                    return (
-                      <div className='col-md-4 py-2'>
-                        <div className='collection-card'>
-                          <img
-                            src={require('../../assets/images/mystry-box.jpg')}
-                            alt=''
-                          />
+                {darkLordLoading ? (
+                  <MintingImageLoading />
+                ) : walletAccountInfo && count > 0 ? (
+                  Array(count)
+                    .fill(0)
+                    .map((x) => {
+                      return (
+                        <div className='col-md-4 py-2'>
+                          <div className='collection-card'>
+                            <img
+                              src={require('../../assets/images/mystry-box.jpg')}
+                              alt=''
+                            />
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })
+                ) : (
+                  <DisconnectedView />
+                )}
               </div>
             </div>
           </div>

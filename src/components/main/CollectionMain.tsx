@@ -20,16 +20,20 @@ export const CollectionMain = () => {
     if (!state.walletAccountInfo) {
       setMintingImageLoading(false);
     }
-    startFetchMyQuery(state, (data) => {
-      if (data) {
-        setFetchingMintImages(false);
-        setMintImages(data);
-        checkImageExistence(data);
-      } else {
-        setFetchingMintImages(false);
-      }
-      setMintingImageLoading(false);
-    });
+    if (state.walletAccountInfo) {
+      startFetchMyQuery(state, (data) => {
+        if (data) {
+          setFetchingMintImages(false);
+          setMintImages(data);
+          checkImageExistence(data);
+        } else {
+          setFetchingMintImages(false);
+        }
+        setMintingImageLoading(false);
+      });
+    } else {
+      setMintImages([]);
+    }
   }, [state.walletAccountInfo]);
 
   const checkImageExistence = async (images: any) => {
@@ -246,7 +250,7 @@ export const CollectionMain = () => {
               <div className='row h-100 '>
                 {mintingImageLoading ? (
                   <MintingImageLoading />
-                ) : state.isWalletConnected ? (
+                ) : state.isWalletConnected && state.walletAccountInfo ? (
                   <ErrorBoundary>
                     <ConnectedView />
                   </ErrorBoundary>

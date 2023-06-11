@@ -20,6 +20,7 @@ const initialState: AuthStateType = {
   totalMinted: null,
   totalNumberOfMintRemaining: null,
   darkLordCount: 0,
+  darkLordLoading: false,
 };
 const authReducer: React.Reducer<AuthStateType, any> = (
   state = initialState,
@@ -57,6 +58,9 @@ const authReducer: React.Reducer<AuthStateType, any> = (
     case 'loading': {
       return { ...state, walletConnetLoading: action.payload };
     }
+    case 'darklord_loading': {
+      return { ...state, darkLordLoading: action.payload };
+    }
     case 'remaining_mint': {
       return {
         ...state,
@@ -86,10 +90,12 @@ const authReducer: React.Reducer<AuthStateType, any> = (
 };
 
 const fetchDarkLordMystryBox = (dispatch: any) => async (walletAddres: any) => {
+  dispatch({ type: 'darklord_loading', payload: true });
   const darkLordUri = `https://api.aptoswarcade.com/darklord?wallet_address=${walletAddres}`;
   try {
     const response = await fetch(darkLordUri);
     const data = await response.json();
+    dispatch({ type: 'darklord_loading', payload: false });
     dispatch({ type: 'fetch_darklord', payload: data?.data?.count });
   } catch (er) {}
 };
@@ -193,6 +199,7 @@ const updateWalletState = (dispatch: any) => async (data: any) => {
 };
 
 const disconnectAptosWallet = (dispatch: any) => async (data: any) => {
+  localStorage.clear();
   dispatch({ type: 'wallet_disconnected' });
 };
 
