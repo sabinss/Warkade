@@ -9,6 +9,7 @@ import { DisconnectWallet } from '../modal/DisconnectWallet';
 import { CustomModal } from '../modal/CustomModal';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
+import { HASH_TOKEN } from '../../constant';
 interface IHeader {
   handleConnectWallet: () => void;
 }
@@ -39,23 +40,19 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
 
   useEffect(() => {
     fetchRemainingMint(walletAccountInfo?.address);
-    // setLoading(true);
-    // setTimeout(() => {
-    //   setLoading(false);
-    // }, 3000);
+
     setConnecting(false);
   }, [walletAccountInfo, isWalletConnected]);
 
   const handleDeposit = async () => {
     const deposit_payload = {
       type: 'entry_function_payload',
-      function:
-        '0x74533a9947300fba32287f4d65e0cee49fbdc629a9f439701f3918901eb5c797::warkade::deposit',
+      function: `${HASH_TOKEN}::warkade::deposit`,
       type_arguments: [],
       arguments: [depositedAmount],
     };
     try {
-      const transaction = await signAndSubmitTransaction(deposit_payload);
+      await signAndSubmitTransaction(deposit_payload);
       // setBalanceModal(false);
       fetchRemainingMint(walletAccountInfo?.address, () => {
         setBalanceModal(false);

@@ -15,8 +15,9 @@ import { ReactComponent as HeartLow } from '../../assets/images/lifelinesvg/one.
 import { ReactComponent as HeartMedium } from '../../assets/images/lifelinesvg/3.svg';
 import { ReactComponent as HeartFull } from '../../assets/images/lifelinesvg/4.svg';
 import { ReactComponent as HeartNil } from '../../assets/images/lifelinesvg/0.svg';
-import { ReactComponent as HeartHalf} from '../../assets/images/lifelinesvg/4.svg';
+import { ReactComponent as HeartHalf } from '../../assets/images/lifelinesvg/4.svg';
 import { toast } from 'react-toastify';
+import { HASH_TOKEN } from '../../constant';
 
 export const LandingMain = () => {
   const {
@@ -33,6 +34,8 @@ export const LandingMain = () => {
   const [mintModal, setMintModal] = useState(false);
   const [openConnectWallet, setConnectWallet] = useState(false);
   const [balanceModal, setBalanceModal] = useState(false);
+  const [depositedAmount, setDepositedAmount] = useState<null | number>(null);
+
   const handleMint = () => {
     setMintModal(true);
   };
@@ -43,22 +46,26 @@ export const LandingMain = () => {
   const handleDeposit = async () => {
     const deposit_payload = {
       type: 'entry_function_payload',
-      function:
-        '0x74533a9947300fba32287f4d65e0cee49fbdc629a9f439701f3918901eb5c797::warkade::deposit',
+
+      function: `${HASH_TOKEN}::warkade::deposit`,
       type_arguments: [],
-      arguments: ['10000000'],
+      arguments: [depositedAmount],
     };
 
     try {
       await signAndSubmitTransaction(deposit_payload);
-      setBalanceModal(false);
       fetchTotalMint(walletAccountInfo?.address);
-      fetchRemainingMint(walletAccountInfo?.address);
-      setBalanceModal(() => false);
+      fetchRemainingMint(walletAccountInfo?.address, () => {
+        setBalanceModal(false);
+      });
       toast.success('Amount has been deposited successfully.');
     } catch (error: any) {
       toast.error(error?.message ?? 'Deposit failed. Please try again!.');
     }
+  };
+
+  const setDepositAmount = (depositAmount: any) => {
+    setDepositedAmount(() => Math.pow(10, 8) * +depositAmount);
   };
 
   const displayHeartImageBasedOnHealth = () => {
@@ -67,31 +74,31 @@ export const LandingMain = () => {
     if (healthValue === 0) {
       imageDisplay = (
         <div className='lifeline_heart nil-heart'>
-         <HeartNil/>
+          <HeartNil />
         </div>
       );
     } else if (healthValue >= 1 && healthValue <= 30) {
       imageDisplay = (
         <div className='lifeline_heart low-heart'>
-            <HeartLow/>
+          <HeartLow />
         </div>
       );
     } else if (healthValue >= 31 && healthValue <= 70) {
       imageDisplay = (
         <div className='lifeline_heart medium-heart'>
-          <HeartHalf/>
+          <HeartHalf />
         </div>
       );
     } else if (healthValue >= 71 && healthValue <= 99) {
       imageDisplay = (
         <div className='lifeline_heart medium-heart'>
-            <HeartMedium/>
+          <HeartMedium />
         </div>
       );
     } else if (healthValue >= 100) {
       imageDisplay = (
         <div className='lifeline_heart full-heart'>
-            <HeartFull/>
+          <HeartFull />
         </div>
       );
     } else {
@@ -289,7 +296,7 @@ export const LandingMain = () => {
                 </li>
                 <li>
                   <strong>Total warcades minted : </strong>
-                  <span>{totalMinted?.guid_creation_num}</span>
+                  <span>{totalMinted}</span>
                 </li>
               </ul>
             )}
@@ -409,17 +416,18 @@ export const LandingMain = () => {
             </div>
             <div className='modal-body'>
               <form action=''>
-                <div className='row'>
+                <div className='row w-100'>
                   <div className='col-md-4 col-lg-4 col-sm-6 col-6'>
                     <div className='form-grp depo_selector'>
                       <input
                         type='radio'
                         name='amnt'
                         value='0.1'
+                        onClick={() => setDepositAmount('0.1')}
                         className='hidden-check'
                       />
-                      <label htmlFor='0.1'>
-                        <span className='apt-btn'> 0.1</span>
+                      <label htmlFor='0.1' className='apt-btn large'>
+                        0.1
                       </label>
                     </div>
                   </div>
@@ -429,10 +437,11 @@ export const LandingMain = () => {
                         type='radio'
                         name='amnt'
                         value='0.2'
+                        onClick={() => setDepositAmount('0.2')}
                         className='hidden-check'
                       />
-                      <label htmlFor='0.2'>
-                        <span className='apt-btn'>0.2</span>
+                      <label htmlFor='0.2' className='apt-btn large'>
+                        0.2
                       </label>
                     </div>
                   </div>
@@ -442,10 +451,11 @@ export const LandingMain = () => {
                         type='radio'
                         name='amnt'
                         value='0.3'
+                        onClick={() => setDepositAmount('0.3')}
                         className='hidden-check'
                       />
-                      <label htmlFor='0.3'>
-                        <span className='apt-btn'>0.3</span>
+                      <label htmlFor='0.3' className='apt-btn large'>
+                        0.3
                       </label>
                     </div>
                   </div>
@@ -455,10 +465,11 @@ export const LandingMain = () => {
                         type='radio'
                         name='amnt'
                         value='0.5'
+                        onClick={() => setDepositAmount('0.5')}
                         className='hidden-check'
                       />
-                      <label htmlFor='0.5'>
-                        <span className='apt-btn'>0.5</span>
+                      <label htmlFor='0.5' className='apt-btn large'>
+                        0.5
                       </label>
                     </div>
                   </div>
@@ -468,10 +479,11 @@ export const LandingMain = () => {
                         type='radio'
                         name='amnt'
                         value='0.7'
+                        onClick={() => setDepositAmount('0.7')}
                         className='hidden-check'
                       />
-                      <label htmlFor='0.7'>
-                        <span className='apt-btn'>0.7</span>
+                      <label htmlFor='0.7' className='apt-btn large'>
+                        0.7
                       </label>
                     </div>
                   </div>
@@ -481,10 +493,11 @@ export const LandingMain = () => {
                         type='radio'
                         name='amnt'
                         value='1.0'
+                        onClick={() => setDepositAmount('1.0')}
                         className='hidden-check'
                       />
-                      <label htmlFor='1.0'>
-                        <span className='apt-btn'>1.0</span>
+                      <label htmlFor='1.0' className='apt-btn large'>
+                        1.0
                       </label>
                     </div>
                   </div>
@@ -494,10 +507,9 @@ export const LandingMain = () => {
                 name='Deposit now'
                 onClick={() => {
                   handleDeposit();
-                  setBalanceModal(false);
                 }}
                 className={[
-                  'wr-primary-theme-btn my-3 mx-auto d-block px-3  text-uppercase',
+                  'wr-primary-theme-btn my-5 mx-auto d-block px-3  text-uppercase',
                 ]}
               />
             </div>

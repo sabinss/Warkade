@@ -5,6 +5,7 @@ import {
   getLocalStorageItem,
   setLocalStorageItem,
 } from '../utils/localstorageService';
+import { HASH_TOKEN } from '../constant';
 
 const initialState: AuthStateType = {
   isloggedIn: false,
@@ -74,7 +75,7 @@ const authReducer: React.Reducer<AuthStateType, any> = (
     }
 
     case 'total_mint': {
-      return { ...state, totalMinted: action.payload?.data };
+      return { ...state, totalMinted: action.payload };
     }
     case 'minting_failure': {
       return {
@@ -128,23 +129,30 @@ const startMinting =
         requestOptions
       );
       const mintImage = await response.json();
-      callback(mintImage?.urls?.image);
+      console.log(mintImage);
+      mintImage?.msg === 'Some error occured!'
+        ? callback(null, 'error')
+        : callback(mintImage?.urls?.image);
+
       dispatch({ type: 'minting_success', payload: mintImage?.urls?.image });
     } catch (err) {
+      console.log('minting err', err);
+      callback(null, err);
       dispatch({ type: 'minting_failure', payload: err });
     }
   };
 
 const fetchTotalMint = (dispatch: any) => async (walletAddress: string) => {
   if (walletAddress) {
-    const totlal_mint_count_uri = `https://fullnode.testnet.aptoslabs.com/v1/accounts/${walletAddress}/resource/0x1::account::Account`;
+    // const totlal_mint_count_uri = `https://fullnode.testnet.aptoslabs.com/v1/accounts/${walletAddress}/resource/0x1::account::Account`;
+    const totlal_mint_count_uri = `https://fullnode.testnet.aptoslabs.com/v1/accounts/${HASH_TOKEN}/resource/${HASH_TOKEN}::warkade::MintInfo`;
     try {
       const response = await fetch(totlal_mint_count_uri);
       const data = await response.json();
 
       dispatch({
         type: 'total_mint',
-        payload: data,
+        payload: data?.data?.last_mint,
       });
     } catch (err) {
       console.log('fetch mint error', err);
@@ -155,27 +163,39 @@ const fetchTotalMint = (dispatch: any) => async (walletAddress: string) => {
 const fetchRemainingMint =
   (dispatch: any) => async (walletAddress: string, callback?: any) => {
     if (walletAddress) {
-      const get_mint_uri = `https://fullnode.testnet.aptoslabs.com/v1/accounts/${walletAddress}/resource/0x74533a9947300fba32287f4d65e0cee49fbdc629a9f439701f3918901eb5c797::warkade::Player`;
+      const get_mint_uri = `https://fullnode.testnet.aptoslabs.com/v1/accounts/${walletAddress}/resource/${HASH_TOKEN}::warkade::Player`;
       try {
         const response = await fetch(get_mint_uri);
         const data = await response.json();
 
-        let totalBalance = +data.data.mints_remaining / 20;
+        if (data.error_code === 'resource_not_found') {
+          dispatch({
+            type: 'remaining_mint',
+            payload: {
+              ...data,
+              health: 0,
+              totalBalance: 0,
+              totalNumberOfMintRemaining: 0,
+            },
+          });
+        } else {
+          let totalBalance = +data.data.mints_remaining / 20;
 
-        let health =
-          +data.data?.mints_remaining >= 20
-            ? 100
-            : +data.data?.mints_remaining * 5;
+          let health =
+            +data.data?.mints_remaining >= 20
+              ? 100
+              : +data.data?.mints_remaining * 5;
 
-        dispatch({
-          type: 'remaining_mint',
-          payload: {
-            ...data,
-            health,
-            totalBalance,
-            totalNumberOfMintRemaining: +data.data.mints_remaining,
-          },
-        });
+          dispatch({
+            type: 'remaining_mint',
+            payload: {
+              ...data,
+              health,
+              totalBalance,
+              totalNumberOfMintRemaining: +data.data.mints_remaining,
+            },
+          });
+        }
         callback && callback();
       } catch (err) {
         console.log('fetch mint error', err);

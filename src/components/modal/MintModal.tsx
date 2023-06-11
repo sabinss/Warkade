@@ -7,6 +7,7 @@ import { Context as AuthContext } from '../../context';
 import { useState } from 'react';
 import { AptosClient } from 'aptos';
 import { toast } from 'react-toastify';
+import { HASH_TOKEN } from '../../constant';
 
 interface IMintModal {
   showModal: boolean;
@@ -21,7 +22,7 @@ export const MintModal = ({
 }: IMintModal) => {
   const client = new AptosClient('https://fullnode.testnet.aptoslabs.com/v1');
 
-  const DARK_LORD_CODE = '0x03';
+  const DARK_LORD_CODE = '0x094461726b204c6f7264';
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const {
@@ -49,8 +50,7 @@ export const MintModal = ({
 
   const mint_warcade = {
     type: 'entry_function_payload',
-    function:
-      '0x74533a9947300fba32287f4d65e0cee49fbdc629a9f439701f3918901eb5c797::warkade::mint',
+    function: `${HASH_TOKEN}::warkade::mint`,
     type_arguments: [],
     arguments: [],
   };
@@ -73,12 +73,7 @@ export const MintModal = ({
       }
     } catch (e) {}
   };
-  // font-size: 10px;
-  // background: red;
-  // width: 100%;
-  // line-height: 18.5px;
-  // margin-bottom: 45px;
-  // margin-top: 20px;
+
   const DarkLordMintedView = () => {
     return (
       <div style={{ marginBottom: 45, marginTop: 20 }}>
@@ -97,7 +92,7 @@ export const MintModal = ({
         <p style={{ fontSize: 10 }}>
           Congratulations you have minted a Aptos Warcade
         </p>
-        <p style={{ fontSize: 10 }}>Try Again to mint more Dark Lords</p>
+        <p style={{ fontSize: 10 }}>Try Again to mint the Dark Lord</p>
       </div>
     );
   };
@@ -119,8 +114,7 @@ export const MintModal = ({
               <p className='text-color'>Congratulation</p>
             </div>
           )}
-          {/* <DarkLordMintedView />
-           */}
+
           {mintImageUri && darkLordMinted && <DarkLordMintedView />}
           {mintImageUri && !darkLordMinted && <NormalMintView />}
           <div className='gif-holder'>
@@ -151,13 +145,23 @@ export const MintModal = ({
                   transaction?.hash
                 );
                 const isDarkLord = isDarkLordMinted(checkDarkLordMint);
-                startMinting(transaction?.hash, (mintImageUri: string) => {
-                  setMinting(() => true);
-                  setMintImageUri(() => mintImageUri);
-                  setMinting(() => false);
-                  fetchTotalMint(walletAccountInfo?.address);
-                  fetchRemainingMint(walletAccountInfo?.address);
-                });
+                startMinting(
+                  transaction?.hash,
+                  (mintImageUri: string, err: any) => {
+                    if (mintImageUri) {
+                      // setMinting(() => true);
+                      setMintImageUri(mintImageUri);
+                      setMinting(false);
+                      fetchTotalMint(walletAccountInfo?.address);
+                      fetchRemainingMint(walletAccountInfo?.address);
+                    } else if (err) {
+                      handleClose();
+                      setMinting(() => false);
+                      setMintImageUri(null);
+                      toast.error('Minting failed.Please try again.');
+                    }
+                  }
+                );
                 setMinting(() => false);
               } catch (e: any) {
                 toast.error(
