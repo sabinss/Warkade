@@ -324,29 +324,29 @@ header {
                 .lifeline_heart{
                     position: relative;
                     &.low-heart{
-                        img{
+                        svg{
                             animation: pulse 0.8s linear infinite;
+                            
                         }
                      
                     }
                     &.nil-heart{
-                        img{
+                        svg{
                             animation: pulse 0.5s linear infinite;
                         }
                      
                     }
                     &.medium-heart{
               
-                        img{
+                        svg{
                             animation: pulse 1.2s linear infinite;
                             position: relative;
-                         
                         }
 
                        
                     }
                     &.full-heart{
-                        img{
+                        svg{
                             animation: none;
                             box-shadow: none!important;
                         }

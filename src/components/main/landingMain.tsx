@@ -11,7 +11,11 @@ import { Context as AuthContext } from '../../context/authContext';
 import { ConnectWallet } from '../modal/ConnectWallet';
 import { CollectionLoader } from '../common/CollectionLoader';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
-
+import { ReactComponent as HeartLow } from '../../assets/images/lifelinesvg/one.svg';
+import { ReactComponent as HeartMedium } from '../../assets/images/lifelinesvg/3.svg';
+import { ReactComponent as HeartFull } from '../../assets/images/lifelinesvg/4.svg';
+import { ReactComponent as HeartNil } from '../../assets/images/lifelinesvg/0.svg';
+import { ReactComponent as HeartHalf} from '../../assets/images/lifelinesvg/4.svg';
 import { toast } from 'react-toastify';
 
 export const LandingMain = () => {
@@ -63,31 +67,31 @@ export const LandingMain = () => {
     if (healthValue === 0) {
       imageDisplay = (
         <div className='lifeline_heart nil-heart'>
-          <img src={require('./../../assets/images/lifelines/0.png')} alt='' />
+         <HeartNil/>
         </div>
       );
     } else if (healthValue >= 1 && healthValue <= 30) {
       imageDisplay = (
         <div className='lifeline_heart low-heart'>
-          <img src={require('./../../assets/images/lifelines/1.png')} alt='' />
+            <HeartLow/>
         </div>
       );
     } else if (healthValue >= 31 && healthValue <= 70) {
       imageDisplay = (
         <div className='lifeline_heart medium-heart'>
-          <img src={require('./../../assets/images/lifelines/2.png')} alt='' />
+          <HeartHalf/>
         </div>
       );
     } else if (healthValue >= 71 && healthValue <= 99) {
       imageDisplay = (
         <div className='lifeline_heart medium-heart'>
-          <img src={require('./../../assets/images/lifelines/3.png')} alt='' />
+            <HeartMedium/>
         </div>
       );
     } else if (healthValue >= 100) {
       imageDisplay = (
         <div className='lifeline_heart full-heart'>
-          <img src={require('./../../assets/images/lifelines/4.png')} alt='' />
+            <HeartFull/>
         </div>
       );
     } else {

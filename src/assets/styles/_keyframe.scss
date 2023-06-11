@@ -75,16 +75,16 @@
   @keyframes pulse {
     0% {
         transform: scale(0.9);
-        box-shadow: none;
+        filter: drop-shadow(10px 10px 10px red);
     }
 
     50% {
         transform: scale(1);
-        
+        filter: drop-shadow(10px 10px 30px red);
     }
 
     100% {
         transform: scale(0.9);
-      
+        filter: drop-shadow(10px 10px 10px red);
     }
   }
