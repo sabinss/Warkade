@@ -42,7 +42,9 @@ export const Landing = () => {
       {!walletConnetLoading && (
         <Header
           handleConnectWallet={() => {
-            setConnectWalletModal(true);
+            if (!walletAccountInfo) {
+              setConnectWalletModal(true);
+            }
           }}
         />
       )}
