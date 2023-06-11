@@ -41,6 +41,7 @@ export const MintModal = ({
   const [mintImageUri, setMintImageUri] = useState<null | string>(null);
   const [isFirstOpen, setIsFirstOpen] = useState(false);
   const [darkLordMinted, setDarkLordMinted] = useState(false);
+  const [hideMystryBox, setHideMystryBox] = useState(false);
 
   useEffect(() => {
     return () => {
@@ -75,14 +76,30 @@ export const MintModal = ({
   };
 
   const DarkLordMintedView = () => {
+    setTimeout(() => {
+      setHideMystryBox(true);
+    }, 3000);
+
     return (
-      <div style={{ marginBottom: 45, marginTop: 20 }}>
-        <p style={{ fontSize: 10 }}>
-          Congratulations you have been awarded a Mystery Box for minting the
-          Dark Lord.
-        </p>
-        <p style={{ fontSize: 10 }}>Try Again to mint more Dark Lords</p>
-      </div>
+      <>
+        <div
+          className={`modal-mystry-box ${hideMystryBox ? 'box-hidden' : ''}`}
+        >
+          <div className='item-image'>
+            <img
+              src={require('../../assets/images/artboard-mystry.png')}
+              alt=''
+            />
+          </div>
+        </div>
+        <div style={{ marginBottom: 45, marginTop: 20 }}>
+          <p style={{ fontSize: 10 }}>
+            Congratulations you have been awarded a Mystery Box for minting the
+            Dark Lord.
+          </p>
+          <p style={{ fontSize: 10 }}>Try Again to mint more Dark Lords</p>
+        </div>
+      </>
     );
   };
 
@@ -293,13 +310,8 @@ export const MintModal = ({
       }}
     >
       {/* design mint modal here */}
-      <div className="modal-mystry-box">
-          <div className="item-image">
-            <img src={require('../../assets/images/artboard-mystry.png')} alt="" />
-          </div>
-        </div>
+
       <div className='mint-modal'>
-        
         <div className='mint-modal-header'>
           <div className='col-lg-11 mint-modal-header-title'>
             <h2 className='mint-modal-header-title'>Mint</h2>
