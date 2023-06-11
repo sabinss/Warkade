@@ -8,8 +8,7 @@ export const MystryMain = ({ count }: { count: number }) => {
   const [connectWalletModal, setConnectWalletModal] = useState(false);
 
   const {
-    state: { darkLordCount, walletAccountInfo, darkLordLoading },
-    fetchDarkLordMystryBox,
+    state: { walletAccountInfo, darkLordLoading },
   } = useContext<any>(AuthContext);
 
   const DisconnectedView = () => {
@@ -35,7 +34,7 @@ export const MystryMain = ({ count }: { count: number }) => {
       return (
         <div className='col-lg-12'>
           <div className='disconneted-frame d-flex align-items-center justify-content-center'>
-            <p>
+            <p className='text-center'>
               {' '}
               You have not minted any dark lord yet. Mystery box will be
               available only if you minted dark lords.
@@ -190,7 +189,7 @@ export const MystryMain = ({ count }: { count: number }) => {
                         <div className='col-md-4 py-2'>
                           <div className='collection-card'>
                             <img
-                              src={require('../../assets/images/mystry-box.jpg')}
+                              src={require('../../assets/images/artboard-mystry.png')}
                               alt=''
                             />
                           </div>

@@ -43,7 +43,6 @@ export const ConnectWallet = ({ handleClose, showModal }: IConnectWallet) => {
 
   const { connect, account, disconnect } = useWallet();
 
-  console.log('account', account);
   const aptosWalletNetwork = new WalletCore(aptosWallet);
 
   useEffect(() => {

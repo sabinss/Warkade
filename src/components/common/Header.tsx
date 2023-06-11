@@ -25,6 +25,7 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
     },
     disconnectAptosWallet,
     fetchRemainingMint,
+    setLoading,
   } = useContext<any>(AuthContext);
   const [balanceModal, setBalanceModal] = useState(false);
   // const [loading, setLoading] = useState(false);
