@@ -1204,3 +1204,13 @@ header {
         }
     }
 }
+.collection-frame .col-md-4 .collection-card {
+    margin: 0px 0px 15px;
+    background-color: #2e2e2e;
+    height: 200px;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
