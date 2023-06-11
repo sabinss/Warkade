@@ -7,6 +7,7 @@ import { Context as AuthContext } from '../../context';
 import { useState } from 'react';
 import { AptosClient } from 'aptos';
 import { toast } from 'react-toastify';
+import { HASH_TOKEN } from '../../constant';
 
 interface IMintModal {
   showModal: boolean;
@@ -49,8 +50,7 @@ export const MintModal = ({
 
   const mint_warcade = {
     type: 'entry_function_payload',
-    function:
-      '0xde47db933dd0148fc85631714a73d90ba56c1150bfcc32179e1ee2200e7838e0::warkade::mint',
+    function: `${HASH_TOKEN}::warkade::mint`,
     type_arguments: [],
     arguments: [],
   };
@@ -66,21 +66,14 @@ export const MintModal = ({
       const bodyCheck = darkLordCheckArray?.data?.data?.inner?.data.find(
         (x: any) => x.key.toLowerCase() === 'body'
       );
-      if (
-        bodyCheck?.value?.value === DARK_LORD_CODE
-      ) {
+      if (bodyCheck?.value?.value === DARK_LORD_CODE) {
         setDarkLordMinted(() => true);
       } else {
         setDarkLordMinted(() => false);
       }
     } catch (e) {}
   };
-  // font-size: 10px;
-  // background: red;
-  // width: 100%;
-  // line-height: 18.5px;
-  // margin-bottom: 45px;
-  // margin-top: 20px;
+
   const DarkLordMintedView = () => {
     return (
       <div style={{ marginBottom: 45, marginTop: 20 }}>
@@ -99,7 +92,7 @@ export const MintModal = ({
         <p style={{ fontSize: 10 }}>
           Congratulations you have minted a Aptos Warcade
         </p>
-        <p style={{ fontSize: 10 }}>Try Again to mint more Dark Lords</p>
+        <p style={{ fontSize: 10 }}>Try Again to mint the Dark Lord</p>
       </div>
     );
   };
