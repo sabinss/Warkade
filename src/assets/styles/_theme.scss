@@ -327,9 +327,6 @@ header {
                         svg{
                             animation: pulse 0.8s linear infinite;
                             
-                            rect{
-                                filter: drop-shadow(30px 10px 30px red);
-                            }
                         }
                      
                     }
@@ -344,7 +341,6 @@ header {
                         svg{
                             animation: pulse 1.2s linear infinite;
                             position: relative;
-                         
                         }
 
                        
