@@ -97,7 +97,9 @@ const fetchDarkLordMystryBox = (dispatch: any) => async (walletAddres: any) => {
     const data = await response.json();
     dispatch({ type: 'darklord_loading', payload: false });
     dispatch({ type: 'fetch_darklord', payload: data?.data?.count });
-  } catch (er) {}
+  } catch (er) {
+    dispatch({ type: 'darklord_loading', payload: false });
+  }
 };
 
 const setLoading = (dispatch: any) => async (isLoading: boolean) => {
