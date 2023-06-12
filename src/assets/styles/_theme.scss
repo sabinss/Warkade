@@ -658,6 +658,15 @@ header {
     background-color: $primary-color; /* Set the background color of the scrollbar thumb */
   }
   
+  .privacy-modal::-webkit-scrollbar {
+    width: 4px; 
+  }
+  .privacy-modal::-webkit-scrollbar-track {
+    background-color: #242424; /* Set the background color of the scrollbar track */
+  }
+  .privacy-modal::-webkit-scrollbar-thumb {
+    background-color: $primary-color; /* Set the background color of the scrollbar thumb */
+  }
 
 .mint-modal-body-card {
     width: 148px;
@@ -1250,3 +1259,5 @@ header {
     }
 }
 
+// logo update
+// privacy policy text update ->show in page

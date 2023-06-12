@@ -168,7 +168,7 @@ export const MystryMain = ({ count }: { count: number }) => {
                     <Link to='/collections'> My Collection</Link>
                   </li>
                   <li className='selected'>
-                    <Link to='/mysterybox'> Mystery Box</Link>
+                    <Link to='/mysterybox'> Mystery Box({count})</Link>
                   </li>
                 </ul>
               </div>

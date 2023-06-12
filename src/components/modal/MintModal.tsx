@@ -150,53 +150,60 @@ export const MintModal = ({
               ...(mintImageUri ? ['success-mint'] : []),
             ]}
             onClick={async () => {
-              setIsFirstOpen(true);
-              setMinting(true);
-              setMintImageUri(null);
-              // handleMint();
-              try {
-                const transaction = await signAndSubmitTransaction(
-                  mint_warcade
-                );
-                const checkDarkLordMint = await client.getTransactionByHash(
-                  transaction?.hash
-                );
-                const isDarkLord = isDarkLordMinted(checkDarkLordMint);
-                startMinting(
-                  transaction?.hash,
-                  (mintImageUri: string, err: any) => {
-                    if (mintImageUri) {
-                      // setMinting(() => true);
-                      setMintImageUri(mintImageUri);
-                      setMinting(false);
-                      fetchTotalMint(walletAccountInfo?.address);
-                      fetchRemainingMint(walletAccountInfo?.address);
-                    } else if (err) {
-                      handleClose();
-                      setMinting(() => false);
-                      setMintImageUri(null);
-                      toast.error('Minting failed.Please try again.');
-                    }
-                  }
-                );
-                setMinting(() => false);
-              } catch (e: any) {
-                toast.error(
-                  'We couldnot approve the transaction.' ??
-                    'Something went wrong',
-                  {
-                    position: 'top-center',
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: 'dark',
-                  }
-                );
+              if (mintImageUri && +totalNumberOfMintRemaining == 0) {
                 handleClose();
-                setMinting(false);
+                toast.error(
+                  'You do not have sufficient balance. Please deposit amount and mint again. Happy Minting!'
+                );
+              } else {
+                setIsFirstOpen(true);
+                setMinting(true);
+                setMintImageUri(null);
+                // handleMint();
+                try {
+                  const transaction = await signAndSubmitTransaction(
+                    mint_warcade
+                  );
+                  const checkDarkLordMint = await client.getTransactionByHash(
+                    transaction?.hash
+                  );
+                  const isDarkLord = isDarkLordMinted(checkDarkLordMint);
+                  startMinting(
+                    transaction?.hash,
+                    (mintImageUri: string, err: any) => {
+                      if (mintImageUri) {
+                        // setMinting(() => true);
+                        setMintImageUri(mintImageUri);
+                        setMinting(false);
+                        fetchTotalMint(walletAccountInfo?.address);
+                        fetchRemainingMint(walletAccountInfo?.address);
+                      } else if (err) {
+                        handleClose();
+                        setMinting(() => false);
+                        setMintImageUri(null);
+                        toast.error('Minting failed.Please try again.');
+                      }
+                    }
+                  );
+                  setMinting(() => false);
+                } catch (e: any) {
+                  toast.error(
+                    'We couldnot approve the transaction.' ??
+                      'Something went wrong',
+                    {
+                      position: 'top-center',
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: 'dark',
+                    }
+                  );
+                  handleClose();
+                  setMinting(false);
+                }
               }
             }}
           />
