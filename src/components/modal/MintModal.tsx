@@ -41,6 +41,7 @@ export const MintModal = ({
   const [mintImageUri, setMintImageUri] = useState<null | string>(null);
   const [isFirstOpen, setIsFirstOpen] = useState(false);
   const [darkLordMinted, setDarkLordMinted] = useState(false);
+  const [hideMystryBox, setHideMystryBox] = useState(false);
 
   useEffect(() => {
     return () => {
@@ -75,14 +76,30 @@ export const MintModal = ({
   };
 
   const DarkLordMintedView = () => {
+    setTimeout(() => {
+      setHideMystryBox(true);
+    }, 3000);
+
     return (
-      <div style={{ marginBottom: 45, marginTop: 20 }}>
-        <p style={{ fontSize: 10 }}>
-          Congratulations you have been awarded a Mystery Box for minting the
-          Dark Lord.
-        </p>
-        <p style={{ fontSize: 10 }}>Try Again to mint more Dark Lords</p>
-      </div>
+      <>
+        <div
+          className={`modal-mystry-box ${hideMystryBox ? 'box-hidden' : ''}`}
+        >
+          <div className='item-image'>
+            <img
+              src={require('../../assets/images/artboard-mystry.png')}
+              alt=''
+            />
+          </div>
+        </div>
+        <div style={{ marginBottom: 45, marginTop: 20 }}>
+          <p style={{ fontSize: 10 }}>
+            Congratulations you have been awarded a Mystery Box for minting the
+            Dark Lord.
+          </p>
+          <p style={{ fontSize: 10 }}>Try Again to mint more Dark Lords</p>
+        </div>
+      </>
     );
   };
 
@@ -133,53 +150,60 @@ export const MintModal = ({
               ...(mintImageUri ? ['success-mint'] : []),
             ]}
             onClick={async () => {
-              setIsFirstOpen(true);
-              setMinting(true);
-              setMintImageUri(null);
-              // handleMint();
-              try {
-                const transaction = await signAndSubmitTransaction(
-                  mint_warcade
-                );
-                const checkDarkLordMint = await client.getTransactionByHash(
-                  transaction?.hash
-                );
-                const isDarkLord = isDarkLordMinted(checkDarkLordMint);
-                startMinting(
-                  transaction?.hash,
-                  (mintImageUri: string, err: any) => {
-                    if (mintImageUri) {
-                      // setMinting(() => true);
-                      setMintImageUri(mintImageUri);
-                      setMinting(false);
-                      fetchTotalMint(walletAccountInfo?.address);
-                      fetchRemainingMint(walletAccountInfo?.address);
-                    } else if (err) {
-                      handleClose();
-                      setMinting(() => false);
-                      setMintImageUri(null);
-                      toast.error('Minting failed.Please try again.');
-                    }
-                  }
-                );
-                setMinting(() => false);
-              } catch (e: any) {
-                toast.error(
-                  'We couldnot approve the transaction.' ??
-                    'Something went wrong',
-                  {
-                    position: 'top-center',
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: 'dark',
-                  }
-                );
+              if (mintImageUri && +totalNumberOfMintRemaining == 0) {
                 handleClose();
-                setMinting(false);
+                toast.error(
+                  'You do not have sufficient balance. Please deposit amount and mint again. Happy Minting!'
+                );
+              } else {
+                setIsFirstOpen(true);
+                setMinting(true);
+                setMintImageUri(null);
+                // handleMint();
+                try {
+                  const transaction = await signAndSubmitTransaction(
+                    mint_warcade
+                  );
+                  const checkDarkLordMint = await client.getTransactionByHash(
+                    transaction?.hash
+                  );
+                  const isDarkLord = isDarkLordMinted(checkDarkLordMint);
+                  startMinting(
+                    transaction?.hash,
+                    (mintImageUri: string, err: any) => {
+                      if (mintImageUri) {
+                        // setMinting(() => true);
+                        setMintImageUri(mintImageUri);
+                        setMinting(false);
+                        fetchTotalMint(walletAccountInfo?.address);
+                        fetchRemainingMint(walletAccountInfo?.address);
+                      } else if (err) {
+                        handleClose();
+                        setMinting(() => false);
+                        setMintImageUri(null);
+                        toast.error('Minting failed.Please try again.');
+                      }
+                    }
+                  );
+                  setMinting(() => false);
+                } catch (e: any) {
+                  toast.error(
+                    'We couldnot approve the transaction.' ??
+                      'Something went wrong',
+                    {
+                      position: 'top-center',
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: 'dark',
+                    }
+                  );
+                  handleClose();
+                  setMinting(false);
+                }
               }
             }}
           />
@@ -293,13 +317,8 @@ export const MintModal = ({
       }}
     >
       {/* design mint modal here */}
-      <div className="modal-mystry-box">
-          <div className="item-image">
-            <img src={require('../../assets/images/artboard-mystry.png')} alt="" />
-          </div>
-        </div>
+
       <div className='mint-modal'>
-        
         <div className='mint-modal-header'>
           <div className='col-lg-11 mint-modal-header-title'>
             <h2 className='mint-modal-header-title'>Mint</h2>

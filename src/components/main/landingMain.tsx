@@ -509,7 +509,7 @@ export const LandingMain = () => {
                   handleDeposit();
                 }}
                 className={[
-                  'wr-primary-theme-btn my-5 mx-auto d-block px-3  text-uppercase',
+                  'wr-primary-theme-btn my-3 my-3 mx-auto d-block px-3  text-uppercase',
                 ]}
               />
             </div>

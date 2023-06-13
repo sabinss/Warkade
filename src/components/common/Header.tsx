@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 // import HeaderLogo from '../../assets/svg/Logo.svg';
-import HeaderLogo from '../../assets/images/logolatest.jpg';
+import HeaderLogo from '../../assets/images/NewHeader.png';
 import { Button } from '../UI/Button';
 import { Link } from 'react-router-dom';
 import { Context as AuthContext } from '../../context';
@@ -10,6 +10,7 @@ import { CustomModal } from '../modal/CustomModal';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
 import { HASH_TOKEN } from '../../constant';
+import { toast } from 'react-toastify';
 interface IHeader {
   handleConnectWallet: () => void;
 }
@@ -57,8 +58,9 @@ export const Header = ({ handleConnectWallet }: IHeader) => {
       fetchRemainingMint(walletAccountInfo?.address, () => {
         setBalanceModal(false);
       });
+      toast.success('Amount has been deposited successfully.');
     } catch (error) {
-      console.log('Deposit failed', error);
+      toast.error('Deposit failed. Please try again!.');
     }
   };
 

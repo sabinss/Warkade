@@ -75,7 +75,6 @@ export const ConnectWallet = ({ handleClose, showModal }: IConnectWallet) => {
       } else if (AllowededWallets.blockto === walletName) {
         openSelectedWallet = BloctoWalletName;
       }
-
       connect(openSelectedWallet);
       // const wallet = new WalletCore(wallets);
       connetAptosWallet(account, () => {
@@ -83,6 +82,7 @@ export const ConnectWallet = ({ handleClose, showModal }: IConnectWallet) => {
       });
       handleClose();
     } catch (e) {
+      console.log(e);
       setLoading(false);
       throw e;
     }

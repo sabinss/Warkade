@@ -234,7 +234,10 @@ export const CollectionMain = () => {
             <div className='tab-link-wrap'>
               <ul>
                 <li className='selected'>
-                  <Link to='/collections'> My Collection</Link>
+                  <Link to='/collections'>
+                    {' '}
+                    My Collection({mintImages.length})
+                  </Link>
                 </li>
                 <li>
                   <Link to='/mysterybox'> Mystery Box</Link>
