@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 // import HeaderLogo from '../../assets/svg/Logo.svg';
-import HeaderLogo from '../../assets/images/logolatest.jpg';
+import HeaderLogo from '../../assets/images/NewHeader.png';
 import { Button } from '../UI/Button';
 import { Link } from 'react-router-dom';
 import { Context as AuthContext } from '../../context';
