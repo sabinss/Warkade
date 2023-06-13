@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { StoryModal } from '../modal/StoryModal';
 import { FaqModal } from '../modal/FaqModal';
 import { PrivacyPolicyModal } from '../modal/PrivacyPolicyModal';
+import { TermsConditionModal } from '../modal/TermsConditionModal';
 
 export const Footer = () => {
   const [showStoryModal, setShowStoryModal] = useState(false);
   const [showFaqModal, setShowFaqModal] = useState(false);
   const [showPrivacyModal, setPrivacyModal] = useState(false);
+  const [showsTermsModal, setTermsMmodal] = useState(false);
   return (
     <footer>
       <div className='containter-fluid px-lg-5 px-sm-2'>
@@ -33,11 +35,10 @@ export const Footer = () => {
               <div className='footer-content-wrap footer-right'>
                 <ul className='list-unstyled d-flex'>
                   <li onClick={() => setPrivacyModal(true)}>
-                    {/* <a href=''></a> */}
                     <p>Privacy Policy</p>
                   </li>
-                  <li>
-                    <a href=''>Terms of Service</a>
+                  <li onClick={() => setTermsMmodal(true)}>
+                    <p>Terms of Service</p>
                   </li>
                 </ul>
               </div>
@@ -61,6 +62,12 @@ export const Footer = () => {
         showModal={showPrivacyModal}
         handleClose={() => {
           setPrivacyModal(false);
+        }}
+      />
+      <TermsConditionModal
+        showModal={showsTermsModal}
+        handleClose={() => {
+          setTermsMmodal(false);
         }}
       />
     </footer>

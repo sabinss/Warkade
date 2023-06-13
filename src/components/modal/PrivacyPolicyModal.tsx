@@ -21,7 +21,7 @@ export const PrivacyPolicyModal = ({ showModal, handleClose }: IFaqModal) => {
       >
         <div className='mint-modal-header'>
           <div className='col-lg-11'>
-            <h3 className='min-modal-header-title'>? Privacy Policy</h3>
+            <h3 className='min-modal-header-title'>Privacy Policy</h3>
           </div>
           <div
             className='col-lg-1 mint-modal-header-icon close'
