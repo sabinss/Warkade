@@ -193,7 +193,9 @@ export const LandingMain = () => {
                     </div>
                   </div>
                   <div className='below-bottom-content d-lg-flex align-align-items-start'>
+                  
                     <div className='bottom-left  d-inline-block'>
+                    <Link to={'/collections'}>
                       <div className='icon-grp-text'>
                         <ul className='list-unstyled d-flex icon-grp'>
                           <li>
@@ -222,9 +224,10 @@ export const LandingMain = () => {
                           </li>
                         </ul>
                         <h6>
-                          <Link to={'/collections'}>My Collection</Link>
+                          My Collection
                         </h6>
                       </div>
+                      </Link>
                     </div>
 
                     <div className='bottom-line-grp  d-inline-block'>
