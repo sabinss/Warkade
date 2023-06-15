@@ -11,11 +11,12 @@ import { Context as AuthContext } from '../../context/authContext';
 import { ConnectWallet } from '../modal/ConnectWallet';
 import { CollectionLoader } from '../common/CollectionLoader';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
-import { ReactComponent as HeartLow } from '../../assets/images/lifelinesvg/one.svg';
-import { ReactComponent as HeartMedium } from '../../assets/images/lifelinesvg/3.svg';
-import { ReactComponent as HeartFull } from '../../assets/images/lifelinesvg/4.svg';
 import { ReactComponent as HeartNil } from '../../assets/images/lifelinesvg/0.svg';
-import { ReactComponent as HeartHalf } from '../../assets/images/lifelinesvg/4.svg';
+import { ReactComponent as HeartLow } from '../../assets/images/lifelinesvg/one.svg';
+import { ReactComponent as HeartMedium } from '../../assets/images/lifelinesvg/2.svg';
+import { ReactComponent as HeartHalf } from '../../assets/images/lifelinesvg/3.svg';
+
+import { ReactComponent as HeartFull } from '../../assets/images/lifelinesvg/4.svg';
 import { toast } from 'react-toastify';
 import { HASH_TOKEN } from '../../constant';
 
@@ -70,41 +71,39 @@ export const LandingMain = () => {
 
   const displayHeartImageBasedOnHealth = () => {
     const healthValue = mintRemaining?.health;
+    console.log('healthValue', healthValue, typeof healthValue);
     let imageDisplay = null;
     if (healthValue === 0) {
-      imageDisplay = (
+      return (
         <div className='lifeline_heart nil-heart'>
           <HeartNil />
         </div>
       );
     } else if (healthValue >= 1 && healthValue <= 30) {
-      imageDisplay = (
+      return (
         <div className='lifeline_heart low-heart'>
           <HeartLow />
         </div>
       );
     } else if (healthValue >= 31 && healthValue <= 70) {
-      imageDisplay = (
-        <div className='lifeline_heart medium-heart'>
-          <HeartHalf />
-        </div>
-      );
-    } else if (healthValue >= 71 && healthValue <= 99) {
-      imageDisplay = (
+      return (
         <div className='lifeline_heart medium-heart'>
           <HeartMedium />
         </div>
       );
+    } else if (healthValue >= 71 && healthValue <= 99) {
+      return (
+        <div className='lifeline_heart medium-heart'>
+          <HeartHalf />
+        </div>
+      );
     } else if (healthValue >= 100) {
-      imageDisplay = (
+      return (
         <div className='lifeline_heart full-heart'>
           <HeartFull />
         </div>
       );
-    } else {
-      imageDisplay = null;
     }
-    return imageDisplay;
   };
 
   return (
@@ -193,7 +192,9 @@ export const LandingMain = () => {
                     </div>
                   </div>
                   <div className='below-bottom-content d-lg-flex align-align-items-start'>
+                  
                     <div className='bottom-left  d-inline-block'>
+                    <Link to={'/collections'}>
                       <div className='icon-grp-text'>
                         <ul className='list-unstyled d-flex icon-grp'>
                           <li>
@@ -222,9 +223,10 @@ export const LandingMain = () => {
                           </li>
                         </ul>
                         <h6>
-                          <Link to={'/collections'}>My Collection</Link>
+                          My Collection
                         </h6>
                       </div>
+                      </Link>
                     </div>
 
                     <div className='bottom-line-grp  d-inline-block'>
