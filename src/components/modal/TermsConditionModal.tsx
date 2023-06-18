@@ -33,7 +33,7 @@ export const TermsConditionModal = ({ showModal, handleClose }: IFaqModal) => {
           </div>
         </div>
         <div className='mint-modal-body my-3'>
-          <div className='mint-modal-body-card-wrapper'>
+          <div className='mint-modal-body-card-wrapper terms_modal'>
             <div>
               <p>
                 Mokshya Protocol Association, (“Mokshya Protocol,” “we,” “us,”
@@ -100,56 +100,72 @@ export const TermsConditionModal = ({ showModal, handleClose }: IFaqModal) => {
                   <h3 style={{ fontSize: 14, marginBottom: 15 }}>
                     Agreement to Terms
                   </h3>
-                  1.1. By accessing or using the Platform (even just browsing
-                  <a href='https://aptoswarcade.com/'>aptoswarcade.com</a>), you
-                  agree that you have read and understood, and, as a condition
-                  to your use of the “platform”, you agree to be bound by the
-                  following terms and conditions, including our privacy policy .
-                  If you don’t agree with these terms, you may not use the
-                  “platform” including browsing our website. 1.2. Certain
-                  features of the Platform, including transactions and
-                  authentication, are facilitated by Third-Party Wallet
-                  Extensions. By using the Platform, you agree that you are
-                  bound by the terms of service and Privacy Policy for the
-                  applicable extensions when using the applicable extension.
+                  <ul>
+                    <li>1.1. By accessing or using the Platform (even just browsing 
+                      <a href='https://aptoswarcade.com/'> aptoswarcade.com</a>), you
+                      agree that you have read and understood, and, as a condition
+                      to your use of the “platform”, you agree to be bound by the
+                      following terms and conditions, including our privacy policy .
+                      If you don’t agree with these terms, you may not use the
+                      “platform” including browsing our website.</li>
+                    <li>
+                      1.2. Certain
+                      features of the Platform, including transactions and
+                      authentication, are facilitated by Third-Party Wallet
+                      Extensions. By using the Platform, you agree that you are
+                      bound by the terms of service and Privacy Policy for the
+                      applicable extensions when using the applicable extension.
+                    </li>
+                  </ul>
                 </li>
                 <li style={{ color: '#A48837' }}>
                   <h3 style={{ fontSize: 14, marginBottom: 15 }}>
                     Aptos Warcade Game
                   </h3>
-                  2.1 The Aptos Warcade game is a NFT minting game built on the
-                  Aptos Blockchain. The objective of the game is to defeat the
-                  Dark Lord and win Mystery Boxes. The Dark Lord has threatened
-                  the Aptos Kingdom, and as a loyal civilian, a user's goal is
-                  to mint Aptos Warcade NFTs to destroy the Dark Lord and help
-                  protect the kingdom. 2.2. A user can mint Aptos Warcade NFTs
-                  by connecting the wallet to the Platform, depositing APT
-                  (Aptos Token), and minting Warcades. Minting more Warcades
-                  increases the chances of killing the Dark Lord. 2.3. If you
-                  successfully mint the Dark Lord, you will receive a Mystery
-                  Box. At the end of Season 1, 50 Popular Aptos NFTs will be
-                  raffled among the wallet addresses that minted the Dark Lord.
-                  The more Dark Lord NFTs you mint, the higher your chances of
-                  winning Blue Chip Aptos NFTs.
+                  <ul>
+                    <li>
+                      2.1 The Aptos Warcade game is a NFT minting game built on the
+                      Aptos Blockchain. The objective of the game is to defeat the
+                      Dark Lord and win Mystery Boxes. The Dark Lord has threatened
+                      the Aptos Kingdom, and as a loyal civilian, a user's goal is
+                      to mint Aptos Warcade NFTs to destroy the Dark Lord and help
+                      protect the kingdom.
+                    </li>
+                    <li>
+                      2.2. A user can mint Aptos Warcade NFTs
+                      by connecting the wallet to the Platform, depositing APT
+                      (Aptos Token), and minting Warcades. Minting more Warcades
+                      increases the chances of killing the Dark Lord. 
+                    </li>
+                    <li>
+                     2.3. If you
+                      successfully mint the Dark Lord, you will receive a Mystery
+                      Box. At the end of Season 1, 50 Popular Aptos NFTs will be
+                      raffled among the wallet addresses that minted the Dark Lord.
+                      The more Dark Lord NFTs you mint, the higher your chances of
+                      winning Blue Chip Aptos NFTs.
+                    </li>
+                  </ul>
+                
                 </li>
                 <li>
                   <h3 style={{ fontSize: 14, marginBottom: 15 }}>
                     How to Play the Game
                   </h3>
                   <ul>
-                    <li style={{ marginBottom: -14 }}>7. 1. Connect Wallet</li>
+                    <li style={{ marginBottom: -14 }}>3. 1. Connect Wallet</li>
                     <li style={{ marginBottom: -14 }}>
-                      7.2. Deposit APT Tokens
+                      3.2. Deposit APT Tokens
                     </li>
                     <li style={{ marginBottom: -14 }}>
-                      7.3. Mint Aptos Warcade NFTs
+                      3.3. Mint Aptos Warcade NFTs
                     </li>
                     <li style={{ marginBottom: -14 }}>
-                      7.4. If you mint Warcades, mint more so that you can kill
+                      3.4. If you mint Warcades, mint more so that you can kill
                       the Dark Lord.
                     </li>
                     <li style={{ marginBottom: -14 }}>
-                      7.5. If you mint the dark lord, you get a mystery box as a
+                      3.5. If you mint the dark lord, you get a mystery box as a
                       reward. 50 Popular Aptos NFTs will be raffled among the
                       wallet addresses that mint Dark Lord at the end of Season
                       1. The more Dark Lord you mint, the more chances of
@@ -161,17 +177,31 @@ export const TermsConditionModal = ({ showModal, handleClose }: IFaqModal) => {
                   <h3 style={{ fontSize: 14, marginBottom: 15 }}>
                     Eligibility
                   </h3>
-                  5.1. You must be of legal age in your jurisdiction to
+                  <ul>
+                    <li>
+                    4.1. You must be of legal age in your jurisdiction to
                   participate in the Aptos Warcade game. By using the Platform,
                   you represent and warrant that you meet the eligibility
-                  criteria. 5.2. If you are accessing the Platform on behalf of
+                  criteria. 
+                    </li>
+                    <li>
+                    4.2. If you are accessing the Platform on behalf of
                   an entity, you represent and warrant that you have the
-                  authority to bind that entity to this Agreement. 5.3. You must
+                  authority to bind that entity to this Agreement.
+                    </li>
+                    <li>
+                    4.3. You must
                   have a minimum deposit at the site to Mint Aptos Warcade NFTs.
-                  5.4. You must have a minimum balance in your wallet to Pay all
+                    </li>
+                    <li>
+                    4.4. You must have a minimum balance in your wallet to Pay all
                   other applicable fees, including but not limited to Aptos
                   Network fees, wallet fees, transaction fees or gas fees during
                   mint.
+                    </li>
+                  </ul>
+               
+                 
                 </li>
                 <li>
                   <h3 style={{ fontSize: 14, marginBottom: 15 }}>

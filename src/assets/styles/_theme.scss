@@ -1107,7 +1107,7 @@ header {
 }
 .deposit-modal{
     background-color: #252525;
-    padding: 10px 20px 40px;
+    padding: 10px 20px 0px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1258,6 +1258,12 @@ header {
         display: none;
     }
 }
-
-// logo update
-// privacy policy text update ->show in page
+.terms_modal{
+    ol{
+        li{
+            ul{
+                list-style-type: none;
+            }
+        }
+    }
+}
