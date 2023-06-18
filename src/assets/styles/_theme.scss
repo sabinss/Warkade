@@ -1258,3 +1258,12 @@ header {
         display: none;
     }
 }
+.terms_modal{
+    ol{
+        li{
+            ul{
+                list-style-type: none;
+            }
+        }
+    }
+}
