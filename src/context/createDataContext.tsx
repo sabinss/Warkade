@@ -1,9 +1,9 @@
-import React, { useReducer } from 'react';
+import React, {useReducer} from 'react';
 
 export default (reducer: any, actions: any, defaultState: any) => {
   const Context = React.createContext(null);
 
-  const Provider = ({ children }: { children: any }) => {
+  const Provider = ({children}: {children: any}) => {
     const [state, dispatch] = useReducer(reducer, defaultState);
 
     const boundAction: any = {};
@@ -11,11 +11,11 @@ export default (reducer: any, actions: any, defaultState: any) => {
       boundAction[key] = actions[key](dispatch);
     }
     return (
-      <Context.Provider value={{ state, ...boundAction }}>
+      <Context.Provider value={{state, ...boundAction}}>
         {children}
       </Context.Provider>
     );
   };
 
-  return { Context, Provider };
+  return {Context, Provider};
 };
