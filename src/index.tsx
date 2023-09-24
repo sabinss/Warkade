@@ -8,15 +8,17 @@ import reportWebVitals from './reportWebVitals';
 import '../src/assets/styles/index.scss';
 
 // wallets
-import { PetraWallet } from 'petra-plugin-wallet-adapter';
-import { BloctoWallet } from '@blocto/aptos-wallet-adapter-plugin';
-import { MartianWallet } from '@martianwallet/aptos-wallet-adapter';
-import { WalletCore, NetworkName } from '@aptos-labs/wallet-adapter-core';
+import {PetraWallet} from 'petra-plugin-wallet-adapter';
+import {BloctoWallet} from '@blocto/aptos-wallet-adapter-plugin';
+import {MartianWallet} from '@martianwallet/aptos-wallet-adapter';
+import {PontemWallet} from '@pontem/wallet-adapter-plugin';
+import {FewchaWallet} from 'fewcha-plugin-wallet-adapter';
+import {WalletCore, NetworkName} from '@aptos-labs/wallet-adapter-core';
 
-import { AptosWalletAdapterProvider } from '@aptos-labs/wallet-adapter-react';
+import {AptosWalletAdapterProvider} from '@aptos-labs/wallet-adapter-react';
 // import ErrorBoundary from './components/Errorboundary';
-import { ErrorBoundary } from 'react-error-boundary';
-import { ToastContainer } from 'react-toastify';
+import {ErrorBoundary} from 'react-error-boundary';
+import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 let network = NetworkName.Testnet;
@@ -25,18 +27,20 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-const wallets = [
+const wallets: any = [
   new PetraWallet(),
   new BloctoWallet({
     network: network,
     bloctoAppId: '84503da4-7d0f-4ced-b004-ecd81bfc333b',
   }),
   new MartianWallet(),
+  new PontemWallet(),
+  new FewchaWallet(),
 ];
 
 export const aptosWallet = new WalletCore(wallets);
 
-function ErrorFallback({ error, resetErrorBoundary }: any) {
+function ErrorFallback({error, resetErrorBoundary}: any) {
   return (
     <div>
       <h2>Something went wrong:</h2>
