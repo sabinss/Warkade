@@ -1,13 +1,13 @@
-import { AiOutlineClose } from 'react-icons/ai';
-import { CustomModal } from './CustomModal';
-import { Button } from '../UI/Button';
-import { useContext, useEffect } from 'react';
-import { useWallet } from '@aptos-labs/wallet-adapter-react';
-import { Context as AuthContext } from '../../context';
-import { useState } from 'react';
-import { AptosClient } from 'aptos';
-import { toast } from 'react-toastify';
-import { HASH_TOKEN } from '../../constant';
+import {AiOutlineClose} from 'react-icons/ai';
+import {CustomModal} from './CustomModal';
+import {Button} from '../UI/Button';
+import {useContext, useEffect} from 'react';
+import {useWallet} from '@aptos-labs/wallet-adapter-react';
+import {Context as AuthContext} from '../../context';
+import {useState} from 'react';
+import {AptosClient} from 'aptos';
+import {toast} from 'react-toastify';
+import {HASH_TOKEN} from '../../constant';
 
 interface IMintModal {
   showModal: boolean;
@@ -15,16 +15,10 @@ interface IMintModal {
   handleMint: () => void;
 }
 
-export const MintModal = ({
-  showModal,
-  handleClose,
-  handleMint,
-}: IMintModal) => {
+export const MintModal = ({showModal, handleClose, handleMint}: IMintModal) => {
   const client = new AptosClient('https://fullnode.testnet.aptoslabs.com/v1');
-
   const DARK_LORD_CODE = '0x094461726b204c6f7264';
 
-  const [currentIndex, setCurrentIndex] = useState(0);
   const {
     state: {
       walletAccountInfo,
@@ -35,13 +29,14 @@ export const MintModal = ({
     fetchRemainingMint,
     fetchTotalMint,
   } = useContext<any>(AuthContext);
-  const { signAndSubmitTransaction } = useWallet();
+  const {signAndSubmitTransaction} = useWallet();
 
   const [minting, setMinting] = useState(false);
-  const [mintImageUri, setMintImageUri] = useState<null | string>(null);
+  const [mintImageUri, setMintImageUri] = useState<any>(null);
   const [isFirstOpen, setIsFirstOpen] = useState(false);
   const [darkLordMinted, setDarkLordMinted] = useState(false);
   const [hideMystryBox, setHideMystryBox] = useState(false);
+  const [startedMinting, setStartedMinting] = useState(false);
 
   useEffect(() => {
     return () => {
@@ -58,7 +53,7 @@ export const MintModal = ({
 
   const isDarkLordMinted = (checkDarkLordMint: any) => {
     try {
-      const { changes } = checkDarkLordMint;
+      const {changes} = checkDarkLordMint;
       const darkLordCheckArray = changes.find((obj: any) => {
         if (obj?.data?.data?.inner?.data) {
           return obj?.data?.data?.inner?.data;
@@ -85,19 +80,19 @@ export const MintModal = ({
         <div
           className={`modal-mystry-box ${hideMystryBox ? 'box-hidden' : ''}`}
         >
-          <div className='item-image'>
+          <div className="item-image">
             <img
               src={require('../../assets/images/artboard-mystry.png')}
-              alt=''
+              alt=""
             />
           </div>
         </div>
-        <div style={{ marginBottom: 45, marginTop: 20 }}>
-          <p style={{ fontSize: 10 }}>
+        <div style={{marginBottom: 45, marginTop: 20}}>
+          <p style={{fontSize: 10}}>
             Congratulations you have been awarded a Mystery Box for minting the
             Dark Lord.
           </p>
-          <p style={{ fontSize: 10 }}>Try Again to mint more Dark Lords</p>
+          <p style={{fontSize: 10}}>Try Again to mint more Dark Lords</p>
         </div>
       </>
     );
@@ -105,11 +100,11 @@ export const MintModal = ({
 
   const NormalMintView = () => {
     return (
-      <div style={{ marginBottom: 45, marginTop: 20 }}>
-        <p style={{ fontSize: 10 }}>
+      <div style={{marginBottom: 45, marginTop: 20}}>
+        <p style={{fontSize: 10}}>
           Congratulations you have minted a Aptos Warcade
         </p>
-        <p style={{ fontSize: 10 }}>Try Again to mint the Dark Lord</p>
+        <p style={{fontSize: 10}}>Try Again to mint the Dark Lord</p>
       </div>
     );
   };
@@ -118,27 +113,27 @@ export const MintModal = ({
     if (minting) {
       return (
         <div>
-          <p className='text-color'>Minting in progress...</p>
-          <p className='text-color'>please wait.</p>
+          <p className="text-color">Minting in progress...</p>
+          <p className="text-color">please wait.</p>
         </div>
       );
     } else {
       return (
-        <div className='sucessBox'>
+        <div className="sucessBox">
           {/* <Button name='congratulations' onClick={() => {}} /> */}
           {mintImageUri && (
-            <div className='sucess-text'>
-              <p className='text-color'>Congratulation</p>
+            <div className="sucess-text">
+              <p className="text-color">Congratulation</p>
             </div>
           )}
 
           {mintImageUri && darkLordMinted && <DarkLordMintedView />}
           {mintImageUri && !darkLordMinted && <NormalMintView />}
-          <div className='gif-holder'>
+          <div className="gif-holder">
             {!mintImageUri && (
               <img
                 src={require('../../assets/images/Burning-Sword.gif')}
-                alt=''
+                alt=""
               />
             )}
           </div>
@@ -150,6 +145,7 @@ export const MintModal = ({
               ...(mintImageUri ? ['success-mint'] : []),
             ]}
             onClick={async () => {
+              setStartedMinting(() => true);
               if (mintImageUri && +totalNumberOfMintRemaining == 0) {
                 handleClose();
                 toast.error(
@@ -157,24 +153,27 @@ export const MintModal = ({
                 );
               } else {
                 setIsFirstOpen(true);
-                setMinting(true);
-                setMintImageUri(null);
+                // setMinting(() => true);
+                // setMintImageUri(null);
                 // handleMint();
                 try {
-                  const transaction = await signAndSubmitTransaction(
-                    mint_warcade
-                  );
+                  setStartedMinting(() => true);
+                  setMintImageUri(() => null);
+                  const transaction =
+                    await signAndSubmitTransaction(mint_warcade);
                   const checkDarkLordMint = await client.getTransactionByHash(
                     transaction?.hash
                   );
+                  setStartedMinting(() => true);
+                  setMintImageUri(() => null);
                   const isDarkLord = isDarkLordMinted(checkDarkLordMint);
+
                   startMinting(
                     transaction?.hash,
                     (mintImageUri: string, err: any) => {
                       if (mintImageUri) {
-                        // setMinting(() => true);
-                        setMintImageUri(mintImageUri);
-                        setMinting(false);
+                        setMintImageUri(() => mintImageUri);
+                        setStartedMinting(() => false);
                         fetchTotalMint(walletAccountInfo?.address);
                         fetchRemainingMint(walletAccountInfo?.address);
                       } else if (err) {
@@ -203,14 +202,15 @@ export const MintModal = ({
                   );
                   handleClose();
                   setMinting(false);
+                  setStartedMinting(() => false);
                 }
               }
             }}
           />
           {mintImageUri && (
             <h2
-              className='text-color close-btn'
-              style={{ fontSize: 15 }}
+              className="text-color close-btn"
+              style={{fontSize: 15}}
               onClick={() => {
                 handleClose();
                 reset();
@@ -224,22 +224,87 @@ export const MintModal = ({
     }
   };
 
+  const MintingViewModel = () => {
+    // ${
+    //   minting ? 'animate-list' : ''
+    return (
+      <ul
+        className={`list-unstyled overflow-hidden mint-char-list animate-list`}
+      >
+        <li>
+          <div className="mint-img-holder">
+            <img src={require('../../assets/images/man1.jpeg')} alt="" />
+          </div>
+        </li>
+        <li>
+          <div className="mint-img-holder">
+            <img src={require('../../assets/images/man2.jpeg')} alt="" />
+          </div>
+        </li>
+        <li>
+          <div className="mint-img-holder">
+            <img src={require('../../assets/images/man3.jpeg')} alt="" />
+          </div>
+        </li>
+        <li>
+          <div className="mint-img-holder">
+            <img src={require('../../assets/images/man4.jpeg')} alt="" />
+          </div>
+        </li>
+        <li>
+          <div className="mint-img-holder">
+            <img src={require('../../assets/images/man5.jpeg')} alt="" />
+          </div>
+        </li>
+        <li>
+          <div className="mint-img-holder">
+            <img src={require('../../assets/images/man6.jpeg')} alt="" />
+          </div>
+        </li>
+        <li>
+          <div className="mint-img-holder">
+            <img src={require('../../assets/images/man7.jpeg')} alt="" />
+          </div>
+        </li>
+        <li>
+          <div className="mint-img-holder">
+            <img src={require('../../assets/images/man8.jpeg')} alt="" />
+          </div>
+        </li>
+      </ul>
+    );
+  };
+
   const reset = () => {
     setMintImageUri(null);
     setMinting(false);
     setIsFirstOpen(false);
   };
+  const MintingComponent = () => {
+    return (
+      <>
+        {minting && !mintImageUri ? (
+          <MintingViewModel />
+        ) : mintImageUri ? (
+          <img
+            src={mintImageUri}
+            alt=""
+            style={{width: '100%', height: '100%'}}
+          />
+        ) : !startedMinting ? (
+          <img
+            src={require('../../assets/images/Characters-shuffle.gif')}
+            alt=""
+            style={{width: '100%', height: '100%'}}
+          />
+        ) : (
+          <MintingViewModel />
+        )}
+      </>
+    );
+  };
 
   const showCardImage = () => {
-    if (!minting && !mintImageUri) {
-      return (
-        <img
-          src={require('../../assets/images/Characters-shuffle.gif')}
-          alt=''
-          style={{ width: '100%', height: '100%' }}
-        />
-      );
-    }
     if (minting && !mintImageUri) {
       return (
         <ul
@@ -248,43 +313,43 @@ export const MintModal = ({
           }`}
         >
           <li>
-            <div className='mint-img-holder'>
-              <img src={require('../../assets/images/man1.jpeg')} alt='' />
+            <div className="mint-img-holder">
+              <img src={require('../../assets/images/man1.jpeg')} alt="" />
             </div>
           </li>
           <li>
-            <div className='mint-img-holder'>
-              <img src={require('../../assets/images/man2.jpeg')} alt='' />
+            <div className="mint-img-holder">
+              <img src={require('../../assets/images/man2.jpeg')} alt="" />
             </div>
           </li>
           <li>
-            <div className='mint-img-holder'>
-              <img src={require('../../assets/images/man3.jpeg')} alt='' />
+            <div className="mint-img-holder">
+              <img src={require('../../assets/images/man3.jpeg')} alt="" />
             </div>
           </li>
           <li>
-            <div className='mint-img-holder'>
-              <img src={require('../../assets/images/man4.jpeg')} alt='' />
+            <div className="mint-img-holder">
+              <img src={require('../../assets/images/man4.jpeg')} alt="" />
             </div>
           </li>
           <li>
-            <div className='mint-img-holder'>
-              <img src={require('../../assets/images/man5.jpeg')} alt='' />
+            <div className="mint-img-holder">
+              <img src={require('../../assets/images/man5.jpeg')} alt="" />
             </div>
           </li>
           <li>
-            <div className='mint-img-holder'>
-              <img src={require('../../assets/images/man6.jpeg')} alt='' />
+            <div className="mint-img-holder">
+              <img src={require('../../assets/images/man6.jpeg')} alt="" />
             </div>
           </li>
           <li>
-            <div className='mint-img-holder'>
-              <img src={require('../../assets/images/man7.jpeg')} alt='' />
+            <div className="mint-img-holder">
+              <img src={require('../../assets/images/man7.jpeg')} alt="" />
             </div>
           </li>
           <li>
-            <div className='mint-img-holder'>
-              <img src={require('../../assets/images/man8.jpeg')} alt='' />
+            <div className="mint-img-holder">
+              <img src={require('../../assets/images/man8.jpeg')} alt="" />
             </div>
           </li>
         </ul>
@@ -294,17 +359,71 @@ export const MintModal = ({
       return (
         <img
           src={mintImageUri}
-          alt=''
-          style={{ width: '100%', height: '100%' }}
+          alt=""
+          style={{width: '100%', height: '100%'}}
         />
       );
     }
+    if (!minting && !mintImageUri) {
+      return (
+        <img
+          src={require('../../assets/images/Characters-shuffle.gif')}
+          alt=""
+          style={{width: '100%', height: '100%'}}
+        />
+      );
+    }
+    return <MintingView />;
+  };
+
+  const MintingView = () => {
     return (
-      <img
-        src={require('../../assets/images/Characters-shuffle.gif')}
-        alt=''
-        style={{ width: '100%', height: '100%' }}
-      />
+      <ul
+        className={`list-unstyled overflow-hidden mint-char-list ${
+          minting ? 'animate-list' : ''
+        }`}
+      >
+        <li>
+          <div className="mint-img-holder">
+            <img src={require('../../assets/images/man1.jpeg')} alt="" />
+          </div>
+        </li>
+        <li>
+          <div className="mint-img-holder">
+            <img src={require('../../assets/images/man2.jpeg')} alt="" />
+          </div>
+        </li>
+        <li>
+          <div className="mint-img-holder">
+            <img src={require('../../assets/images/man3.jpeg')} alt="" />
+          </div>
+        </li>
+        <li>
+          <div className="mint-img-holder">
+            <img src={require('../../assets/images/man4.jpeg')} alt="" />
+          </div>
+        </li>
+        <li>
+          <div className="mint-img-holder">
+            <img src={require('../../assets/images/man5.jpeg')} alt="" />
+          </div>
+        </li>
+        <li>
+          <div className="mint-img-holder">
+            <img src={require('../../assets/images/man6.jpeg')} alt="" />
+          </div>
+        </li>
+        <li>
+          <div className="mint-img-holder">
+            <img src={require('../../assets/images/man7.jpeg')} alt="" />
+          </div>
+        </li>
+        <li>
+          <div className="mint-img-holder">
+            <img src={require('../../assets/images/man8.jpeg')} alt="" />
+          </div>
+        </li>
+      </ul>
     );
   };
 
@@ -318,13 +437,13 @@ export const MintModal = ({
     >
       {/* design mint modal here */}
 
-      <div className='mint-modal'>
-        <div className='mint-modal-header'>
-          <div className='col-lg-11 mint-modal-header-title'>
-            <h2 className='mint-modal-header-title'>Mint</h2>
+      <div className="mint-modal">
+        <div className="mint-modal-header">
+          <div className="col-lg-11 mint-modal-header-title">
+            <h2 className="mint-modal-header-title">Mint</h2>
           </div>
           <div
-            className='col-lg-1 mint-modal-header-icon close'
+            className="col-lg-1 mint-modal-header-icon close"
             onClick={() => {
               handleClose();
               reset();
@@ -350,23 +469,33 @@ export const MintModal = ({
         >
           Total Remaining Mint: {totalNumberOfMintRemaining}
         </p>
-        <div className='mint-modal-body my-3'>
-          <div className='mint-modal-body-card-wrapper d-flex'>
-            <div className='flame-holder'>
-              <img src={require('../../assets/images/Torch.gif')} alt='' />
+        <div className="mint-modal-body my-3">
+          <div className="mint-modal-body-card-wrapper d-flex">
+            <div className="flame-holder">
+              <img src={require('../../assets/images/Torch.gif')} alt="" />
             </div>
             <div
               className={`mint-modal-body-card ${
-                mintImageUri ? ' hero-card' : ''
+                mintImageUri ? 'hero-card' : ''
               }`}
             >
-              {showCardImage()}
+              {/* {showCardImage()} */}
+              {/* {startedMinting && (
+                <MintingViewModel />
+                <p
+                  className="hero-card"
+                  style={{position: 'absolute', fontSize: 10}}
+                >
+                  Loading...
+                </p>
+              )} */}
+              <MintingComponent />
             </div>
-            <div className='flame-holder'>
-              <img src={require('../../assets/images/Torch.gif')} alt='' />
+            <div className="flame-holder">
+              <img src={require('../../assets/images/Torch.gif')} alt="" />
             </div>
           </div>
-          <div className='d-inline-block mb-3'>{showMintingView()}</div>
+          <div className="d-inline-block mb-3">{showMintingView()}</div>
         </div>
       </div>
     </CustomModal>

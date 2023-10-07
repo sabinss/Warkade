@@ -1,11 +1,11 @@
 import React from 'react';
 import createDataContext from './createDataContext';
-import { AuthStateType } from './types';
+import {AuthStateType} from './types';
 import {
   getLocalStorageItem,
   setLocalStorageItem,
 } from '../utils/localstorageService';
-import { HASH_TOKEN } from '../constant';
+import {HASH_TOKEN} from '../constant';
 
 const initialState: AuthStateType = {
   isloggedIn: false,
@@ -48,19 +48,19 @@ const authReducer: React.Reducer<AuthStateType, any> = (
         connectedWalletName: action.payload,
       };
     case 'minting': {
-      return { ...state, isMinting: true, mintImageUrl: null };
+      return {...state, isMinting: true, mintImageUrl: null};
     }
     case 'minting_success': {
       let remainingMint = state.totalNumberOfMintRemaining
         ? state.totalNumberOfMintRemaining - 1
         : 0;
-      return { ...state, isMinting: false, mintImageUrl: action.payload };
+      return {...state, isMinting: false, mintImageUrl: action.payload};
     }
     case 'loading': {
-      return { ...state, walletConnetLoading: action.payload };
+      return {...state, walletConnetLoading: action.payload};
     }
     case 'darklord_loading': {
-      return { ...state, darkLordLoading: action.payload };
+      return {...state, darkLordLoading: action.payload};
     }
     case 'remaining_mint': {
       return {
@@ -71,11 +71,11 @@ const authReducer: React.Reducer<AuthStateType, any> = (
     }
 
     case 'fetch_darklord': {
-      return { ...state, darkLordCount: action.payload };
+      return {...state, darkLordCount: action.payload};
     }
 
     case 'total_mint': {
-      return { ...state, totalMinted: action.payload };
+      return {...state, totalMinted: action.payload};
     }
     case 'minting_failure': {
       return {
@@ -91,25 +91,31 @@ const authReducer: React.Reducer<AuthStateType, any> = (
 };
 
 const fetchDarkLordMystryBox = (dispatch: any) => async (walletAddres: any) => {
-  dispatch({ type: 'darklord_loading', payload: true });
+  dispatch({type: 'darklord_loading', payload: true});
   const darkLordUri = `https://api.aptoswarcade.com/darklord?wallet_address=${walletAddres}`;
   try {
     const response = await fetch(darkLordUri);
     const data = await response.json();
-    dispatch({ type: 'darklord_loading', payload: false });
-    dispatch({ type: 'fetch_darklord', payload: data?.data?.count });
+    dispatch({type: 'darklord_loading', payload: false});
+    dispatch({type: 'fetch_darklord', payload: data?.data?.count});
   } catch (er) {
-    dispatch({ type: 'darklord_loading', payload: false });
+    dispatch({type: 'darklord_loading', payload: false});
   }
 };
 
 const setLoading = (dispatch: any) => async (isLoading: boolean) => {
-  dispatch({ type: 'loading', payload: isLoading });
+  dispatch({type: 'loading', payload: isLoading});
 };
 
 const startMinting =
   (dispatch: any) => async (transactionHash: string, callback: any) => {
-    dispatch({ type: 'minting' });
+    // setTimeout(() => {
+    //   callback(
+    //     'https://img.freepik.com/free-vector/hand-drawn-nft-style-ape-illustration_23-2149622021.jpg?size=626&ext=jpg&ga=GA1.2.33442328.1670301685&semt=ais'
+    //   );
+    // }, 3000);
+    // return;
+    // dispatch({type: 'minting'});
     try {
       var myHeaders = new Headers();
       myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -133,12 +139,12 @@ const startMinting =
       mintImage?.msg === 'Some error occured!'
         ? callback(null, 'error')
         : callback(mintImage?.urls?.image);
-
-      dispatch({ type: 'minting_success', payload: mintImage?.urls?.image });
+      callback(mintImage?.urls?.image);
+      // dispatch({type: 'minting_success', payload: mintImage?.urls?.image});
     } catch (err) {
       console.log('minting err', err);
       callback(null, err);
-      dispatch({ type: 'minting_failure', payload: err });
+      dispatch({type: 'minting_failure', payload: err});
     }
   };
 
@@ -206,26 +212,26 @@ const fetchRemainingMint =
 const connetAptosWallet =
   (dispatch: any) => async (data: any, callback: any) => {
     setLocalStorageItem('walletInfo', data);
-    dispatch({ type: 'wallet_conected', payload: data });
+    dispatch({type: 'wallet_conected', payload: data});
     callback && callback();
   };
 
 const setConnectedWalletName =
   (dispatch: any) => async (walletName: string) => {
     setLocalStorageItem('walletName', walletName);
-    dispatch({ type: 'connected_wallet_name', payload: walletName });
+    dispatch({type: 'connected_wallet_name', payload: walletName});
   };
 
 const updateWalletState = (dispatch: any) => async (data: any) => {
-  dispatch({ type: 'wallet_conected', payload: data });
+  dispatch({type: 'wallet_conected', payload: data});
 };
 
 const disconnectAptosWallet = (dispatch: any) => async (data: any) => {
   localStorage.clear();
-  dispatch({ type: 'wallet_disconnected' });
+  dispatch({type: 'wallet_disconnected'});
 };
 
-export const { Context, Provider } = createDataContext(
+export const {Context, Provider} = createDataContext(
   authReducer,
   {
     connetAptosWallet,

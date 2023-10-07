@@ -12,6 +12,7 @@ import {PetraWalletName} from 'petra-plugin-wallet-adapter';
 import {BloctoWalletName} from '@blocto/aptos-wallet-adapter-plugin';
 import {PontemWalletName} from '@pontem/wallet-adapter-plugin';
 import {FewchaWalletName} from 'fewcha-plugin-wallet-adapter';
+import {MSafeWalletAdapter} from '@manahippo/aptos-wallet-adapter';
 
 import {Context as AuthContext} from '../../context';
 // wallets

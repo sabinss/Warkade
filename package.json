@@ -8,6 +8,7 @@
     "@aptos-labs/wallet-adapter-react": "^1.1.0",
     "@aptstats/spika-wallet-extension": "^0.0.3",
     "@blocto/aptos-wallet-adapter-plugin": "^0.1.8",
+    "@manahippo/aptos-wallet-adapter": "^1.0.10",
     "@martianwallet/aptos-wallet-adapter": "^0.0.4",
     "@pontem/wallet-adapter-plugin": "^0.2.0",
     "@testing-library/jest-dom": "^5.16.5",
