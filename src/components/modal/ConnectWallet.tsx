@@ -12,13 +12,14 @@ import {PetraWalletName} from 'petra-plugin-wallet-adapter';
 import {BloctoWalletName} from '@blocto/aptos-wallet-adapter-plugin';
 import {PontemWalletName} from '@pontem/wallet-adapter-plugin';
 import {FewchaWalletName} from 'fewcha-plugin-wallet-adapter';
-import {MSafeWalletAdapter} from '@manahippo/aptos-wallet-adapter';
 
 import {Context as AuthContext} from '../../context';
 // wallets
 import {PetraWallet} from 'petra-plugin-wallet-adapter';
 import {BloctoWallet} from '@blocto/aptos-wallet-adapter-plugin';
 import {MartianWallet} from '@martianwallet/aptos-wallet-adapter';
+import {SpikaWalletName} from '@spika/aptos-plugin';
+import {RiseWalletName} from '@rise-wallet/wallet-adapter';
 
 interface IConnectWallet {
   showModal: boolean;
@@ -31,6 +32,8 @@ enum AllowededWallets {
   martian = 'Martian',
   pontem = 'Pontem',
   fewcha = 'Fewcha',
+  spika = 'Spika',
+  rise = 'Rise',
 }
 
 export const ConnectWallet = ({handleClose, showModal}: IConnectWallet) => {
@@ -49,7 +52,7 @@ export const ConnectWallet = ({handleClose, showModal}: IConnectWallet) => {
 
   const {connect, account, disconnect} = useWallet();
 
-  const aptosWalletNetwork = new WalletCore(aptosWallet);
+  // const aptosWalletNetwork = new WalletCore(aptosWallet);
 
   useEffect(() => {
     if (account) {
@@ -71,7 +74,6 @@ export const ConnectWallet = ({handleClose, showModal}: IConnectWallet) => {
   const handleConnectWallet = async (walletName: string) => {
     try {
       setLoading(true);
-      console.log(walletName);
       setConnectedWalletName(walletName);
       let openSelectedWallet: any = '';
       if (AllowededWallets.petra === walletName) {
@@ -84,6 +86,10 @@ export const ConnectWallet = ({handleClose, showModal}: IConnectWallet) => {
         openSelectedWallet = PontemWalletName;
       } else if (AllowededWallets.fewcha === walletName) {
         openSelectedWallet = FewchaWalletName;
+      } else if (AllowededWallets.spika === walletName) {
+        openSelectedWallet = SpikaWalletName;
+      } else if (AllowededWallets.rise === walletName) {
+        openSelectedWallet = RiseWalletName;
       }
       connect(openSelectedWallet);
       // const wallet = new WalletCore(wallets);
@@ -196,6 +202,38 @@ export const ConnectWallet = ({handleClose, showModal}: IConnectWallet) => {
             />
             <span className="text-color wallet-text">
               {AllowededWallets.fewcha}
+            </span>
+          </div>
+          <div
+            className={`wallet-list-item d-flex  justify-content-start  align-items-center ${
+              selectedWallet === AllowededWallets.spika
+                ? 'wallet-list-item-active'
+                : ''
+            }`}
+            onClick={() => handleSelectWallet(AllowededWallets.spika)}
+          >
+            <img
+              className="wallet-img"
+              src={require('../../assets/images/spika.jpeg')}
+            />
+            <span className="text-color wallet-text">
+              {AllowededWallets.spika}
+            </span>
+          </div>
+          <div
+            className={`wallet-list-item d-flex  justify-content-start  align-items-center ${
+              selectedWallet === AllowededWallets.rise
+                ? 'wallet-list-item-active'
+                : ''
+            }`}
+            onClick={() => handleSelectWallet(AllowededWallets.rise)}
+          >
+            <img
+              className="wallet-img"
+              src={require('../../assets/images/rise.jpeg')}
+            />
+            <span className="text-color wallet-text">
+              {AllowededWallets.rise}
             </span>
           </div>
         </div>

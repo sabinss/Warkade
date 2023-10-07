@@ -14,7 +14,8 @@ import {MartianWallet} from '@martianwallet/aptos-wallet-adapter';
 import {PontemWallet} from '@pontem/wallet-adapter-plugin';
 import {FewchaWallet} from 'fewcha-plugin-wallet-adapter';
 import {WalletCore, NetworkName} from '@aptos-labs/wallet-adapter-core';
-import {MSafeWalletAdapter} from '@manahippo/aptos-wallet-adapter';
+import {SpikaWallet} from '@spika/aptos-plugin';
+import {RiseWallet} from '@rise-wallet/wallet-adapter';
 
 import {AptosWalletAdapterProvider} from '@aptos-labs/wallet-adapter-react';
 // import ErrorBoundary from './components/Errorboundary';
@@ -37,7 +38,8 @@ const wallets: any = [
   new MartianWallet(),
   new PontemWallet(),
   new FewchaWallet(),
-  new MSafeWalletAdapter(),
+  new SpikaWallet(),
+  new RiseWallet(),
 ];
 
 export const aptosWallet = new WalletCore(wallets);

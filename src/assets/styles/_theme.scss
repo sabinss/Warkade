@@ -746,6 +746,19 @@ footer {
   max-height: 100%;
   overflow-y: scroll;
   padding-top: 30px;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #252525;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $primary-color;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #a48837;
+  }
 }
 .wallet-img {
   width: 40px;
